@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html data-response="1" data-impaired>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title title="({month} 2016) {document-title}">GRID 001</title>
+
+<meta name="description" content="{document-description}">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT">
+
+<link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Montserrat:400,700|Droid+Sans:400,700|Droid+Serif:400,700|Droid+Sans+Mono">
+<style>
+    [data-typo="montserrat" ] { font-family: 'Montserrat' }
+    [data-typo="droid-sans" ] { font-family: 'Droid Sans' }
+    [data-typo="droid-serif"] { font-family: 'Droid Serif' }
+    [data-typo="droid-mono" ] { font-family: 'Droid Sans Mono' }
+</style>
+<!--  -->
+<link rel='stylesheet' href="css/normalize-4.2.0.css">
+<link rel='stylesheet' href="css/ers-base-init.css">
+<link rel='stylesheet' href="css/ers-base-view.css">
+<link rel='stylesheet' href="css/ers-base-grid.css">
+<link rel='stylesheet' href="css/ers-scroll-nobar.css">
+<link rel='stylesheet' href="css/ers-base-scaling.css">
+<link rel='stylesheet' href="css/ers-base-theming.css">
+<link rel='stylesheet' href="css/ers-base-utils.css">
+
+<link rel='stylesheet' href="assets/fonts/redacted/stylesheet.css">
+
+
+<style id="ers--overrides">
+/************************************************/
+/* easy RESPONSIVE|DEMO|NESS                    */
+/************************************************/
+/* HTML Default */
+
+.html               { font-size: calc(0.00625 * 100vmin + 0.625rem) }
+.html header        { font-size: calc(0.01250 * 100vmin + 1.25em); line-height: normal }
+.html footer        { font-size: calc(0.00500 * 100vmin + 0.50em); line-height: normal }
+
+h1                  { font-size: 2.00em; font-weight: bold; margin: 0.67em 0 }
+h2                  { font-size: 1.50em; font-weight: bold; margin: 0.83em 0 }
+h3                  { font-size: 1.17em; font-weight: bold; margin: 1.00em 0 }
+h4                  { font-size: 1.00em; font-weight: bold; margin: 1.33em 0 }
+h5                  { font-size: 0.83em; font-weight: bold; margin: 1.67em 0 }
+h6                  { font-size: 0.67em; font-weight: bold; margin: 2.33em 0 }
+
+
+body                        { flex-flow: row }
+aside                       { height: 100% }
+
+header                      { height: 5rem }
+footer                      { height: 2rem }
+
+[data-patch]>*              { background: white; border: 1px solid hsla(0,0%,70%,.2) }
+
+[data-patch]>*>*            { background-color: white; color: currentcolor }
+
+/* 'view' hover-effect when scaled down */
+[data-patch]>*:hover        { background: currentcolor;
+                              background-image: linear-gradient(-180deg, hsla(0,0%,100%,.75) 0%, hsla(0,0%,100%,.75) 100%) }
+
+/* 'view' hover-effect when maximized (actually cancelling..) */
+[class^="scale-switch"]:checked+*:hover [data-patch]>*:hover { background-color: white; background-image: none }
+
+/* view-content */
+[class*="scale-switch"]:checked + *                                     { left: 12.5%; width: 87.5% }
+/* Nested view-content */
+[class*="scale-switch"]:checked + * [class*="scale-switch"]:checked + * { /* fiddle away! */
+                                                                          left: 0; width: 100% }
+
+.view-panel-bg              { background: linear-gradient(#FBEC6B, #F4BC6B, #EB8B6B, #E0536B, #D6306D, #A32C68, #722A65, #422662, #12255D, #275B75, #3C918B, #52C6A2, #66F8B6) }
+.view-header[data-patch]    { height: 3rem; padding: 0 }
+
+</style>
+
+<style>
+/************************************************/
+/* easy RESPONSIVE|DEMO|NESS                    */
+/************************************************/
+#logo-inits                 { width: calc(7rem / 2.0);
+                              font-size: calc(7rem / 2.0); line-height: calc(7rem / 2.0);
+                              -ms-writing-mode: tb-rl; writing-mode: vertical-rl }
+
+#actionbar                  { flex-basis: 12.5%; max-width: 12.5%; overflow: hidden }
+#actionbar >footer          { height: 7rem; padding: 0 }
+
+#dashboard--header          { font-size: calc(7rem / 2.1) }
+#dashboard-footer > *       { padding: 0 .5rem }
+
+#desktop                    { overflow-x: hidden; overflow-y: auto }
+#desktop--menu              { position: sticky; flex-flow: row wrap; height: 4rem; max-height: 4rem;
+                              margin: 0 4rem }
+
+[id^="demo"]                { justify-content: center; align-content: center; padding: 3rem .25rem }
+
+label[for^="card"]          { cursor: pointer }
+
+[data-buttons="flat"]>*,
+[data-button ="flat"]       { padding: .25rem 1rem; font-variant: small-caps; text-transform: uppercase }
+
+[data-buttons="flat"]>*:hover,
+[data-button ="flat"]:hover { background: currentcolor; cursor: pointer;
+                              background-image: linear-gradient(-180deg, hsla(0,0%,  0%,.55) 0%, hsla(0,0%,  0%,.55) 100%) }
+
+
+#demo-QQ .view-content { flex-flow: column wrap; max-width: 50rem  }
+figure {
+  margin-bottom: 1.8rem;
+  display: flex;
+  justify-content: space-between;
+}
+.post-image:nth-last-child(n+2):nth-last-child(-n+2):first-child,
+.post-image:nth-last-child(n+2):nth-last-child(-n+2):first-child ~ .post-image {
+          flex: 0 1 48%;
+}
+.post-image:nth-last-child(n+3):nth-last-child(-n+3):first-child,
+.post-image:nth-last-child(n+3):nth-last-child(-n+3):first-child ~ .post-image {
+          flex: 0 1 31%;
+}
+
+
+</style>
+
+
+<style>
+button {
+  text-align: center;
+  font-size: 100%;
+  padding: 1em;
+}
+
+i {
+  font-style: normal;
+  display: block;
+  box-sizing: border-box;
+  line-height: 1.35;
+  width: 1.5em;
+  height: 1.5em;
+  text-align: center;
+  font-size: 200%;
+  border-radius: 50%;
+  margin: 0 auto;
+  border: .1em solid currentcolor;
+}
+
+[data-patch]>*>*:hover i{
+  background: currentcolor;
+  -moz-outline: none; outline: none;
+  background-image: linear-gradient(-180deg, hsla(0,0%,  0%,.55) 0%, hsla(0,0%,  0%,.55) 100%)
+}
+
+
+
+[bs1]       { box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12) }
+[bs1]:hover { box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) }
+
+</style>
+
+</head>
+
+<body data-debug="0">
+<!-- See remarks about 'hoverboard' in CSS => only activate when using hover effects -->
+<!--div class="hoverboard"></div-->
+
+<aside id="actionbar" data-bg="D2">
+    <header>header</header>
+
+    <div class="inner">inner</div>
+
+    <footer id="ers--logo"><div id="logo-inits" class="translucent" data-typo="montserrat">ERS</div></footer>
+</aside>
+
+<main id="dashboard">
+    <header id="dashboard--header" data-bg="L2"><div class="left"></div><div class="center"></div><div class="right"></div></header>
+<!-- 
+ -->
+    <div id="desktop" class="outer">
+        <nav id="desktop--menu"><div class="left">nav</div><div class="center">nav</div><div class="right">nav</div></nav>
+
+        <section id="demo-001">
+            <input id="card-001" class="scale-switch-50" type="checkbox" data-gone="1"/>
+            <item class="view scale-50" data-bg="L1">
+                <label for="card-001" class="view-header">header</label>
+                <div class="view-panel">
+                    <div class="view-content" data-patch="1x1">
+                        <!-- the 'patch' -->
+                        <div>1</div>
+                    </div>
+                </div>
+            </item>
+
+            <input id="card-002" class="scale-switch-25" type="checkbox" data-gone="1"/>
+            <item class="view scale-25" data-bg="L1">
+                <label for="card-002" class="view-header">header</label>
+                <div class="view-panel">
+                    <div class="view-content" data-patch="2x2">
+                        <!-- the 'patches' -->
+                        <div data-patch="2x3">
+                            <div>1.1</div>
+                            <div>1.2</div>
+                            <div>1.3</div>
+                            <div>1.4</div>
+                            <div>1.5</div>
+                            <div>1.6</div>
+                        </div>
+                        <div data-patch="3x2">
+                            <div>2.1</div>
+                            <div data-patch="1x3">
+                                <div>x</div>
+                                <div>x</div>
+                                <div>x</div>
+                            </div>
+                            <div>2.3</div>
+                            <div data-patch="1x3">
+                                <div>x</div>
+                                <div>x</div>
+                                <div>x</div>
+                            </div>
+                            <div>2.5</div>
+                            <div data-patch="1x3">
+                                <div>x</div>
+                                <div>x</div>
+                                <div>x</div>
+                            </div>
+                        </div>
+                        <div data-patch="2x1">
+                            <div>3.1</div>
+                            <div>3.2</div>
+                        </div>
+                        <div data-patch="1x2">
+                            <div>4.1</div>
+                            <div>4.2</div>
+                        </div>
+                    </div>
+                </div>
+            </item>
+
+            <input id="card-003" class="scale-switch-50" type="checkbox" data-gone="1"/>
+            <item class="view scale-50" data-bg="L1">
+                <label for="card-003" class="view-header">header</label>
+                <div class="view-panel">
+                    <div class="view-content" data-patch="3x3">
+                        <!-- etc... -->
+                        <div>1</div>
+                        <div>2</div>
+                        <div>3</div>
+                        <div>4</div>
+                        <div>5</div>
+                        <div>6</div>
+                        <div>7</div>
+                        <div>8</div>
+                        <div>9</div>
+                    </div>
+                </div>
+            </item>
+
+            <input id="card-004" class="scale-switch-50" type="checkbox" data-gone="1"/>
+            <item class="view square scale-50sq" data-bg="L1">
+                <label for="card-004" class="view-header">header</label>
+                <div class="view-panel">
+                    <div class="view-content" data-patch="4x4">
+                        <!-- some more... -->
+                        <div> 1</div>
+                        <div> 2</div>
+                        <div> 3</div>
+                        <div> 4</div>
+                        <div> 5</div>
+                        <div> 6</div>
+                        <div> 7</div>
+                        <div> 8</div>
+                        <div> 9</div>
+                        <div>10</div>
+                        <div>11</div>
+                        <div>12</div>
+                        <div>13</div>
+                        <div>14</div>
+                        <div>15</div>
+                        <div>16</div>
+                    </div>
+                </div>
+            </item>
+
+
+
+            <input id="card-005-32" class="scale-switch-50" type="checkbox" data-gone="1"/>
+            <item class="view square scale-50sq" data-bg="L1">
+                <label for="card-005-32" class="view-header">header</label>
+                <div class="view-list">
+                    <div class="view-content" data-patch="2x2">
+                        <div>5-32.1</div>
+                        <div>5-32.2</div>
+                        <div>5-32.3</div>
+                        <div data-patch="1x2">
+                            <div>5-32.4.1</div>
+                            <div>5-32.4.2</div>
+                        </div>
+                    </div>
+                </div>
+            </item>
+
+
+
+            <input id="card-005" class="scale-switch-50" type="checkbox" data-gone="1"/>
+            <item class="view square scale-50sq" data-bg="L1">
+                <label for="card-005" class="view-header" data-patch="7x1">
+                        <span>sun</span>
+                        <span>mon</span>
+                        <span>tue</span>
+                        <span>wed</span>
+                        <span>thu</span>
+                        <span>fri</span>
+                        <span>sat</span>
+                </label>
+                <div class="view-panel">
+                    <div class="view-content" data-patch="7x5" fill>
+                        <!-- and then some... -->
+                        <div> 1</div>
+                        <div> 2</div>
+                        <div> 3</div>
+                        <div> 4</div>
+                        <div> 5</div>
+                        <div> 6</div>
+                        <div> 7</div>
+                        <div> 8</div>
+                        <div> 9</div>
+                        <div>10</div>
+                        <div>11</div>
+                        <div>12</div>
+                        <div>13</div>
+                        <div>14</div>
+                        <div>15</div>
+                        <div>16</div>
+                        <div>17</div>
+                        <div>18</div>
+                        <div>19</div>
+                        <div>20</div>
+                        <div>21</div>
+                        <div>22</div>
+                        <div>23</div>
+                        <div>24</div>
+                        <div>25</div>
+                        <div>26</div>
+                        <div>27</div>
+                        <div>28</div>
+                        <div>29</div>
+                        <div>30</div>
+                        <div>31</div>
+                    </div>
+                    <div class="view-toolbar" data-buttons="flat">
+                        <div>help</div>
+                        <div>cancel</div>
+                        <div>ok</div>
+                    </div>
+                </div>
+            </item>
+        </section>
+
+        <section id="demo-QQ">
+            <input id="card-00QQ1" class="scale-switch-50" type="checkbox" data-gone="1"/>
+            <item class="view scale-50 nobar" data-bg="L1">
+                <label for="card-00QQ1" class="view-header">header</label>
+                <div class="view-panel nobar-scroller">
+                    <div class="view-content">
+                        <figure>
+                          <div class="post-image"><img src="https://kunsplash.it/900/400/?random"/></div>
+                        </figure>
+                        <!-- double image row-->
+                        <figure>
+                          <div class="post-image"><img src="https://kunsplash.it/400/300/?random"/></div>
+                          <div class="post-image"><img src="https://kunsplash.it/800/600/?random"/></div>
+                        </figure>
+                        <!-- triple image row-->
+                        <figure>
+                          <div class="post-image"><img src="https://kunsplash.it/375/250/?random"/></div>
+                          <div class="post-image"><img src="https://kunsplash.it/396/264/?random"/></div>
+                          <div class="post-image"><img src="https://kunsplash.it/399/266/?random"/></div>
+                        </figure>
+                    </div>
+                </div>
+            </item>
+        </section>
+    </div>
+</main>
+
+</body>
+</html>

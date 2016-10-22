@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title title="({month} 2016) {document-title}">{document-title}</title>
+
+<!-- 
+    Inspirations: {site-links}
+-->
+
+<meta name="description" content="{document-description}">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT">
+
+<style id="ers--demo--document-styles">
+/************************************************/
+/* easy RESPONSIVE|FONT|NESS                    */
+/************************************************/
+/* Responsive font: y = mx + b */
+html { font-size: calc(0.00625 * 100vmin + 11px) }
+body { font-size: 1rem; line-height: normal }
+
+/************************************************/
+/* DEMO RULES                                   */
+/************************************************/
+/* variabel */
+/* mixin */
+html, body {
+  background: #f1f1f1;
+  font-family: 'Raleway', sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+.layout-article {
+  max-width: 1027px;
+  margin: 0 auto;
+  padding: 40px 0px;
+}
+.layout-article ul.box-article {
+  list-style: none;
+  -moz-column-count: 3;
+  -webkit-column-count: 3;
+  column-count: 3;
+  -webkit-column-gap: 0px;
+  -moz-column-gap: 0px;
+  column-gap: 0px;
+}
+.layout-article ul.box-article li {
+  display: inline-block;
+  -webkit-column-break-inside: avoid;
+  -moz-column-break-inside: avoid;
+  column-break-inside: avoid;
+  padding: 25px;
+  background: #ffffff;
+  height: auto;
+  overflow: hidden;
+  margin: 15px;
+  position: relative;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.layout-article ul.box-article li article {
+  width: 100%;
+}
+.layout-article ul.box-article li article h1 {
+  -webkit-transition: ease 0.3s;
+  transition: ease 0.3s;
+  font-size: 24px;
+  line-height: 31px;
+  font-weight: 600;
+  color: #191919;
+  margin-bottom: 15px;
+}
+.layout-article ul.box-article li article figure {
+  width: 100%;
+}
+.layout-article ul.box-article li article figure img {
+  width: 100%;
+}
+.layout-article ul.box-article li article p {
+  margin-top: 15px;
+  font-size: 16px;
+  line-height: 26px;
+  font-weight: 500;
+  color: #5E5E5E;
+}
+.layout-article ul.box-article li article span {
+  width: 100%;
+  display: block;
+  padding: 15px;
+  text-align: center;
+  background: #24cf5f;
+  margin-left: -15px;
+  color: #ffffff;
+  -webkit-transform: translateY(15px);
+  transform: translateY(15px);
+  -webkit-transition: ease 0.3s;
+  transition: ease 0.3s;
+}
+.layout-article ul.box-article li:hover article h1 {
+  color: #24cf5f;
+}
+.layout-article ul.box-article li:hover article span {
+  /* @include translateY(0px); */
+}
+@media only screen and (max-width: 480px) {
+  .layout-article ul.box-article {
+    -moz-column-count: 1;
+    -webkit-column-count: 1;
+    column-count: 1;
+  }
+}
+@media only screen and (min-width: 481px) and (max-width: 1023px) {
+  .layout-article ul.box-article {
+    -moz-column-count: 2;
+    -webkit-column-count: 2;
+    column-count: 2;
+  }
+}
+
+.credit {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  width: 150px;
+  height: 100px;
+  background: url(http://tlab.co.id/images/logo.png) no-repeat center center;
+}
+
+</style>
+</head>
+
+<body>
+
+
+<section class="layout-article">
+  <ul class="box-article">
+    <li class="list-article wow flipInY">
+      <article class="box-article"><a href="">
+          <h1>Gummies fruitcake cupcake candy tart sesame snaps apple pie halvah.</h1>
+          <p>Sweet roll lemon drops chupa chups. Candy canes icing soufflé ice cream tiramisu jelly-o macaroon sweet roll chocolate cake. Cake bear claw gummies topping candy canes liquorice muffin halvah.</p></a></article>
+    </li>
+    <li data-wow-delay="0.3s" class="list-article wow flipInY">
+      <article class="box-article"><a href="">
+          <h1>Gummies fruitcake cupcake candy tart </h1>
+          <figure><img src="https://images.unsplash.com/photo-1441906363162-903afd0d3d52?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;s=51953479f1ce3812d6fc2bc7d82ecea4" alt=""/></figure>
+          <p>Sweet roll lemon drops chupa chups. Candy canes icing soufflé ice cream tiramisu jelly-o macaroon sweet roll chocolate cake. Cake bear claw gummies topping candy canes liquorice muffin halvah.</p></a></article>
+    </li>
+    <li data-wow-delay="0.6s" class="list-article wow flipInY">
+      <article class="box-article"><a href="">
+          <h1>Gummies fruitcake cupcake candy tart sesame snaps apple.  </h1>
+          <figure><img src="https://images.unsplash.com/photo-1443527216320-7e744084f5a7?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;s=6fbde3ee76bc8f49caf14c89778b2210" alt=""/></figure>
+          <p>Sweet roll lemon drops chupa chups. Candy canes icing soufflé ice cream tiramisu jelly-o macaroon sweet roll chocolate cake. Cake bear claw gummies topping candy canes liquorice muffin halvah.</p></a></article>
+    </li>
+    <li data-wow-delay="0.9s" class="list-article wow flipInY">
+      <article class="box-article"><a href="">
+          <h1>Gummies fruitcake cupcake </h1>
+          <p>Sweet roll lemon drops chupa chups. Candy canes icing soufflé ice cream tiramisu jelly-o macaroon sweet roll chocolate cake. Cake bear claw gummies topping candy canes liquorice muffin halvah.</p></a></article>
+    </li>
+    <li data-wow-delay="1.2s" class="list-article wow flipInY">
+      <article class="box-article"><a href="">
+          <h1>Cake apple pie candy canes liquorice.</h1>
+          <p>Sweet roll lemon drops chupa chups. Candy canes icing soufflé ice cream tiramisu jelly-o macaroon sweet roll chocolate cake. Cake bear claw gummies topping candy canes liquorice muffin halvah.</p></a></article>
+    </li>
+    <li data-wow-delay="1.5s" class="list-article wow flipInY">
+      <article class="box-article"><a href="">
+          <h1>Gummies fruitcake cupcake candy tart sesame snaps apple pie</h1>
+          <figure><img src="https://images.unsplash.com/photo-1440470177828-6381dc5074ba?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;s=6faf705d60f9804d03079755fb323a9a" alt=""/></figure>
+          <p>Sweet roll lemon drops chupa chups. Candy canes icing soufflé ice cream tiramisu jelly-o macaroon sweet roll chocolate cake. Cake bear claw gummies topping candy canes liquorice muffin halvah.</p></a></article>
+    </li>
+  </ul>
+</section><a href="http://tlab.co.id/" target="_blank" class="credit"></a>
+
+</body>
+</html>

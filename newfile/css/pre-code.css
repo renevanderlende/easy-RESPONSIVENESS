@@ -1,0 +1,55 @@
+@CHARSET "UTF-8";
+
+pre                         { display: block; padding: 8px 12px; direction: inherit;
+                              font-size: 13px; 
+                              -moz-tab-size: 4; -o-tab-size: 4; tab-size: 4;
+                            }
+
+#demo-static-code:after     { content: '\A<div\A'
+                                       '\9 data-any-before="before"\A'
+                                       '\9 data-any-after ="after"\A'
+                                       '\9>\A'
+                                       '\9 using a static text\A'
+                                       '</div>\A' }
+
+#demo-data-utf-code:after   { content: '\A<div\A'
+                                       '\9 data-any-el-ba="bHbFbA aHaFaA"\A'
+                                       '\9 data-utf\A'
+                                       '\9 data-b-any-before="&#x1f610;"\A'
+                                       '\9 data-b-any-hover ="&#x1f60a;"\A'
+                                       '\9 data-b-any-active="&#x1f601;"\A'
+                                       '\9 data-a-any-after ="&#x1f601;"\A'
+                                       '\9 data-a-any-hover ="&#x1f60a;"\A'
+                                       '\9 data-a-any-active="&#x1f610;"\A'
+                                       '\9>\A'
+                                       '\9 text\A'
+                                       '</div>\A' }
+
+/*
+    usage:
+    
+                    <pre id="demo-static-code"></pre>
+                    <pre id="demo-data-utf-code"></pre>
+    
+
+
+*/
+
+.h1.blended { /*http://codepen.io/rauldronca/pen/kkYdmO*/
+  position: absolute;
+  top: 50%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  font-family: 'Raleway', sans-serif;
+  font-size: 7vw;
+  font-weight: 800;
+  letter-spacing: 8px;
+  line-height: 60px;
+  text-align: center;
+  padding: 35px;
+  margin: 0;
+  background: #333;
+  color: white;
+  mix-blend-mode: multiply;
+}
+

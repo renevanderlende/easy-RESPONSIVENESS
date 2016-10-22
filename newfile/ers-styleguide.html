@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html data-response="1" data-impaired="press" data-design="0">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title title="(August 2016) {document-title}">ERS Style Guide</title>
+
+<meta name="description" content="{document-description}">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT">
+
+
+<link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Montserrat:400,700|Droid+Sans:400,700|Droid+Serif:400,700|Droid+Sans+Mono">
+<style>
+    [data-typo="montserrat" ] { font-family: 'Montserrat' }
+    [data-typo="droid-sans" ] { font-family: 'Droid Sans' }
+    [data-typo="droid-serif"] { font-family: 'Droid Serif' }
+    [data-typo="droid-mono" ] { font-family: 'Droid Sans Mono' }
+</style>
+
+<link rel='stylesheet' href="css/normalize-4.2.0.css">
+<link rel='stylesheet' href="css/ers-base-init.css">
+<link rel='stylesheet' href="css/ers-base-view.css">
+<link rel='stylesheet' href="css/ers-base-grid.css">
+<link rel='stylesheet' href="css/ers-scroll-nobar.css">
+<link rel='stylesheet' href="css/ers-base-scaling.css">
+<link rel='stylesheet' href="css/ers-base-utils.css">
+<link rel='stylesheet' href="css/ers-base-theming.css">
+
+<link rel='stylesheet' href="assets/fonts/redacted/stylesheet.css">
+
+
+<style id="ers---base-init---overrides">
+body    { flex-flow: row wrap }
+aside   { height: 100% }
+
+header  { height: 5rem }
+footer  { height: 2rem }
+
+section {}
+item    { flex: 1 1 40rem; max-width: 75%; flex-direction: column; align-items: center }
+
+</style>
+
+
+<style id="ers--view-effects">
+/************************************************/
+/* easy RESPONSIVE|EFFECT|NESS            (WIP) */
+/************************************************/
+.hoverboard                             { background: transparent; position: fixed; top:0; right:0; width: 100%; height: 100% }
+
+[data-effect],[data-effect]>*           { /* transition: all 50ms ease-in-out */ } /* or something */
+
+[data-effect*="BS"]:hover>*:hover       { box-shadow: 0 1rem 2.5rem -1rem hsl(0,0%,0%) }
+
+[data-effect*="BD"]:hover>*:not(:hover),
+[data-effect*="S0"]:hover>*:not(:hover) { filter: saturate(0); opacity: .7 }
+[data-effect*="O0"]:hover>*:not(:hover) { filter: blur(15px) saturate(0); opacity: .5 }
+
+[data-effect*="BD"]:hover>*:hover       { box-shadow: 0 0 1px 2px hsla(0,0%,100%,.4),
+                                                      0 0 0  10px currentColor; border-radius: 3px }
+
+[data-effect*="BG"]:hover>*:not(:hover) { background-color: hsla(0,0%,100%,.6); filter: blur(15px) }
+[data-effect*="BG"]:hover>*:hover       { background-color: hsla(0,0%,100%,1 ); filter: none }
+</style>
+
+<style id="ers--color--settings">
+/************************************************/
+/* COLOR SETTINGS                               */
+/************************************************/
+/*
+    USAGE:
+
+    <div class="set-pen-color">
+        <span>
+            <input class="color-picker" id="colorPicker" type="color" value="#2B95FF" />
+            <input class="color-value"  id="colorValue"  type="text" />
+        </span>
+    </div>
+*/
+.color-picker, .color-value         { /*only for IDE class reference checker*/ }
+
+.set-pen-color                      { font-family: monospace; padding: .5rem; align-items: flex-start }
+
+.set-pen-color input                { color: currentcolor; width: auto;
+                                      outline: none; border: none; background: transparent;
+                                      -webkit-appearance: none; -moz-appearance: none; appearance: none }
+
+.set-pen-color input[type*="text"]  { border: 1px solid currentcolor; color: white; padding: 0.1em 0.5em; border-radius: 3px }
+
+.set-pen-color input[type*="color"] { color: white; width: 2rem }
+
+</style>
+
+<style id="ers--styleguide">
+/************************************************/
+/* easy RESPONSIVE|STYLEGUIDE|NESS              */
+/************************************************/
+#ers--logo   { overflow: hidden }
+#logo-inits {
+    justify-content: center;
+    width    : calc(7rem / 2.0);
+    font-size: calc(7rem / 2.1);
+
+    text-shadow: -1px 1px 1px hsla(0,0%,0%,.2);
+
+    -ms-writing-mode: tb-rl;
+        writing-mode: vertical-rl;
+}
+
+#logo-name                      { overflow: hidden; align-items: flex-end }
+#logo-name >:nth-child(1)       {}
+#logo-name >:nth-child(2)       {}
+#logo-name >:nth-child(3)       { color: black }
+
+
+#actionbar                      { flex-basis: 12.5%; min-width: 6rem }
+#actionbar >footer              { height: 7rem; padding: 0 }
+
+#dashboard--header              { font-size: calc(7rem / 2.1); }
+#dashboard-footer > *           { padding: 0 .5rem }
+
+#desktop                        { overflow-x: hidden; overflow-y: auto; }
+#desktop--menu                  { position: sticky; flex-flow: row wrap; height: 3rem; max-height: 3rem;
+                                  margin: 0 4rem }
+
+
+[id^="cardlist"]                { flex-wrap: wrap;
+                                  justify-content: center; align-items: flex-start;
+                                  padding: 1.5rem 0 }
+
+
+nav                             { height: 4rem }
+
+
+                                  /* easy font rotation, MAKE SURE you own the knowledge! */
+.vert-text-R                    { -ms-writing-mode: tb-rl;          /* for IE */
+                                      writing-mode: vertical-rl }   /* the rest */
+
+.vert-text-L                    { -ms-writing-mode: rl-tb;
+                                      writing-mode: vertical-lr }
+
+
+/* <main> could be a 'nobar' element too, but for demo purposes a scrollbar seems a better choice */
+
+label[for^="card"]              { cursor: pointer }
+
+/* Views */
+.view-header                    { position: sticky; height: 3rem; font-size: 1.5rem; line-height: 3rem; }
+
+.view-header,.view-footer       { padding: 0 1rem }
+
+.view-header::before            { font-family: 'Material Icons'; content: ''; /* content: '\E5D1' fullscreen_exit */ }
+.view-header::after             { font-family: 'Material Icons'; content: '\e1c1' /* \e5d0 fullscreen/screen_rotation */ }
+
+[data-icon^="mdl"]::after       { font-family: 'Material Icons'; font-size: 1.5rem; width: 2rem; text-align: center }
+
+[data-icon="mdl.palette"]::after{ content: '\e40a' }
+
+.view-header::after             { font-size: 1.6875rem; width: 2rem }
+.view-header:hover::after       { font-size: 2rem }
+
+
+.view-content p                 { text-align: justify; max-width: 80% }
+
+/* GOOGLE MDL STYLING */
+.view-header,
+[shadow="MDL"]                  { z-index: 1;
+                                  box-shadow: 0px 2px 2px  0px rgba(0,0,0,.14),
+                                              0px 3px 1px -2px rgba(0,0,0,.10),
+                                              0px 1px 5px  0px rgba(0,0,0,.12) }
+
+#cardlist--intro .viewww-content  { flex-direction: column;  }
+/************************************************/
+.example                            { flex-flow: column nowrap; width: 100%; background-color: hsla(0,0%,100%,1) }
+
+.example .container                 { flex: 1 1 40rem; max-width: 40em; flex-direction: column; align-items: center; }
+.example > section,
+.center                             { justify-content: center; align-items: center; text-align: center }
+
+.example .flex-row                  { flex-flow: row wrap }
+.example .header                    { padding: 7rem 0 5rem 0; line-height: normal;
+                                      background: currentColor url("http://kunsplash.it/640/480?image=998") center no-repeat;
+                                      background-size: cover;
+                                      background-blend-mode: multiply }
+.example .header h2,
+.example .header h1                 { text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2) }
+.example .header h1                 { font-weight: 300; font-size: 2.6em; margin: 0.3em 0 }
+.example .header h2                 { margin-top: 0; margin-bottom: 2em; font-weight: 300; font-size: 1.3em }
+
+
+
+.button                             { display: inline-block; padding: 0.4em 1em 0.5em;
+                                      text-decoration: none; border-radius: 0.3em;
+
+                                      transition: all 0.2s ease; transform: scale(1);
+
+                                      box-shadow: 0px 7px 12px 0px rgba(0, 0, 0, 0.1);
+                                      background-image: linear-gradient(-180deg, rgba(0, 0, 0, 0.2) 0%,
+                                                                                 rgba(0, 0, 0, 0.2) 100%) }
+.button:hover                       { transform: scale(1.05);
+
+                                      box-shadow: 0px 7px 12px 0px rgba(0, 0, 0, 0.3);
+                                      background-image: linear-gradient(-180deg, rgba(0, 0, 0, 0.5) 0%,
+                                                                                 rgba(0, 0, 0, 0.5) 100%) }
+.button.white-button                { background: white }
+.button.white-button:hover          { background: currentColor }
+.button.white-button:hover span     { color: white }
+
+
+
+.artwork                            { flex: 1; min-height: .5rem; background-color: currentColor }
+.artwork > *                        { width: 25%; height: 100% }
+
+.artwork .one                       { background: rgba(0, 0, 0, 0.2) }
+.artwork .two                       { background: rgba(0, 0, 0, 0.5) }
+.artwork .three                     { background: rgba(0, 0, 0, 0.4) }
+.artwork .four                      { background: rgba(0, 0, 0, 0.6) }
+</style>
+
+</head>
+
+<body data-debug="0">
+<!-- See remarks about 'hoverboard' in CSS => only activate when using hover effects -->
+<!--div class="hoverboard"></div-->
+
+<aside id="actionbar" class="outer" data-bg="D2">
+    <header></header>
+
+    <div class="inner" bg="0"></div>
+
+    <footer id="ers--logo"><div id="logo-inits" class="translucent" data-typo="montserrat">ERS</div></footer>
+</aside>
+
+<main id="dashboard">
+    <header id="dashboard--header">
+        <div class="left"  ></div>
+        <div class="center"></div>
+        <div class="right" ></div>
+    </header>
+
+    <nav id="desktop--menu" data-bg="H-120">
+        <div class="left"  ></div>
+        <div class="center black">desktop menu</div>
+        <div class="right" ></div>
+    </nav>
+<!-- 
+ -->
+    <div id="desktop" class="inner" bg="0">
+        <div id="cardlist--intro" data-effect="BS">
+
+            <input id="card-000" class="scale-switch-50" type="checkbox" data-gone="1"/>
+            <div class="view scale-50 nobar">
+                <label for="card-000" class="view-header">introduction</label>
+                <div class="view-panel nobar-scroller">
+                    <div class="view-content example">
+                        <section class="header">
+                            <div class="container">
+                                <h1>
+                                    <span class="white" data-typo="montserrat">The mainstream call-to-action that you have seen everywhere</span>
+                                </h1>
+                                <h2 class="white translucent" data-typo="droid-serif">Don’t forget this subtitle that is super important.</h2>
+                                <a class="button background" href="#"><span class="white">Woah, a button</span>
+                                </a> &nbsp; <a class="button white-button background" href="#"><span>White button this time</span>
+                                </a>
+                            </div>
+                        </section>
+
+                        <section class="artwork"><div class="one"></div><div class="two"></div><div class="three"></div><div class="four"></div></section>
+                        <section>
+                            <item class="black">
+                                <h2>the story goes on ...</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ille enim occurrentia nescio quae comminiscebatur; Varietates autem iniurasque fortunae facile veteres philosophorum praeceptis instituta vita superabat. Plane idem, inquit, et maxima quidem, qua fieri nulla maior potest. Cur igitur, cum de re conveniat, non malumus usitate loqui? Positum est a nostris in iis esse rebus, quae secundum naturam essent, non dolere; </p>
+                                <p>Te enim iudicem aequum puto, modo quae dicat ille bene noris. Tu quidem reddes; Quae quidem sapientes sequuntur duce natura tamquam videntes; Illud dico, ea, quae dicat, praeclare inter se cohaerere. Gerendus est mos, modo recte sentiat. </p>
+                                <p>Stulti autem malorum memoria torquentur, sapientes bona praeterita grata recordatione renovata delectant. Duo Reges: constructio interrete. Totum autem id externum est, et quod externum, id in casu est. Neque enim civitas in seditione beata esse potest nec in discordia dominorum domus; Quamvis enim depravatae non sint, pravae tamen esse possunt. Quasi ego id curem, quid ille aiat aut neget. Est enim effectrix multarum et magnarum voluptatum. Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus. </p>
+                                <p>Sed quae tandem ista ratio est? Quid de Pythagora? Licet hic rursus ea commemores, quae optimis verbis ab Epicuro de laude amicitiae dicta sunt. Tu quidem reddes; Sin laboramus, quis est, qui alienae modum statuat industriae? Hoc enim identidem dicitis, non intellegere nos quam dicatis voluptatem. Itaque hic ipse iam pridem est reiectus; Itaque mihi non satis videmini considerare quod iter sit naturae quaeque progressio. Qui autem esse poteris, nisi te amor ipse ceperit? Nam, ut paulo ante docui, augendae voluptatis finis est doloris omnis amotio. </p>
+                                <p>Non modo carum sibi quemque, verum etiam vehementer carum esse? Quia dolori non voluptas contraria est, sed doloris privatio. Quae cum essent dicta, discessimus. Dici enim nihil potest verius. Addidisti ad extremum etiam indoctum fuisse. Maximas vero virtutes iacere omnis necesse est voluptate dominante. Si qua in iis corrigere voluit, deteriora fecit. </p>
+                            </item>
+                        </section>
+
+                        <section data-bg="M3">
+                            <item class="black" data-typo="droid-serif">
+                                <h2 data-typo="montserrat">the story goes on ...</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ille enim occurrentia nescio quae comminiscebatur; Varietates autem iniurasque fortunae facile veteres philosophorum praeceptis instituta vita superabat. Plane idem, inquit, et maxima quidem, qua fieri nulla maior potest. Cur igitur, cum de re conveniat, non malumus usitate loqui? Positum est a nostris in iis esse rebus, quae secundum naturam essent, non dolere; </p>
+                                <p>Te enim iudicem aequum puto, modo quae dicat ille bene noris. Tu quidem reddes; Quae quidem sapientes sequuntur duce natura tamquam videntes; Illud dico, ea, quae dicat, praeclare inter se cohaerere. Gerendus est mos, modo recte sentiat. </p>
+                                <p>Stulti autem malorum memoria torquentur, sapientes bona praeterita grata recordatione renovata delectant. Duo Reges: constructio interrete. Totum autem id externum est, et quod externum, id in casu est. Neque enim civitas in seditione beata esse potest nec in discordia dominorum domus; Quamvis enim depravatae non sint, pravae tamen esse possunt. Quasi ego id curem, quid ille aiat aut neget. Est enim effectrix multarum et magnarum voluptatum. Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus. </p>
+                                <p>Sed quae tandem ista ratio est? Quid de Pythagora? Licet hic rursus ea commemores, quae optimis verbis ab Epicuro de laude amicitiae dicta sunt. Tu quidem reddes; Sin laboramus, quis est, qui alienae modum statuat industriae? Hoc enim identidem dicitis, non intellegere nos quam dicatis voluptatem. Itaque hic ipse iam pridem est reiectus; Itaque mihi non satis videmini considerare quod iter sit naturae quaeque progressio. Qui autem esse poteris, nisi te amor ipse ceperit? Nam, ut paulo ante docui, augendae voluptatis finis est doloris omnis amotio. </p>
+                                <p>Non modo carum sibi quemque, verum etiam vehementer carum esse? Quia dolori non voluptas contraria est, sed doloris privatio. Quae cum essent dicta, discessimus. Dici enim nihil potest verius. Addidisti ad extremum etiam indoctum fuisse. Maximas vero virtutes iacere omnis necesse est voluptate dominante. Si qua in iis corrigere voluit, deteriora fecit. </p>
+                            </item>
+                        </section>
+
+                        <section data-bg="L2">
+                            <item class="black" data-typo="droid-sans">
+                                <h2 data-typo="montserrat">the story goes on ...</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ille enim occurrentia nescio quae comminiscebatur; Varietates autem iniurasque fortunae facile veteres philosophorum praeceptis instituta vita superabat. Plane idem, inquit, et maxima quidem, qua fieri nulla maior potest. Cur igitur, cum de re conveniat, non malumus usitate loqui? Positum est a nostris in iis esse rebus, quae secundum naturam essent, non dolere; </p>
+                                <p>Te enim iudicem aequum puto, modo quae dicat ille bene noris. Tu quidem reddes; Quae quidem sapientes sequuntur duce natura tamquam videntes; Illud dico, ea, quae dicat, praeclare inter se cohaerere. Gerendus est mos, modo recte sentiat. </p>
+                                <p>Stulti autem malorum memoria torquentur, sapientes bona praeterita grata recordatione renovata delectant. Duo Reges: constructio interrete. Totum autem id externum est, et quod externum, id in casu est. Neque enim civitas in seditione beata esse potest nec in discordia dominorum domus; Quamvis enim depravatae non sint, pravae tamen esse possunt. Quasi ego id curem, quid ille aiat aut neget. Est enim effectrix multarum et magnarum voluptatum. Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus. </p>
+                                <p>Sed quae tandem ista ratio est? Quid de Pythagora? Licet hic rursus ea commemores, quae optimis verbis ab Epicuro de laude amicitiae dicta sunt. Tu quidem reddes; Sin laboramus, quis est, qui alienae modum statuat industriae? Hoc enim identidem dicitis, non intellegere nos quam dicatis voluptatem. Itaque hic ipse iam pridem est reiectus; Itaque mihi non satis videmini considerare quod iter sit naturae quaeque progressio. Qui autem esse poteris, nisi te amor ipse ceperit? Nam, ut paulo ante docui, augendae voluptatis finis est doloris omnis amotio. </p>
+                                <p>Non modo carum sibi quemque, verum etiam vehementer carum esse? Quia dolori non voluptas contraria est, sed doloris privatio. Quae cum essent dicta, discessimus. Dici enim nihil potest verius. Addidisti ad extremum etiam indoctum fuisse. Maximas vero virtutes iacere omnis necesse est voluptate dominante. Si qua in iis corrigere voluit, deteriora fecit. </p>
+                            </item>
+                        </section>
+                        <section data-bg="D2" data-typo="droid-mono">
+                            <item class="white" data-typo="montserrat">
+                                <h2>the story goes on ...</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ille enim occurrentia nescio quae comminiscebatur; Varietates autem iniurasque fortunae facile veteres philosophorum praeceptis instituta vita superabat. Plane idem, inquit, et maxima quidem, qua fieri nulla maior potest. Cur igitur, cum de re conveniat, non malumus usitate loqui? Positum est a nostris in iis esse rebus, quae secundum naturam essent, non dolere; </p>
+                                <p>Te enim iudicem aequum puto, modo quae dicat ille bene noris. Tu quidem reddes; Quae quidem sapientes sequuntur duce natura tamquam videntes; Illud dico, ea, quae dicat, praeclare inter se cohaerere. Gerendus est mos, modo recte sentiat. </p>
+                                <p>Stulti autem malorum memoria torquentur, sapientes bona praeterita grata recordatione renovata delectant. Duo Reges: constructio interrete. Totum autem id externum est, et quod externum, id in casu est. Neque enim civitas in seditione beata esse potest nec in discordia dominorum domus; Quamvis enim depravatae non sint, pravae tamen esse possunt. Quasi ego id curem, quid ille aiat aut neget. Est enim effectrix multarum et magnarum voluptatum. Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus. </p>
+                                <p>Sed quae tandem ista ratio est? Quid de Pythagora? Licet hic rursus ea commemores, quae optimis verbis ab Epicuro de laude amicitiae dicta sunt. Tu quidem reddes; Sin laboramus, quis est, qui alienae modum statuat industriae? Hoc enim identidem dicitis, non intellegere nos quam dicatis voluptatem. Itaque hic ipse iam pridem est reiectus; Itaque mihi non satis videmini considerare quod iter sit naturae quaeque progressio. Qui autem esse poteris, nisi te amor ipse ceperit? Nam, ut paulo ante docui, augendae voluptatis finis est doloris omnis amotio. </p>
+                                <p>Non modo carum sibi quemque, verum etiam vehementer carum esse? Quia dolori non voluptas contraria est, sed doloris privatio. Quae cum essent dicta, discessimus. Dici enim nihil potest verius. Addidisti ad extremum etiam indoctum fuisse. Maximas vero virtutes iacere omnis necesse est voluptate dominante. Si qua in iis corrigere voluit, deteriora fecit. </p>
+                            </item>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <input id="card-001" class="scale-switch-50" type="checkbox" data-gone="1"/>
+            <div class="view scale-50 nobar">
+                <label for="card-001" class="view-header">header</label>
+                <div class="view-panel nobar-scroller">
+                    <div class="view-content">
+                        <section data-bg="L3">
+                            <item class="black" data-typo="redacted-r">
+                                <h2 data-typo="montserrat">the story goes on ...</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ille enim occurrentia nescio quae comminiscebatur; Varietates autem iniurasque fortunae facile veteres philosophorum praeceptis instituta vita superabat. Plane idem, inquit, et maxima quidem, qua fieri nulla maior potest. Cur igitur, cum de re conveniat, non malumus usitate loqui? Positum est a nostris in iis esse rebus, quae secundum naturam essent, non dolere; </p>
+                                <p>Te enim iudicem aequum puto, modo quae dicat ille bene noris. Tu quidem reddes; Quae quidem sapientes sequuntur duce natura tamquam videntes; Illud dico, ea, quae dicat, praeclare inter se cohaerere. Gerendus est mos, modo recte sentiat. </p>
+                                <p>Stulti autem malorum memoria torquentur, sapientes bona praeterita grata recordatione renovata delectant. Duo Reges: constructio interrete. Totum autem id externum est, et quod externum, id in casu est. Neque enim civitas in seditione beata esse potest nec in discordia dominorum domus; Quamvis enim depravatae non sint, pravae tamen esse possunt. Quasi ego id curem, quid ille aiat aut neget. Est enim effectrix multarum et magnarum voluptatum. Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus. </p>
+                                <p>Sed quae tandem ista ratio est? Quid de Pythagora? Licet hic rursus ea commemores, quae optimis verbis ab Epicuro de laude amicitiae dicta sunt. Tu quidem reddes; Sin laboramus, quis est, qui alienae modum statuat industriae? Hoc enim identidem dicitis, non intellegere nos quam dicatis voluptatem. Itaque hic ipse iam pridem est reiectus; Itaque mihi non satis videmini considerare quod iter sit naturae quaeque progressio. Qui autem esse poteris, nisi te amor ipse ceperit? Nam, ut paulo ante docui, augendae voluptatis finis est doloris omnis amotio. </p>
+                                <p>Non modo carum sibi quemque, verum etiam vehementer carum esse? Quia dolori non voluptas contraria est, sed doloris privatio. Quae cum essent dicta, discessimus. Dici enim nihil potest verius. Addidisti ad extremum etiam indoctum fuisse. Maximas vero virtutes iacere omnis necesse est voluptate dominante. Si qua in iis corrigere voluit, deteriora fecit. </p>
+                            </item>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <input id="card-003" class="scale-switch-50" type="checkbox" data-gone="1"/>
+            <div class="view scale-50 nobar">
+
+                <label for="card-003" class="view-header">colorguide</label>
+                <div class="view-panel nobar-scroller">
+
+                    <div class="inner" data-bg>
+                        <div class="set-pen-color">
+                            <input class="color-value"  id="colorValue"  type="text" data-icon="mdl.palette" />
+                            <input class="color-picker" id="colorPicker" type="color" value="#2B95FF" /><span class="white" data-icon="mdl.palette"></span>
+                        </div>
+                    </div>
+
+                    <div class="view-content">
+                        <div id="cardlist--colors--shades">
+                            <section id="colors--basic" data-effect="BS">
+                                <input id="card-S" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-S" class="view-header">selected</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg></div>
+                                    </div>
+                                </div>
+                                <input id="card-I1" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-I1" class="view-header">inverted</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="I1"></div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section id="colors--shades" data-effect="BS">
+                                <input id="card-L1" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-L1" class="view-header">light 1</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="L1"></div>
+                                    </div>
+                                </div>
+                                <input id="card-L2" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-L2" class="view-header">light 2</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="L2"></div>
+                                    </div>
+                                </div>
+                                <input id="card-L3" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-L3" class="view-header">light 3</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="L3"></div>
+                                    </div>
+                                </div>
+                                <input id="card-M1" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-M1" class="view-header">medium 1</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="M1"></div>
+                                    </div>
+                                </div>
+                                <input id="card-M2" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-M2" class="view-header">medium 2</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="M2"></div>
+                                    </div>
+                                </div>
+                                <input id="card-M3" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-M3" class="view-header">medium 3</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="M3"></div>
+                                    </div>
+                                </div>
+                                <input id="card-D1" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-D1" class="view-header">dark 1</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="D1"></div>
+                                    </div>
+                                </div>
+                                <input id="card-D2" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-D2" class="view-header">dark 2</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="D2"></div>
+                                    </div>
+                                </div>
+                                <input id="card-D3" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-D3" class="view-header">dark 3</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="D3"></div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div id="cardlist--colors--hue">
+                            <section id="colors--hue-min" data-effect="BS">
+                                <input id="card-H15a" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H15a" class="view-header">hue -15</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H-15"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H30a" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H30a" class="view-header">hue -30</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H-30"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H45a" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H45a" class="view-header">hue -45</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H-45"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H60a" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H60a" class="view-header">hue -60</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H-60"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H75a" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H75a" class="view-header">hue -75</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H-75"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H90a" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H90a" class="view-header">hue -90</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H-90"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H120a" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H120a" class="view-header">hue -105</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H-105"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H120a" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H120a" class="view-header">hue -120</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H-120"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H135a" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H135a" class="view-header">hue -135</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H-135"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H150a" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H150a" class="view-header">hue -150</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H-150"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H165a" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H165a" class="view-header">hue -165</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H-165"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H180a" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H180a" class="view-header">hue -180</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H-180"></div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section id="colors--hue-plus" data-effect="BS">
+                                <input id="card-H15b" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H15b" class="view-header">hue +15</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H+15"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H30b" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H30b" class="view-header">hue +30</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H+30"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H45b" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H45b" class="view-header">hue +45</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H+45"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H60b" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H6b" class="view-header">hue +60</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H+60"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H75b" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H75b" class="view-header">hue +75</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H+75"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H90b" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H90b" class="view-header">hue +90</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H+90"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H105b" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H105b" class="view-header">hue +105</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H+105"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H120b" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H120b" class="view-header">hue +120</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H+120"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H135b" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H135b" class="view-header">hue +135</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H+135"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H150b" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H150b" class="view-header">hue +150</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H+150"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H165b" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H165b" class="view-header">hue +165</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H+165"></div>
+                                    </div>
+                                </div>
+                                <input id="card-H180b" class="scale-switch-33" type="checkbox" data-gone="1"/>
+                                <div class="view square scale-33sq nobar">
+                                    <label for="card-H180b" class="view-header">hue +180</label>
+                                    <div class="view-panel nobar-scroller">
+                                        <div class="view-content" data-bg="H+180"></div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="cardlist--nine-patch">
+        </div>
+    </div>
+
+    <footer id="dashboard-footer">
+        <div class="left"  ></div>
+        <div class="center"></div>
+        <div class="right black">easy RESPONSIVE<span class="white">||</span>NESS Series</div>
+    </footer>
+</main>
+
+
+
+</body>
+
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script>
+    var $penColor = $('#colorPicker').val();
+
+    $(document).ready(function() {
+      $('#colorValue').val($penColor);
+      document.documentElement.style.color = $penColor
+      var isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)
+      if (isSafari) {
+        $('#colorPicker').css('display', 'none');
+      }
+    })
+
+    $('#colorPicker').change(function() {
+      $penColor = $(this).val()
+      $('#colorValue').val($penColor);
+      document.documentElement.style.color = $penColor
+    });
+
+    $('#colorValue').change(function() {
+      $penColor = $(this).val()
+      $('#colorPicker').val($penColor);
+      document.documentElement.style.color = $penColor
+    });
+</script>
+
+</html>

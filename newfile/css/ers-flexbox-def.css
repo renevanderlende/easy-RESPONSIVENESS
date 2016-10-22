@@ -1,0 +1,63 @@
+@CHARSET "UTF-8";
+
+/************************************************/
+/* GENERIC FLEXBOX RULES (WIP but stable)       */
+/************************************************/
+/* WIP FLEX (contains) */
+[data-fbl*="F"]     { display: flex }
+[data-fbl*="I"]     { display: inline-flex }
+
+/* WIP FLEX-DIRECTION (contains) */
+[data-fbl*="C1"]    { flex-direction: column         }
+[data-fbl*="C2"]    { flex-direction: column-reverse }
+[data-fbl*="R1"]    { flex-direction: row            }
+[data-fbl*="R2"]    { flex-direction: row-reverse    }
+
+/* WIP FLEX-WRAP (contains) */
+[data-fbl*="W"]     { flex-wrap: wrap   }
+[data-fbl*="N"]     { flex-wrap: nowrap }
+
+/* WIP FLEX-GROW/SHRINK (contains) */
+[data-flex*="00"]    { flex: 0 0 }
+[data-flex*="01"]    { flex: 0 1 }
+[data-flex*="10"]    { flex: 1 0 }
+[data-flex*="11"]    { flex: 1 1 }
+
+/* JUSTIFY CONTENT (main axis), sets default for all items inside container */
+[data-aln*="jc.fs"] { justify-content: flex-start    }
+[data-aln*="jc.fe"] { justify-content: flex-end      }
+[data-aln*="jc.c" ] { justify-content: center        }
+[data-aln*="jc.sa"] { justify-content: space-around  }
+[data-aln*="jc.sb"] { justify-content: space-between }
+
+/* ALIGN ITEMS (cross axis), sets default for all items inside container */
+[data-aln*="ai.s" ] { align-items: stretch    }
+[data-aln*="ai.fs"] { align-items: flex-start }
+[data-aln*="ai.fe"] { align-items: flex-end   }
+[data-aln*="ai.c" ] { align-items: center     }
+[data-aln*="ai.b" ] { align-items: baseline   }
+
+/* ALIGN CONTENT (cross axis with multiple lines) */
+[data-aln*="ac.s" ] { align-content: stretch       }
+[data-aln*="ac.fs"] { align-content: flex-start    }
+[data-aln*="ac.fe"] { align-content: flex-end      }
+[data-aln*="ac.c" ] { align-content: center        }
+[data-aln*="ac.sa"] { align-content: space-around  }
+[data-aln*="ac.sb"] { align-content: space-between }
+
+/* ALIGN SELF (cross axis), overrides default of an item */
+[data-aln*="as.a" ] { align-self: auto       }
+[data-aln*="as.fs"] { align-self: flex-start }
+[data-aln*="as.fe"] { align-self: flex-end   }
+[data-aln*="as.c" ] { align-self: center     }
+[data-aln*="as.s" ] { align-self: stretch    }
+[data-aln*="as.b" ] { align-self: baseline   }
+
+/* Generic DISPLAY (FLEX or reset) and TEXT-ALIGN */
+[data-fbl*="b"]     { display: block }
+[data-fbl*="i"]     { display: inline-block }
+[data-fbl*="n"]     { display: none }
+
+[data-aln*="ta.l" ] { text-align: left   }
+[data-aln*="ta.c" ] { text-align: center }
+[data-aln*="ta.r" ] { text-align: right  }

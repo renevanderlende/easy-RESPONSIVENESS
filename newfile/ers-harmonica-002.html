@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title>ERS harmonica 2 (FBL)</title>
+
+<link rel="stylesheet" href="css/ers-demo-globals.css">
+<link rel="stylesheet" href="css/ers-harmonica-attr.css">
+
+<!-- link rel="stylesheet" href="css/ers-harmonica-attr-cus.css" -->
+
+<style>
+/* base flexbox patch grid structure */
+[data-patch]    { display: flex; flex-wrap: wrap; align-content: flex-start; width: 100%; height: 100% }
+[data-patch]>*  { overflow: hidden }
+
+[data-patch^= "1x"]>* { flex:1 1 100%      ; max-width:100%       } [data-patch$= "x1"]>* { height:100%      ; max-height:100%       }
+[data-patch^= "2x"]>* { flex:1 1  50%      ; max-width: 50%       } [data-patch$= "x2"]>* { height: 50%      ; max-height: 50%       }
+[data-patch^= "3x"]>* { flex:1 1  33.33333%; max-width: 33.33333% } [data-patch$= "x3"]>* { height: 33.33333%; max-height: 33.33333% }
+[data-patch^= "4x"]>* { flex:1 1  25%      ; max-width: 25%       } [data-patch$= "x4"]>* { height: 25%      ; max-height: 25%       }
+[data-patch^= "5x"]>* { flex:1 1  20%      ; max-width: 20%       } [data-patch$= "x5"]>* { height: 20%      ; max-height: 20%       }
+[data-patch^= "6x"]>* { flex:1 1  16.66667%; max-width: 16.66667% } [data-patch$= "x6"]>* { height: 16.66667%; max-height: 16.66667% }
+[data-patch^= "7x"]>* { flex:1 1  14.28571%; max-width: 14.28571% } [data-patch$= "x7"]>* { height: 14.28571%; max-height: 14.28571% }
+[data-patch^= "8x"]>* { flex:1 1  12.5%    ; max-width: 12.5%     } [data-patch$= "x8"]>* { height: 12.5%    ; max-height: 12.5%     }
+[data-patch^= "9x"]>* { flex:1 1  11.11111%; max-width: 11.11111% } [data-patch$= "x9"]>* { height: 11.11111%; max-height: 11.11111% }
+[data-patch^="10x"]>* { flex:1 1  10%      ; max-width: 10%       } [data-patch$="x10"]>* { height: 10%      ; max-height: 10%       }
+
+[data-patch][fill=""]>*:last-child,[data-patch][fill*="H"]>*:last-child { max-width : 100% } /* when less elements than required by ratios */
+[data-patch][fill=""]>*:last-child,[data-patch][fill*="V"]>*:last-child { max-height: 100% }
+
+
+/************************************************/
+/* DEMO                                         */
+/************************************************/
+body                            { padding-bottom: 3rem }
+main                            { max-width: 90%; justify-content: center; margin: 0 auto; padding-top: 3rem }
+
+[empty]                         { display: flex; justify-content: center; align-content: center; align-items: center;
+                                  font-size: 1.25rem; color: hsla(0,0%,0%,.2) }
+
+[data-harmonica]>input[name="harm-demo1"]:checked + figure {  }
+
+
+/*
+item>*                          {  position: relative; /*border: .5px solid hsla(0,0%,0%,.1)*/  }
+/*
+[data-harmonica]               { justify-content: flex-start; align-content: flex-start; align-items: flex-start; }
+[data-harmonica]>*:hover                {}
+[data-harmonica]:hover>*:not(:hover)    { filter: blur(2px); opacity: .6 }
+*/
+
+img { display: block }
+
+#demo1 {
+    width: 695px;
+    height: auto;
+    margin: 0 auto;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.08);
+    border: 7px solid rgba(255,255,255,0.6) }
+
+[data-harmonica="H"] figure { flex: 1 1 99px }
+
+figure {position: relative;
+    padding: 0; margin: 0;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.6);/* functions as border */
+}
+figcaption span {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    left: 1px;
+    text-align: center;
+    background: rgba(87, 73, 81, 0.2);
+    line-height: 1.25rem;
+    font-size: 1.25rem;
+    opacity: 0;
+    text-transform: uppercase;
+    letter-spacing: .25rem;
+    font-weight: bold;
+    padding: 20px;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+} 
+figure:hover span {
+    opacity: 1;
+    transition: opacity 150ms ease-in-out;
+}
+</style>
+
+
+</head>
+
+<body data-debug="0">
+<item id="demo1" data-harmonica="H">
+    <input type="radio" name="harm-demo1" /><figure><img src="assets/demos/1.jpg"><figcaption><span>True Colors</span></figcaption></figure>
+    <input type="radio" name="harm-demo1" /><figure><img src="assets/demos/2.jpg"><figcaption><span>Honest Light        </span></figcaption></figure>
+    <input type="radio" name="harm-demo1" /><figure><img src="assets/demos/3.jpg"><figcaption><span>Silent Serenity     </span></figcaption></figure>
+    <input type="radio" name="harm-demo1" /><figure><img src="assets/demos/4.jpg"><figcaption><span>Warm Welcome        </span></figcaption></figure>
+    <input type="radio" name="harm-demo1" /><figure><img src="assets/demos/5.jpg"><figcaption><span>Sensible Magic      </span></figcaption></figure>
+    <input type="radio" name="harm-demo1" /><figure><img src="assets/demos/6.jpg"><figcaption><span>Lovely Midnight     </span></figcaption></figure>
+    <input type="radio" name="harm-demo1" /><figure><img src="assets/demos/7.jpg"><figcaption><span>Illuminated Darkness</span></figcaption></figure>
+    <input type="radio" name="harm-demo1" /><figure><img src="assets/demos/8.jpg"><figcaption><span>Happy Child         </span></figcaption></figure>
+</item>
+
+<main data-patch="3x3">
+    <item empty><div>&lt;empty&gt;</div></item>
+    <item empty><div>&lt;empty&gt;</div></item>
+    <item empty><div>&lt;empty&gt;</div></item>
+
+    <item data-harmonica="H" data-behaviour>
+        <img src="assets/unsplashit/354_002.jpg">
+        <img src="assets/unsplashit/354_004.jpg">
+        <img src="assets/unsplashit/354_006.jpg">
+        <img src="assets/unsplashit/354_008.jpg">
+    </item>
+    <item data-harmonica="V" data-behaviour>
+        <img src="assets/unsplashit/354_002.jpg">
+        <img src="assets/unsplashit/354_004.jpg">
+        <img src="assets/unsplashit/354_006.jpg">
+        <img src="assets/unsplashit/354_008.jpg">
+    </item>
+    <item data-harmonica="H" data-behaviour>
+        <div data-harmonica="V"><img src="assets/unsplashit/354_002.jpg"><img src="assets/unsplashit/354_004.jpg"><img src="assets/unsplashit/354_006.jpg"><img src="assets/unsplashit/354_008.jpg"></div>
+        <div data-harmonica="V"><img src="assets/unsplashit/354_010.jpg"><img src="assets/unsplashit/354_012.jpg"><img src="assets/unsplashit/354_014.jpg"><img src="assets/unsplashit/354_016.jpg"></div>
+        <div data-harmonica="V"><img src="assets/unsplashit/354_070.jpg"><img src="assets/unsplashit/354_072.jpg"><img src="assets/unsplashit/354_074.jpg"><img src="assets/unsplashit/354_076.jpg"></div>
+    </item>
+    <item data-harmonica="HM" data-effect="blur" data-behaviour>
+        <input id="C1" type="checkbox" data-function="S" name="harm-C" /><label for="C1" data-function="T"><span>H1</span></label>
+        <input id="C2" type="checkbox" data-function="S" name="harm-C" /><label for="C2" data-function="T"><span>H2</span></label>
+        <input id="C3" type="checkbox" data-function="S" name="harm-C" /><label for="C3" data-function="T"><span>H3</span></label>
+    </item>
+    <item data-harmonica="VM" data-effect="blur" data-behaviour>
+        <input id="R1" type="radio"    data-function="S" name="harm-R" /><label for="R1" data-function="T"><span>H1</span></label>
+        <input id="R2" type="radio"    data-function="S" name="harm-R" /><label for="R2" data-function="T"><span>H2</span></label>
+        <input id="R3" type="radio"    data-function="S" name="harm-R" /><label for="R3" data-function="T"><span>H3</span></label>
+    </item>
+</main>
+</body>
+</html>

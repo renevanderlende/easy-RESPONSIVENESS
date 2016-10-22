@@ -1,0 +1,57 @@
+@CHARSET "UTF-8";
+
+/************************************************/
+/* easy RESPONSIVE|HARMONICA|NESS CLASS   (WIP) */
+/************************************************/
+/*
+    .harmonicaH/V or
+    [data-harmonica]: use to define a flexbox (FBL) parent container holding the harmonica "folding" elements.
+
+    .harmonicaH/V or
+    data-harmonica > * - harmonica "folding" elements (flexed child elements)
+
+    data-harmonica: H - Horizontal  a row of several folds next to eachother     (.harmonicaH)
+                    V - Vertical    a column of several folds below to eachother (.harmonicaV)
+
+    Explanation:
+
+    - grow hovered flexed child element to given flex-basis
+    - shrink the other flexed child elements to: (width [or height] * flex-basis) / (#elements - 1)
+    - optionally adjust them to specified flexed element width/height constraints (or fill parent, the default)
+
+    A flex-basis of 100% hides sibling child elements when they have no minimum sizes => 80% or 90% works best
+
+    Functionality for either classes or custom data attributes is equal,
+    but the latter are easier to manipulate/toggle in Javascript.
+*/
+/* [MANDATORY] */
+[class^="harmonica"]            { display: flex; height: 100%; width: 100% }
+
+.harmonicaH                     { flex-flow: row nowrap }
+.harmonicaV                     { flex-flow: column nowrap }
+
+[class^="harmonica"]>*          { flex: 1; overflow: hidden }
+[class^="harmonica"]>*:hover    { flex-basis: 80% }
+
+/* [OPTIONAL] */
+.harmonicaH>*                   { height: 100%; max-height: 100%; min-width : 1.5em } /* at least # of fold elements + 1 */
+.harmonicaV>*                   { width : 100%; max-width : 100%; min-height: 1.5em } /* otherwise there's little movement */
+
+/*************************************************/
+/* easy RESPONSIVE|HARMONICA|NESS CUST.ATTRIBUTE */
+/*************************************************/
+/* [MANDATORY] */
+[data-harmonica]                { display: flex; height: 100%; width: 100% }
+
+[data-harmonica^="H"]           { flex-flow: row nowrap }
+[data-harmonica^="V"]           { flex-flow: column nowrap }
+
+[data-harmonica]>*              { flex: 1; overflow: hidden }
+[data-harmonica]>*:hover        { flex-basis: 80% }
+
+/* [OPTIONAL] */
+[data-harmonica^="H"]>*         { height: 100%; max-height: 100%; min-width : 1.5em }
+[data-harmonica^="V"]>*         { width : 100%; max-width : 100%; min-height: 1.5em }
+
+
+

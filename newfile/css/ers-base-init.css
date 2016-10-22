@@ -1,0 +1,215 @@
+@CHARSET "UTF-8";
+
+/************************************************/
+/* BELOW MY PREFERED STANDARDS AND UTILS(STABLE)*/
+/************************************************/
+/* 'box-sizing: border-box', measure width/height including padding and borders */
+html,body   { box-sizing: border-box; width: 100% }
+
+ /* take over parent's sizing behaviour */
+*::before, *::after,
+ *          { box-sizing: inherit }
+
+ /*          { direction: inherit; unicode-bidi: bidi-override }*/
+
+ /* https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient => NOTES */
+html        { height: 100%; min-height: 100vh }
+body        { max-width: 100%; height: 100%; margin: 0 auto }
+
+/* Most useful when moveing and clicking a lot, prevents accidental (and annoying) text selection */
+/* (Don't forget to disable on elements that need selection capabilities, easily missed!) */
+body        { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none }
+
+ /* Enable font specific settings and smooth text */
+html        { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased;
+              font-variant-ligatures: common-ligatures discretionary-ligatures historical-ligatures }
+
+/************************************************/
+/* DEFAULT APPLICATION CURSORS                  */
+/************************************************/
+/* Cursor mess */
+body  { cursor: default } 
+input { cursor: auto }
+input[list="datalist"],input[type="button"],input[type="checkbox"],input[type="radio"],
+input[type="color"],input[type="range"],input[type="reset"],input[type="file"],input[type="submit"],
+a,button,select,keygen   { cursor: pointer } 
+[contenteditable="true"] { cursor: text }
+/* Djeezzz, everyone does this ... how about making this the browser W3 default? */
+
+/************************************************/
+/* FLEXBOX (FBL)                   (STABLE WIP) */
+/************************************************/
+/*!!IMPORTANT!!IMPORTANT!!IMPORTANT!!IMPORTANT!!*/
+/* Most major content container elements are FBL*/
+/*    **** Love it, hate it, go with it ****    */
+
+ /* Initially assume (default) FBL row behaviour */
+header,h1,h2,h3,h4,h5,h6,footer,/*(!!!)*/ div /*(!!!)*/,section
+{ display: flex }
+
+ /* Initially assume FBL column behaviour */
+body,main,article,nav,aside,form,item,ol,ul
+{ display: flex; flex-direction: column }
+
+code,pre,label,li,button
+{ display: inline-flex; flex-direction: column }
+
+/* Grow to available space by default */
+main,form,section   { flex: 1 }
+/* Try to keep item.width/flex-basis ≈ 18 to 20rem */
+form,section,item   { flex-wrap: wrap }
+/*
+    FBL MEMORY AIDS:
+
+    flex-direction: row     => a row of one or more columns - HTML 'display: flex' default
+    flex-direction: column  => a column of one or more rows
+
+    either row   : justify-content => child element horizontal alignment - default flex-start (left-aligned)
+    or     column: align-content   =>               vertical             - default flex-start (top-aligned)
+    or     either: align-items     =>           horizontal/vertical      - default stretch    (match width/height)
+*/
+
+ /* Initial FBL alignments (WIP, optimization later) */
+article             { flex: 1; align-items: center } /* Initially space and divide evenly */
+
+main                {}          /* Whatever meets your needs */
+aside               {}
+header,footer,nav   { align-items: center }
+main                {}
+article             {}
+form                {}
+section             {}
+item                {}
+
+/************************************************/
+/* NON FBL defaults                (STABLE WIP) */
+/************************************************/
+header,footer           { width: 100% }
+
+main                    { width: 100%; max-width: 100%; margin: 0 auto }
+article                 { /*overflow: auto*/ }
+
+code,pre,kbd,samp       { position: relative; font-size: 0.875em; line-height: normal; font-weight: normal }
+
+section,form,item       { width: 100%; max-width: 100% }
+item                    { min-width: 9rem } /* will yield 2 items on 320px when margin: .5rem */
+
+ /* get rid of extra spacing below images when designated as [block] */
+img                     { display: block; max-width: 100%; }
+
+img[block]              { display: block; width: 100%; height: auto; object-fit: scale-down }
+
+ /* no decoration */
+a                       { text-decoration: none; background: transparent; color: inherit; font-size: inherit }
+
+ /* no predefined styling */
+p,ol,ul,li,pre          { margin: 0; padding: 0 }
+ol,ul,li                { list-style: none }
+
+ /* ok, maybe a few... */
+hr                      { margin: 1rem 0; width: 100%; border-color: hsla(0,0%,0%,.075) }
+p                       { hyphens: auto }
+pre                     { padding: .5em 1.5em; -moz-tab-size: 4; -o-tab-size: 4; tab-size: 4; overflow: auto }
+code                    { padding: .15em; background: hsla(0,0%,0%,.05); text-shadow: none }
+
+/*demo WIP*/
+dt, dd                  { display: inline }     /* By Lea Verou in 'CSS Secrets' */
+dd                      { margin: 0 }
+dd + dt::before         { content: '\A'; white-space: pre; }
+dd + dd::before         { content: ' / '; font-weight: normal } /*=>*/
+/* =>demo, put related DD's on the same document line for correct spacing */
+
+/************************************************/
+/* easy RESPONSIVE|FONT|NESS       (STABLE WIP) */
+/************************************************/
+/* Responsive font: y = mx + b => 12px at 320 ... 16px at 960 => 1 full pixel per 160px screen size */
+/* Formula: 1/160 x minimum_of(viewport width,viewport height) + 62.5%_of_root_fontsize (default root is: 16px) */
+html[data-response="1"]         { font-size: calc(0.00625 * 100vmin + 0.625rem) !important } /* 10px at 0px screen width */
+/* Given a 320x568 screen the fontsize will be: 1/160 x 320 x 0.625 x 16px = 12px (or 12px/16px=0.75rem) */
+/*
+    Although 1rem defaults to 16px in most (all?) browsers, user can override this value in the browser font settings.
+    ::root then will reflect the modified default font-size. 
+    This is the main reason for using '+ 0.625rem' in the formula instead of '+ 10px' as in CSS <html> takes the ::root
+    font-size as base value, while body takes the <html> font-size as base value.
+
+    - Obviously, usage of '[data-response="1"]' is [OPTIONAL] simply remove references when undesired
+      (or use your own trigger).
+    - Make sure you understand when to use REM or EM
+
+*/
+/* Alternate fontsizes based on above formula. NOTICE the usage of EM to support inheritance of parent font-size */
+html[data-response="1"] header  { font-size: calc(0.01250 * 100vmin + 1.25em); line-height: normal }
+html[data-response="1"] footer  { font-size: calc(0.00500 * 100vmin + 0.50em); line-height: normal }
+/* Make sure that your decimal values are divisable by 0.00125 as it is the magic number in the formula */
+/* Subtle text shadow to improve readability */
+html[data-impaired]             { text-shadow: .2px .2px .3px hsla(0,0%,25%,.3), -.1px -.1px .1px hsla(0,0%,25%,.2) }
+html[data-impaired="0"]         { text-shadow: none }
+
+html                            { font-weight: 400; line-height: 1.5rem }
+
+h1,h2,h3,h4,h5,h6,hgroup,hr,
+header,footer                   { font-weight: 300 }
+
+h1,h2,h3,h4,h5,h6,hgroup,hr,
+ul,ol,dd,p,pre,
+table,fieldset,figure           { margin-bottom: 1.5rem } /* same as body line-height, vertical rythm */
+
+/* TODO needs some margin work! */
+.huge                           { font-size: calc(0.03      * 100vmin + 3em      ); margin: 0.165em 0 }
+.h0                             { font-size: calc(0.015     * 100vmin + 1.5em    ); margin: 0.33em  0 }
+h1,.h1                          { font-size: calc(0.0125    * 100vmin + 1.25em   ); margin: 0.67em  0 }
+h2,.h2                          { font-size: calc(0.009375  * 100vmin + 0.9375em ); margin: 0.83em  0 }
+h3,.h3                          { font-size: calc(0.0073125 * 100vmin + 0.73125em); margin: 1.00em  0 }
+h4,.h4                          { font-size: calc(0.00625   * 100vmin + 0.625em  ); margin: 1.33em  0 }
+h5,.h5                          { font-size: calc(0.0051875 * 100vmin + 0.81875em); margin: 1.67em  0 }
+h6,.h6                          { font-size: calc(0.0041875 * 100vmin + 0.41875em); margin: 2.33em  0 }
+
+/* HTML.CSS */
+
+/* hidden elements 
+base, basefont, datalist, head, meta, script, style, title,
+noembed, param, template {
+   display: none;
+}
+
+address,article,aside,
+blockquote,body,
+center,
+dd,details,dir,div,dl,dt,
+fieldset,figcaption,figure,footer,form,
+header,hgroup,hr,html,
+legend,
+main,menu,multicol,
+nav,noframes,
+ol,option,optgroup,
+p,
+section,summary,
+ul { display: block }
+
+
+ul, menu, dir {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}
+*/
+/* <hr> noshade and color attributes are handled completely by
+ * the nsHTMLHRElement attribute mapping code
+
+hr {
+  border: 1px inset;
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  color: gray;
+  -moz-float-edge: margin-box;
+  box-sizing: border-box;
+}
+
+hr[size="1"] {
+  border-style: solid none none none;
+}
+ */

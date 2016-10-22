@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title title="(July 2016) {document-title}">Nobar with auto-margins</title>
+
+<meta name="description" content="{document-description}">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT">
+
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Work+Sans:100,300,400,700|Source+Sans+Pro:300,400,700,900">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700|Biryani:300,400,700,900">
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel='stylesheet' href="https://fonts.googleapis.com/css?family=Montserrat">
+
+<style>
+/************************************************/
+/* BELOW MY PREFERED STANDARDS AND UTILS(STABLE)*/
+/************************************************/
+/* 'box-sizing: border-box', measure width/height including padding and borders */
+html,body { box-sizing: border-box; width: 100%; height: 100%; min-height: 100% }
+body      { max-width: 100%; margin: 0 auto; cursor: default }
+
+/* Most useful when moveing and clicking a lot, prevents accidental (and annoying) text selection */
+/* (Don't forget to disable on elements that need selection capabilities, easily missed!) */
+body      { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none }
+
+*::before, *::after, * { box-sizing: inherit }
+/************************************************/
+/* easy RESPONSIVE|FONT|NESS           (STABLE) */
+/************************************************/
+/* Responsive font: y = mx + b => 12px at 320, 13 at 480, 14px at 640... 1px per 160px screen size */
+html      { font-size: calc(0.00625 * 100vmin + 10px) !important /* minimum size 10px at 0px screen size */ }
+body      { font-size: 1rem !important; line-height: 1.4rem; overflow: hidden /* no unwanted/uncontrolled scrollbars */ }
+/* !important is [OPTIONAL], here for demo purposes to prevent accidental override */
+
+html      { font-family: 'Work Sans'; font-weight: normal;
+            text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased;
+            font-variant-ligatures: common-ligatures discretionary-ligatures historical-ligatures }
+
+h1,h2,h3,h4,h5,h6,hgroup,hr,ul,ol,dd,p,figure,pre,table,section,item,
+fieldset  { margin-bottom: 1.4rem } /* same as body line-height, vertical rythm */
+
+h1,h2,h3,h4,h5,h6,hgroup,hr,header,
+footer    { font-weight: 300 }
+/************************************************/
+/* DEBUG/DESIGN helpers               (EXCERPT) */
+/************************************************/
+[data-debug*="1" ] *    { outline: 1px dashed black }
+[data-debug*="1T"] *    { transition: all 0.5s ease-in-out }
+
+[data-display="B" ]     { display: block }
+[data-display="IB"]     { display: inline-block }
+[data-display="I" ]     { display: inline }
+[data-display="F" ]     { display: flex; flex: 1 }
+[data-display="IF"]     { display: inline-flex }
+[data-display="H" ]     { visibility: hidden }
+
+[data-gone="1"],        /* Don't go above 'z-index: 999999' as some browser will turn larger values to 0 */
+[data-gone="1"] *,      /* while others will allow values up to 2^31 - 1 = 2,147,483,647 */
+[data-display="0"]      { display:none; position:absolute; overflow:hidden; z-index:-999999; top:-999999px;
+                          height: 1px; min-height:0px; max-height:0px; width :1px; min-width :0px; max-width :0px;
+                          margin:-1px; padding:0; border:0; clip:rect(0 0 0 0) }
+/************************************************/
+/* FLEXBOX (FBL)                   (STABLE WIP) */
+/************************************************/
+/*!!IMPORTANT!!IMPORTANT!!IMPORTANT!!IMPORTANT!!*/
+/* Most major content container elements are FBL*/
+/*    **** Love it, hate it, go with it ****    */
+
+/* Initially assume FBL row behaviour */
+body,
+header,h1,h2,h3,h4,h5,h6,footer,div,section,li  { display: flex;        flex-direction: row /*for clarity*/}
+ /* Initially assume FBL column behaviour */
+main,article,nav,aside,form,item,ol,ul          { display: flex;        flex-direction: column }
+code,pre,label                                  { display: inline-flex; flex-direction: column }
+/* Grow to available space by default */
+main,form,section                               { flex: 1 }
+/* Try to keep item.width/flex-basis ≈ 20 and 22.5 rem */
+form,section,item                               { flex-wrap: wrap }
+/*
+    FBL MEMORY AIDS:
+
+    flex-direction: row     => a row of one or more columns - HTML 'display: flex' default
+    flex-direction: column  => a column of one or more rows
+
+    either row   : justify-content => child element horizontal alignment - default flex-start (left-aligned)
+    or     column: align-content   =>               vertical             - default flex-start (top-aligned)
+    or     either: align-items     =>           horizontal/vertical      - default stretch    (match width/height)
+*/
+
+/* Initial FBL alignments (WIP) */
+main            {}
+aside           { flex-basis: 20rem } /* Whatever meets your needs, just override */
+header,footer   {}
+article         {}
+form            {}
+section         {}
+item            {}
+div             {}
+/************************************************/
+/* easy RESPONSIVE|VIEW|NESS              (WIP) */
+/************************************************/
+.view                       { flex-direction: column; 
+                              width: 20rem; height: 30rem } /* initial W/H, override as required */
+
+.view-panel,.view-list      { flex: 1; flex-direction: column; overflow: auto /* for views with scrollbar */ }
+
+.view-list>*>*              { flex: 1 1 auto } /* list row content */
+
+/* [OPTIONAL] */
+.view-header,.view-footer   { justify-content: center; align-content: center; align-items: center;
+                              text-align: center; vertical-align: baseline }
+/* [MANDATORY] new starting point for your content, use as wrapper, override where needed */
+.view-content               { width: 100%; max-width: 100%; height: 100%; max-height: 100% }
+/*
+        USAGE example:
+
+        <div class="view">
+            <header class="view-header">NICE HEADER</header>
+            <div class="view-list">
+                <div class="view-content">
+
+                    <!-- your content -->
+
+                </div>
+            </div>
+            <footer class="view-footer">NICE FOOTER</footer>
+        </div>
+*/
+/************************************************/
+/* easy RESPONSIVE|SCROLL-NOBAR|NESS(STABLE WIP)*/
+/************************************************/
+.nobar { /* [MANDATORY] main scrolling container wrapper */
+    overflow: hidden   !important } /* Hides scrollbar for overflowing '.nobar-scroller' */
+
+.nobar-scroller { /* [MANDATORY] scroll container */
+    position  : relative !important;
+    height    : auto     !important;/* HTML default, to make sure of that! */ 
+    max-height: 100%     !important;/* NO(!) other height value => to get scroll effect */
+    overflow-y: scroll   !important;/* Always 'scroll', otherwise you'll get size<>width jitter */
+    overflow-x: hidden;             /* (WIP)ish, maybe later... */
+
+    padding-left : 17px !important;
+    padding-right:  0px !important;
+    left         :-17px !important; /* Left gutter to hide scrollbar */
+    right        :-17px !important; /* and right (sb-widths => FF:17px; IE:15px; CH:20px) */
+    width: calc(100% + 34px) !important } /* PLUS 34px to hide scrollbar on either side (17px is HTML default) */
+
+/* Needed to hide browser scrollbar, based on widest scrollbar of CH, IE and FF */
+/* Adding support for "LTR/RTL" document swapping. (Notice required space between body[..] and .nobar)  */
+ /* Defaults to LTR behaviour, invert L/R if you need RTL default */
+body[dir="ltr"] .nobar-scroller { padding-left: 17px !important; padding-right:  0px !important }
+body[dir="rtl"] .nobar-scroller { padding-left:  0px !important; padding-right: 17px !important }
+/************************************************/
+/* easy RESPONSIVE|EFFECT|NESS            (WIP) */
+/************************************************/
+/* [OPTIONAL] 'Hoverboard' is used to undo hover effect when mouse is between child elements but still on the parent */
+.hoverboard                             { position: fixed; top:0; right:17px; bottom:0; left:0 }
+/* (TODO: still need to figure out why this works as it does and remove the need for it...) */
+
+/* slight delay to skip hoverboard 'undo'-effect with fast mouse hover movements */
+[data-effect],[data-effect]>*           { transition: all 20ms ease-out }
+
+[data-effect]::before                   { z-index: 1; position: absolute; top:0; right:0; bottom:0; left:0 }
+/* 
+    Simple parent/child Hover Effects (STABLE WIP), add your own as required
+*/
+/* positive check => hovered element only */
+[data-effect*="BS"]:hover>*:hover       { box-shadow: 0 0.625rem 2.5rem -0.625rem hsl(0,0%,0%) }
+
+/* negative check => all but hovered element */
+[data-effect*="S0"]:hover>*:not(:hover) { filter: saturate(0); opacity: .5 }
+[data-effect*="O0"]:hover>*:not(:hover) { filter: blur(15px) saturate(0); opacity: .5 }
+
+/* NOTES: 
+    - blur() causes view/FBL resize jitter, use it wisely. 
+    - Rules can be combined as long as attribute names differ. Play with colors, shadows, borders, etc.
+      ( e.g. <div data-effect="BSO0"></div> )
+    - Add/remove transition delays to enable graphics engine to catch up/speed up.
+*/
+/************************************************/
+/* easy RESPONSIVE|POSITION|NESS          (WIP) */
+/************************************************/
+/* TODO: body LTR/RTL swapping */
+
+[data-pos="L"]  { margin-right: auto }
+[data-pos="R"]  { margin-left : auto }
+
+[data-pos=""],
+[data-pos="CH"] { margin-left: auto; margin-right : auto }
+[data-pos="CV"] { margin-top : auto; margin-bottom: auto }
+[data-pos="CC"] { margin: auto }
+/************************************************/
+/* easy RESPONSIVE|SCALE|NESS      (STABLE WIP) */
+/************************************************/
+/*
+    Two options:
+
+      1) .SCALE-TO                 - single class to simply scale an element
+      2) .SCALE_SWITCH and SCALE   - to scale an element with a checkbox trigger
+    
+    Margins will not get scaled by HTML engine, these classes resize the margins to the proper scale.
+    Override margins if you want regular HTML behaviour.    
+
+*/
+/* Scale toggling lobotomized owl for generic use */
+.scale-to-12 ,.scale-switch-12  + *   { transform: scale(0.125) } /* eight size (12.5%) */
+.scale-to-25 ,.scale-switch-25  + *   { transform: scale(0.25 ) } /* quarter size  (25) */
+.scale-to-50 ,.scale-switch-50  + *   { transform: scale(0.5  ) } /* half size     (50) */
+.scale-to-100,.scale-switch-100 + *   { transform: scale(1    ) } /* full size    (100) */
+
+[class^="scale-switch"]:checked + * { 
+    transform: scale(1.0); z-index: 1;                          /* switch to full screen, on top of the rest */
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    margin: 0;                                                  /* Resets negative margins below */
+}
+/*
+    Margins will not get scaled by HTML engine, so we have to do it by hand:
+*/
+.scale-to-12 ,.scale-12   { margin: calc(-1 * (30rem - 0.125 * 30rem)/2 + .5rem) calc(-1 * (20rem - 0.125 * 20rem)/2 + .5rem) }
+.scale-to-25 ,.scale-25   { margin: calc(-1 * (30rem - 0.25  * 30rem)/2 + .5rem) calc(-1 * (20rem - 0.25  * 20rem)/2 + .5rem) }
+.scale-to-50 ,.scale-50   { margin: calc(-1 * (30rem - 0.5   * 30rem)/2 + .5rem) calc(-1 * (20rem - 0.5   * 20rem)/2 + .5rem) }
+.scale-to-100,.scale-100  { margin: .5rem }
+
+/* 
+    FORMULA for T/B and L/R margins:
+
+    margin: calc(-1 * (full-scale-height - scale * full-scale-height)/ 2 + wanted scaled element T/B margin )
+            calc(-1 * (full-scale-width  - scale * full-scale-width )/ 2 + wanted scaled element L/R margin )
+
+    - original unscaled element width and height
+    - negative (-1) to scale down ('remove') HTML unscaled margin
+    - calculated margin / 2 for either side T/B and L/R
+    - plus actually wanted margin
+
+    NOTES: - Because of 'box-sizing: border-box' padding will get scaled properly by HTML engine.
+           - !!ALL calc()'s in REM so they comply with 'easy RESPONSIVE|FONT|NESS' font-sizing.
+           - Obviously you need four calc()'s when all margins differ.
+
+    Finally, play with scales and sizes to get the hang of it.
+*/
+
+#the-scale-trigger                                 { /* trigger styling */ cursor: pointer }
+.scale-switch-N + #target-element-wrapper-which-is { /* scale N size */ }
+.scaleN                                            { /* scale N margins */ }
+
+/* Generic  */ [class^="scale-switch"]:checked + *,    
+/* Specific */ .scale-switch-N:checked + #target-element-wrapper-which-is { /* full-screen/unscaled size */ }
+
+/* (yes, that's all there is to it...really) */
+/*
+    GENERIC USAGE:
+    
+        <div id="target-element-wrapper-which-is" class="scaled-to-N">
+            <header>some header</header>
+            <div>
+
+                <!-- your content -->
+
+            </div>
+            <footer>some footer</footer>
+        </div>
+
+        OR
+
+        <input id="your-hidden-trigger" class="scale-switch-N" type="checkbox" data-gone="1"/>
+        <div id="target-element-wrapper-which-is" class="scale-N">
+            <label id="the-scale-trigger" for="your-hidden-trigger">alternate checkbox trigger as header</label>
+            <div>
+
+                <!-- your content -->
+
+            </div>
+            <footer>some footer</footer>
+        </div>
+*/
+/************************************************/
+/* END OF PREFERRED SETTINGS                    */
+/************************************************/
+
+
+
+/************************************************/
+/* DEMO                                         */
+/************************************************/
+.main-width                     { max-width: calc(100% - 0.05 * 100vmin * 2) }  /* minus width of rightside logo */
+.hoverboard                     { right: calc(0.05 * 100vmin * 2 + 17px);       /* width of rightside logo + scrollbar */ 
+                                  background-color: hsla(0,50%,50%,.3) }
+
+/* <main> could be a 'nobar' element too, but for demo purposes a scrollbar seems a better choice */
+main                            { align-items: center; padding-top: 3rem; margin-bottom: 3rem; overflow: auto }
+/* just the background... */
+main::after                     { z-index: -1; top: 0; right: 0; bottom: 0; left: 0;
+                                  content: '';/*
+                                  background-color: hsl(0,0%,50%);
+                                  background-image: url("http://unsplash.it/840/640?image=1077");
+                                  background-size: cover;
+                                  background-repeat: no-repeat;
+                                  background-attachment: fixed;
+                                  background-position: 100% 100%*/ }
+/* Logo */
+#ers-logo,#ers-copy             { font-family: 'Raleway'; position: fixed; }
+#ers-logo                       { z-index: 99990; top: 0; right:0;  justify-content: center;
+                                  background-color: hsla(90,2%,78%,.2); color: hsla(90,2%,93%,.6);
+                                  font-weight: 600; line-height: 1.75em;
+                                  text-shadow: -1px 1px 1px hsla(0,0%,0%,.2);
+
+                                  /* easy font rotation, MAKE SURE you own the knowledge! */
+                                  -ms-writing-mode:tb-rl;           /* for IE */
+                                      writing-mode: vertical-rl;    /* the rest */
+
+                                  /* the only relevant code in this rule: proper scaling */
+                                  width       : calc(0.05 * 100vmin * 2); height: 100%;
+                                  font-size   : calc(0.05 * 100vmin) }
+/* Copyright */
+#ers-copy                       { z-index: 99999; bottom: 0; left: 0; 
+                                  right: calc(0.05 * 100vmin * 2); /* width of rightside logo */
+                                  justify-content: flex-end; text-align: center; padding: .5rem 1rem; 
+                                  background-color: transparent; font-weight: 400; color: hsla(0,0%,0%,.8) }
+
+/* Generic elements */
+[class^="scale-switch"]:checked  + * form,
+[class^="scale-switch"]:checked  + * section { max-width: calc(100% - 0.05 * 100vmin * 2); }
+[class^="scale-switch"]:checked + *          { border-radius: 0 }
+
+/* Scale switching */
+.scale-switch:checked + *       { transition: all 0ms; border-radius: 0 }
+label[for^="card"]              { cursor: pointer }
+
+</style>
+</head>
+
+
+<body data-debug="1">
+
+<main class="main-width">
+    <!-- See comment in CSS -->
+    <!--div class="hoverboard"></div-->
+
+    <div id="cardsintro" data-effect="O0">
+
+        <input id="card-0" class="scale-switch-100" type="checkbox" data-gone="1"/>
+        <div class="view scale-100 nobar" title="click header to expand/collapse card...">
+            <label for="card-0" class="view-header">header</label>
+
+            <div class="view-panel nobar-scroller">
+                <div class="view-content">
+                </div>
+            </div>
+
+            <footer class="view-footer">footer</footer>
+        </div>
+
+        <input id="card-1" class="scale-switch-100" type="checkbox" data-gone="1"/>
+        <div class="view scale-100 nobar" title="click header to expand/collapse card...">
+            <label for="card-1" class="view-header">introduction</label>
+
+            <div class="view-panel nobar-scroller">
+                <div class="view-content">
+                    <section>
+                        <item><p>
+                            Introductory text...
+                        </p></item>
+                    </section>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+ 
+    <!-- Card container with 'blur + opacity' effect on its child elements -->
+    <div id="cardsbasic" data-effect="O0">
+
+        <!-- Hidden checkbox element which controls scaling of the card -->
+        <input id="card-00a" class="scale-switch-100" type="checkbox" data-gone="1"/>
+        <div class="view scale-100 nobar" title="click header to expand/collapse card...">
+            <label for="card-00a" class="view-header">introduction</label>
+            <div class="view-panel nobar-scroller">
+                <div class="view-content">
+
+                    <section>
+                        <item>item 1</item>
+                        <item>item 2</item>
+                        <item>item 3</item>
+                    </section>
+
+                    <section>
+                        <item>item 4</item>
+                        <item>item 5</item>
+                        <item>item 6</item>
+                    </section>
+
+                </div>
+            </div>
+            <footer class="view-footer">footer</footer>
+        </div>
+
+        <input id="card-00b" class="scale-switch-50" type="checkbox" data-gone="1"/>
+        <div class="view scale-50 nobar">
+            <label for="card-00b" class="view-header">introduction</label>
+            <div class="view-panel nobar-scroller">
+
+                <div class="view-content">
+
+
+                </div>
+
+            </div>
+            <footer class="view-footer">footer</footer>
+        </div>
+
+        <input id="card-00c" class="scale-switch-25" type="checkbox" data-gone="1"/>
+        <div class="view scale-25 nobar">
+            <label for="card-00c" class="view-header">introduction</label>
+            <div class="view-panel nobar-scroller">
+
+                <div class="view-content">
+
+
+                </div>
+
+            </div>
+            <footer class="view-footer">footer</footer>
+        </div>
+
+        <input id="card-00d" class="scale-switch-25" type="checkbox" data-gone="1"/>
+        <div class="view scale-25 nobar">
+            <label for="card-00d" class="view-header">introduction</label>
+            <div class="view-panel nobar-scroller">
+
+                <div class="view-content">
+
+
+                </div>
+
+            </div>
+            <footer class="view-footer">footer</footer>
+        </div>
+
+        <input id="card-00e" class="scale-switch-12" type="checkbox" data-gone="1"/>
+        <div class="view scale-12 nobar">
+            <label for="card-00e" class="view-header">introduction</label>
+            <div class="view-panel nobar-scroller">
+
+                <div class="view-content">
+
+
+                </div>
+
+            </div>
+            <footer class="view-footer">footer</footer>
+        </div>
+
+        <input id="card-00f" class="scale-switch-12" type="checkbox" data-gone="1"/>
+        <div class="view scale-12 nobar">
+            <label for="card-00f" class="view-header">introduction</label>
+            <div class="view-panel nobar-scroller">
+
+                <div class="view-content">
+
+                    <input id="card-00f-00" class="scale-switch-50" type="checkbox" data-gone="1"/>
+                    <div class="view scale-50 nobar">
+                        <label for="card-00f-00" class="view-header">nesting</label>
+                        <div class="view-panel nobar-scroller">
+                            <div class="view-content">
+                                <item><div data-pos="L" ></div></item>
+                                <item><div data-pos="L" ></div></item>
+                                <item><div data-pos="CH"></div></item>
+                                <item><div data-pos="R" ></div></item>
+                                <item><div data-pos="R" ></div></item>
+                                <item><div data-pos="L" ></div></item>
+                                <item><div data-pos="CH"></div></item>
+                                <item><div data-pos="CH"></div></item>
+                                <item><div data-pos="R" ></div></item>
+                                <item><div data-pos="R" ></div></item>
+                                <item><div data-pos="CH"></div></item>
+                                <item><div data-pos="L" ></div></item>
+                                <item><div data-pos="L" ></div></item>
+                                <item><div data-pos="L" ></div></item>
+                                <item><div data-pos="CH"></div></item>
+                                <item><div data-pos="R" ></div></item>
+                                <item><div data-pos="R" ></div></item>
+                                <item><div data-pos="L" ></div></item>
+                                <item><div data-pos="CH"></div></item>
+                                <item><div data-pos="CH"></div></item>
+                                <item><div data-pos="R" ></div></item>
+                                <item><div data-pos="R" ></div></item>
+                                <item><div data-pos="CH"></div></item>
+                                <item><div data-pos="L" ></div></item>
+                                <item><div data-pos="L" ></div></item>
+                                <item><div data-pos="L" ></div></item>
+                                <item><div data-pos="CH"></div></item>
+                                <item><div data-pos="R" ></div></item>
+                                <item><div data-pos="R" ></div></item>
+                                <item><div data-pos="L" ></div></item>
+                                <item><div data-pos="CH"></div></item>
+                                <item><div data-pos="CH"></div></item>
+                                <item><div data-pos="R" ></div></item>
+                                <item><div data-pos="R" ></div></item>
+                                <item><div data-pos="CH"></div></item>
+                                <item><div data-pos="L" ></div></item>
+                            </div>
+                        </div>
+                        <footer class="view-footer">footer</footer>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <footer class="view-footer">footer</footer>
+        </div>
+    </div>
+
+
+
+    <div id="cardslist01" data-effect="O0">
+
+        <input id="card-01a" class="scale-switch-50" type="checkbox" data-gone="1"/>
+        <div class="view scale-50 nobar">
+            <label for="card-01a" class="view-header">header</label>
+            <div class="view-list nobar-scroller">
+                <div class="view-content">
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="L" ></div></item>
+                </div>
+            </div>
+            <footer class="view-footer">footer</footer>
+        </div>
+
+        <input id="card-01b" class="scale-switch-50" type="checkbox" data-gone="1"/>
+        <div class="view scale-50 nobar">
+            <label for="card-01b" class="view-header">basic</label>
+            <div class="view-panel nobar-scroller">
+                <div class="view-content">
+                    <item data-pos="CC"><div>CCC</div></item>
+                    <item data-pos="CC"><div>CCC</div></item>
+                </div>
+            </div>
+            <footer class="view-footer">footer</footer>
+        </div>
+
+        <input id="card-01c" class="scale-switch-50" type="checkbox" data-gone="1"/>
+        <div class="view scale-50">
+            <label for="card-01c" class="view-header">header</label>
+            <div class="view-list" data-effect="S0">
+                <div class="view-content">
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="L" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="R" ></div></item>
+                    <item><div data-pos="CH"></div></item>
+                    <item><div data-pos="L" ></div></item>
+                </div>
+            </div>
+            <footer class="view-footer">footer</footer>
+        </div>
+
+        <input id="card-01d" class="scale-switch-50" type="checkbox" data-gone="1"/>
+        <div class="view scale-50 nobar">
+            <label for="card-01d" class="view-header">header</label>
+            <div class="view-list nobar-scroller">
+                <div class="view-content">
+                </div>
+            </div>
+            <footer class="view-footer">footer</footer>
+        </div>
+    </div>
+
+    <div id="cardslist02" data-effect="O0">
+
+        <input id="card-02a" class="scale-switch-25" type="checkbox" data-gone="1"/>
+        <div class="view scale-25 nobar">
+            <label for="card-02a" class="view-header">header</label>
+            <div class="view-list nobar-scroller">
+                <div class="view-content">
+                </div>
+            </div>
+            <footer class="view-footer">footer</footer>
+        </div>
+
+        <input id="card-02b" class="scale-switch-25" type="checkbox" data-gone="1"/>
+        <div class="view scale-25 nobar">
+            <label for="card-02b" class="view-header">basic</label>
+            <div class="view-panel nobar-scroller">
+                <div class="view-content">
+                </div>
+            </div>
+            <footer class="view-footer">footer</footer>
+        </div>
+
+        <input id="card-02c" class="scale-switch-25" type="checkbox" data-gone="1"/>
+        <div class="view scale-25">
+            <label for="card-02c" class="view-header">header</label>
+            <div class="view-list" data-effect="S0">
+                <div class="view-content">
+                </div>
+            </div>
+            <footer class="view-footer">footer</footer>
+        </div>
+
+        <input id="card-02d" class="scale-switch-25" type="checkbox" data-gone="1"/>
+        <div class="view scale-25 nobar">
+            <label for="card-02d" class="view-header">header</label>
+            <div class="view-list nobar-scroller">
+                <div class="view-content">
+                </div>
+            </div>
+            <footer class="view-footer">footer</footer>
+        </div>
+
+        <input id="card-02e" class="scale-switch-25" type="checkbox" data-gone="1"/>
+        <div class="view scale-25 nobar">
+            <label for="card-02e" class="view-header">header</label>
+            <div class="view-list nobar-scroller">
+                <div class="view-content">
+                </div>
+            </div>
+            <footer class="view-footer">footer</footer>
+        </div>
+
+        <input id="card-02f" class="scale-switch-25" type="checkbox" data-gone="1"/>
+        <div class="view scale-25 nobar">
+            <label for="card-02f" class="view-header">header</label>
+            <div class="view-list nobar-scroller">
+                <div class="view-content">
+                </div>
+            </div>
+            <footer class="view-footer">footer</footer>
+        </div>
+
+        <input id="card-02g" class="scale-switch-25" type="checkbox" data-gone="1"/>
+        <div class="view scale-25 nobar">
+            <label for="card-02g" class="view-header">header</label>
+            <div class="view-list nobar-scroller">
+                <div class="view-content">
+                </div>
+            </div>
+            <footer class="view-footer">footer</footer>
+        </div>
+    </div>
+
+
+    <div id="cardsinfo" data-effect="O0">
+        <input id="card-04a" class="scale-switch-12" type="checkbox" data-gone="1"/>
+        <div class="view scale-12 nobar">
+            <label for="card-04a" class="view-header">Codrops</label>
+            <div class="view-panel nobar-scroller">
+                <div class="view-content">
+                    <!--iframe src="http://tympanus.net/codrops/css_reference/"></iframe-->
+                </div>
+            </div>
+            <footer class="view-footer">extensive CSS reference</footer>
+        </div>
+
+        <input id="card-04b" class="scale-switch-12" type="checkbox" data-gone="1"/>
+        <div class="view scale-12 nobar">
+            <label for="card-04b" class="view-header">w3schools</label><div class="view-panel nobar-scroller">
+                <div class="view-content"><!--iframe src="http://www.w3schools.com"></iframe--></div>
+            </div><footer class="view-footer">all you need to know</footer>
+        </div>
+
+        <input id="card-04c" class="scale-switch-12" type="checkbox" data-gone="1"/>
+        <div class="view scale-12 nobar">
+            <label for="card-04c" class="view-header">FLATICON</label><div class="view-panel nobar-scroller">
+                <div class="view-content"><!--iframe src="http://www.flaticon.com"></iframe--></div>
+            </div><footer class="view-footer">look no further</footer>
+        </div>
+
+        <input id="card-04d" class="scale-switch-12" type="checkbox" data-gone="1"/>
+        <div class="view scale-12 nobar">
+            <label for="card-04d" class="view-header">Codepen</label><div class="view-panel nobar-scroller">
+                <div class="view-content"><!--iframe src="http://codepen.io"></iframe--></div>
+            </div><footer class="view-footer">home is where...</footer>
+        </div>
+    </div>
+
+    <footer id="ers-copy">copyright &copy; 2016 by rene van der lende - proprietary + MIT licensed code</footer>
+</main>
+
+<header id="ers-logo" title="watch me fit however you size the browser...">easy responsive||ness series</header>
+</body>
+</html>

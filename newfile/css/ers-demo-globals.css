@@ -1,0 +1,47 @@
+@CHARSET "UTF-8";
+
+/************************************************/
+/* PREFERED STANDARDS                  (STABLE) */
+/************************************************/
+html,body,main          { box-sizing: border-box; width: 100%; margin: 0 }
+*::before, *::after, *  { box-sizing: inherit } /* calculate elements sizes including their padding and borders */
+
+ /* Check height info: https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient => NOTES */
+html                    { height: 100%; min-height: 100vh; font-family: Arial, Helvetica, sans-serif }
+body,main               { max-width: 100%; height: 100%; overflow: auto }
+/************************************************/
+/* PREFERED THIS AND THATS             (STABLE) */
+/************************************************/
+/* modern smoothing and typface ligature usage */
+html                    { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased;
+                          font-variant-ligatures: common-ligatures discretionary-ligatures historical-ligatures }
+/* Disallow users to select any page content (for copy/paste) by default */
+body                    { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none }
+/************************************************/
+/* UTILS                               (STABLE) */
+/************************************************/
+/* Show a dotted outline for easy debugging of element sizing */
+[data-debug*="1"] *     { outline: 1px dashed black }
+/* slow down page buildup to follow transtion or check responsiveness */
+[data-debug*="T"] *     { transition: all 1.0s ease-in-out }
+[data-debug*="t"] *     { transition: all 0.5s ease-in-out }
+/* Absolutely, positively hide the element from view and voice-readers */
+[data-gone="1"]         { display:none; position:absolute; overflow:hidden; clip:rect(0 0 0 0);
+                          z-index:-999999; top:-999999px; margin:-1px; padding:0; border:0;
+                          height:1px; width:1px; min-height:0; min-width:0; max-height:0; max-width:0 }
+/************************************************/
+/* DEFAULT APPLICATION CURSORS         (STABLE) */
+/************************************************/
+body  { cursor: default } /* plain arrow for everything, but */
+input { cursor: auto }    /* use HTML default cursor on inputs, unless it is a: */
+input[list="datalist"],input[type="button"],input[type="checkbox"],input[type="radio"],
+input[type="color"],input[type="range"],input[type="reset"],input[type="file"],input[type="submit"],
+a,button,select,keygen   { cursor: pointer } 
+[contenteditable="true"] { cursor: text }
+/************************************************/
+/* easy RESPONSIVE|FONT|NESS       (STABLE WIP) */
+/************************************************/
+/* Responsive font: y = mx + b => 12px at 320 ... 16px at 960 => 1 full pixel per 160px screen size */
+html    { font-size: calc(0.00625 * 100vmin + 0.625rem); line-height: normal }
+[crisp] { text-shadow: .2px .2px .3px hsla(0,0%,25%,.2), -.1px -.1px .1px hsla(0,0%,25%,.1) }
+/* subtle shadow to improve text readability */

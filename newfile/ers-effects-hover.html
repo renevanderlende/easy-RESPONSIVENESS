@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title title="(June 2016) ERS effects: Hover">ERS Effects: Font &amp; Hover</title>
+
+<meta name="description" content="ERS Effects: Font & Hover">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT">
+
+
+<style>/* @import font preferences */
+@import url("http://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900");
+@import url("http://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900");
+
+ /* Define preferred default fonts */
+html,p                          { font-family: 'Work Sans', Arial, Helvetica, sans-serif }
+header,h1,h2,h3,h4,h5,h6,footer { font-family: 'Raleway'  , Arial, Helvetica, sans-serif }
+code,pre,kbd,samp               { font-family: Consolas, monospace }
+
+.tf-headline    { font-size: 3.5rem    }
+.tf-header      { font-size: 3rem      }
+.tf-subheader   { font-size: 2.125rem  }
+.tf-title       { font-size: 1.5rem    }
+.tf-subtitle    { font-size: 1.25rem   }
+.tf-body-1      { font-size: 1rem      }
+.tf-body-2      { font-size: 0.9375rem }
+.tf-caption-1   { font-size: 0.875rem  }
+.tf-caption-2   { font-size: 0.75rem   }
+
+.tf-1 {font-size: calc(0.00391 * 100vmin + 14px)} /* 19px at 1280 => (19-14)/12.8 * 100vmin + 14 */
+.tf-2 {font-size: calc(0.01788 * 100vmin + 16px); color:hsla(10, 100%, 55%,1)} /* 38px => (38-16)/12.8 dito */
+.tf-3 {font-size: calc(0.03468 * 100vmin + 18px)} /* 57px dito */
+.tf-4 {font-size: calc(0.04375 * 100vmin + 20px)} /* 76px dito */
+
+[class^="tf-"]  { line-height: normal } 
+</style>
+
+<style>/* @import style reset/preferences */
+/************************************************/
+/* GENERIC RULE RESET                  (STABLE) */
+/************************************************/
+/* @import url('xxx/ers-globals.css'); */
+
+html,body               { box-sizing: border-box; height: 100%; width: 100% }
+
+ /* take over parent's sizing behaviour */
+*:before, * , *:after   { box-sizing: inherit }
+
+ /* Enable font specific settings and smooth text */
+html                    { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased;
+                          font-variant-ligatures: common-ligatures discretionary-ligatures historical-ligatures;
+                          font-family: Arial, Helvetica, sans-serif;
+                          min-height: 100% /*https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient => NOTES*/ }
+
+body                    { max-width: 100%; margin: 0 auto; overflow: auto; cursor: default }
+
+/************************************************/
+/* FLEXBOX (FBL)                   (STABLE WIP) */
+/************************************************/
+/* Most major content container elements are FBL */
+/* *** Love it, hate it, for now: just use it *** */
+
+ /* Initially assume FBL row behaviour */
+header,h1,h2,h3,h4,h5,h6,footer,
+nav, section,
+div,span,
+li                      { display: flex; flex-direction: row; position: relative }
+
+ /* Initially assume FBL column behaviour */
+body,main,
+article,aside,
+item,
+code,pre,label,
+ol,ul                   { display: flex; flex-direction: column; position: relative }
+
+ /* grow to fill available space */
+main,article,
+header > *,footer > *   { flex: 1 } /* Initially space and divide evenly */
+
+section                 { flex-wrap: wrap   }
+item                    { /*flex-basis: 20rem*/ } /* 'item as child' behaviour: try to stay within 320px/20rem */
+aside                   { flex-basis: 20rem } /* Whatever meets your needs */
+
+ /* Initial alignments */
+header,footer           {}
+main                    {}
+article                 {}
+section                 {}
+item                    {}
+
+#layer--main-app-base           { z-index: 0   } /* [MANDATORY] Main wrapper, bottom most layer */
+  #overlay--hero                { z-index: 900 } /* [OPTIONAL] topmost container holding heroic stuff */
+  #overlay--modals              { z-index: 800 } /* [OPTIONAL] container holding modal content */
+  #overlay--toggles             { z-index: 700 } /* [OPTIONAL][fixed] used for on/off, show/hide toggles, badges */
+  #overlay--buttons             { z-index: 600 } /* [OPTIONAL] used for app buttons, fab's */
+
+  #layer--main-application      { z-index: 100 } /* [MANDATORY] */
+    #layer--app-sidebars        { z-index: 400 } /* [OPTIONAL][fixed] anything will do: menu, lists */
+
+    #layer--app-topdrawer       { z-index: 300 } /* [OPTIONAL][fixed] for logo, header */
+    #layer--app-sitenav         { z-index: 300 } /* [OPTIONAL][fixed] site navigation */
+
+    #layer--app-content         { z-index: 200 } /* [MANDATORY] Main application content container */
+      #layer--app-bottomdrawer  { z-index: 100 } /* [OPTIONAL][fixed] for messages, snacks etc */
+
+  #layer--information           { z-index: 2   } /* [OPTIONAL][fixed] Info, contact, credits, map, etc */
+  #layer--specials              { z-index: 1   } /* [OPTIONAL][fixed] Backgrounds, playground */
+
+/* ---------------------------- */
+/* --- Flexbox Layout (FBL) --- */
+/* ---------------------------- */
+/* All main layers are stretching and wrapping flexbox layout containers */
+[id^="overlay--"] > *,
+[id^="layer--"]                 { display: flex; flex-flow: column wrap; flex: 1; position: relative }
+
+#layer--sitenav, #layer--information,
+#layer--specials                { flex-flow: row wrap }
+
+/* All elements designated as "app--" made FBL by default */
+[id^="app--"]                   { display: flex; flex-flow: row wrap; position: relative }
+
+/* ----------------------------- */
+/* --- Sizes and positioning --- */
+/* ----------------------------- */
+/* All overlays are merely content containers with their own stacking context */
+[id^="overlay--"]               { width: 0; height: 0 } /* no FBL */
+[id^="layer--"]                 { position: relative }
+
+/* LAYER--MAIN-APP-BASE: Main wrapper, meant to act as 'body' for the application */
+#layer--main-app-base           { width: 100%; min-height: 200vh; overflow: auto }
+/* For scroll over/under purposes min-height should be at least 100vh + #layer--information.height */
+
+/************************************************/
+/* NON FBL defaults                (STABLE WIP) */
+/************************************************/
+
+header                  { min-height: 5.0rem /* 80px */}
+footer                  { min-height: 3.5rem /* 56px */}
+
+header,footer           { width: 100% }
+
+main                    { width: 100%; max-width: 100%; height: 100%; margin: 0 auto }
+article                 { overflow: auto }
+
+code,pre,kbd,samp       { position: relative; font-size: 0.9em; line-height: normal; font-weight: normal }
+
+section                 { padding: 1rem }
+item                    { padding: .5rem 2rem 2rem; margin: .5rem; border-radius: .25rem }
+
+ /* get rid of extra spacing below images */
+img                     { display: block; width: 100%; height: auto; object-fit: scale-down }
+
+ /* no decoration */
+a                       { text-decoration: none; background: transparent; 
+                          color: inherit; font-size: inherit }
+
+ /* no predefined styling */
+ol,ul,li,pre            { margin: 0; padding: 0 }
+ol,ul,li                { list-style: none }
+
+ /* ok, maybe a few... */
+hr                      { margin: 1em 0; border-color: hsla(0,0%,0%,.05) }
+p                       { margin: 0 .5rem; line-height: 1.5em; hyphens: auto; }
+pre                     { padding: .5em .25em; -moz-tab-size: 4; -o-tab-size: 4; tab-size: 4; overflow: auto }
+code                    { padding: .5em 1.5em; background: hsla(0,0%,0%,.05); text-shadow: none }
+
+dt, dd                  { display: inline }
+dd                      { margin: 0 }
+dd + dt::before         { content: '\A'; white-space: pre; }
+dd + dd::before         { content: ' / '; font-weight: normal }
+
+/* Make an element really, really invisible */
+[data-gone="1"]         { display: none; position:absolute; z-index:-999999; top:-999999px; overflow: hidden;
+                          clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0 }
+
+
+/************************************************/
+/* DEBUG/DESIGN helpers               (EXCERPT) */
+/************************************************/
+body[data-debug*="1"] * { outline: 1px dashed black }
+body[data-debug*="T"] * { transition: all .5s ease-in-out }
+
+/************************************************/
+/* easy RESPONSIVE|FONT|NESS           (STABLE) */
+/************************************************/
+ /* Responsive font: y = mx + b, shrink/grow to minus/plus 1px every 160 screen pixels, minimum 11px */
+html { font-size  : calc(0.00625  * 100vmin + 11px) }
+body { font-size: 1rem; line-height: 1.3rem }
+
+/************************************************/
+/* INFO BAR                                     */
+/************************************************/
+#infobar                { z-index: 400; position: fixed; top:0; left:0; 
+                          height: 100%; width: 25rem; max-width: calc(100% - 4rem) /* MDL(ish) */;
+                          background-color: hsl(210, 13%, 25%);
+                          /* border-right: 4px solid hsla(10, 100%, 55%,.75) */  }
+
+#infobar > footer       { /* background-color: hsla(10, 100%, 55%,.75) */ }
+
+#toggle--info           { z-index: 700; position: fixed; cursor: pointer; 
+                          justify-content: center; align-items: center;
+                          top: 0; left: 1rem; width: 4rem; height: 4rem; padding-bottom: .5rem;
+                          overflow-x: hidden; overflow-y: auto;
+                          background-color: hsl(210, 13%, 25%);
+                          font-size: 1.75rem; border-radius: 0 0 50% 50% }
+
+/* Plain hovering (sortof) */
+#toggle--info:hover::before { color: hsl(10, 100%, 55%); font-size: 1.95rem }
+#toggle--info:hover         { box-shadow: 0px 0px 4px 0px hsla(10, 100%, 55%,.8) }
+
+ /* Infobar hide/show, BOTH rules need a transition attribute (if any) */
+#infobar--toggler:not(:checked) ~ #infobar { left: -50rem; transition: all 300ms ease-out } /* move it offscreen */
+#infobar--toggler:checked       ~ #infobar { left: 0;      transition: all 300ms ease-in  } /* and back in view */
+
+ /* Swap infobar toggle-icon (from Unicode Groups 'Mathematical Operators' and/or 'Letterlike Symbols') */
+
+ /* when infobar is visible and button not hovered */
+#infobar--toggler:checked + #toggle--info::before           { content: '\226a' }
+#infobar--toggler:not(:hover):checked + #toggle--info       { box-shadow: 0px 0px 2px 1px hsla(210, 13%, 55%,.8) }
+
+ /* when infobar is hidden and button not hovered */
+#infobar--toggler:not(:checked) + #toggle--info::before     { content: '\2261' } /* 2261 or 2139 */
+#infobar--toggler:not(:hover):not(:checked) + #toggle--info { box-shadow: 0px 0px 2px 1px hsla(210, 13%, 75%,.8) }
+
+
+/************************************************/
+/* DEMO RULES                                   */
+/************************************************/
+body                    { height: 100vh;
+                          background-color: hsla(210, 13%, 60%,1);
+                                     color: hsla(210, 13%, 90%,1); }
+
+h3                      { color: black }
+
+section                 { justify-content: center }
+item                    { align-items: flex-start; flex: 1; min-width: 20rem }
+
+.content                {}
+.main                   {}
+.info                   {}
+
+ul                      { min-width: 10rem }
+li                      { justify-content: center; padding: 0 1rem;
+                          height: 2rem; line-height: 2rem; font-size: 1.2rem }
+
+section + section       { margin-bottom: 3rem }
+
+.demo-01                {}
+
+.demo-02                { flex-direction: row  }
+.demo-02 item >div      { justify-content: center; align-items: center; color: black; 
+                          width: 3rem; height: 3rem; margin: .25rem; border-radius: 10px }
+
+.demo-02 .exam1>div     { border: 2px solid hsla(10, 100%, 55%, .6) }
+.demo-02 .exam2>div     { background-color: hsla(10, 100%, 55%, .6) }
+
+
+#text-effects > *       { color: hsla(0,0%,0%,.9); background-color: white }
+#colors-15-effects > *  { justify-content: center; align-items: center; width: 4rem; height: 4rem }
+
+/************************************************/
+/* easy RESPONSIVE|EFFECT|NESS     (STABLE WIP) */
+/************************************************/
+/*
+    - Minimal effect structure
+
+        .parent:hover > .children   { parent.hover: modify all child elements }
+        .parent > .children:hover   { child.hover : modify hovered child element effect }
+
+    - on child.hover the parent.hover effect will be on too.
+    - Preferably use (*)-selectors, so the effect can be used on most HTML <tags>. 
+
+*/
+
+ /* For a minimal effect you would need just 1 rule */
+[data-effect="minimal"]>*:hover     { color: hsla(210, 13%,60%,1); background-color: hsla( 61,92%,63%,1) }
+
+ /* For a simple effect you would need 2 rules */
+[data-effect="simple1"]:hover>*     { color: hsla( 61,92%,63%,1) }
+[data-effect="simple2"]:hover>*     { filter: blur(1.5px) brightness(80%) saturate(80%); color: hsla( 61,92%,63%,1) }
+ /* (starts with) */
+[data-effect^="simple"]>*:hover     { filter: none; color: hsla(210, 13%,60%,1); background-color: hsla( 61, 92%,63%,1) }
+
+/************************************************/
+/* predefined effects              (STABLE WIP) */
+/************************************************/
+/* Rules for all hover effects */
+[data-effect]                       {}
+[data-effect]:hover>*               {}
+[data-effect]>*:hover               {}
+
+ /* NOTE: Nesting and combining effects is possible. Maximum is one per [MAIN] */
+
+ /* [MAIN] Element 'border-radius' options [DEMO] */
+/* Border shape variations                positions:  T   R   B   L    */
+[data-effect*="B.1111"]>*:hover     { border-radius:  0   0   0   0  } /* square */
+[data-effect*="B.1110"]>*:hover     { border-radius:  0   0   0  50% }
+[data-effect*="B.1101"]>*:hover     { border-radius:  0   0  50%  0  }
+[data-effect*="B.1100"]>*:hover     { border-radius:  0   0  50% 50% }
+[data-effect*="B.1011"]>*:hover     { border-radius:  0  50%  0   0  }
+[data-effect*="B.1010"]>*:hover     { border-radius:  0  50%  0  50% }
+[data-effect*="B.1001"]>*:hover     { border-radius:  0  50% 50%  0  }
+[data-effect*="B.1000"]>*:hover     { border-radius:  0  50% 50% 50% }
+[data-effect*="B.0111"]>*:hover     { border-radius: 50%  0   0   0  }
+[data-effect*="B.0110"]>*:hover     { border-radius: 50%  0   0  50% }
+[data-effect*="B.0101"]>*:hover     { border-radius: 50%  0  50%  0  }
+[data-effect*="B.0100"]>*:hover     { border-radius: 50%  0  50% 50% }
+[data-effect*="B.0011"]>*:hover     { border-radius: 50% 50%  0   0  }
+[data-effect*="B.0010"]>*:hover     { border-radius: 50% 50%  0  50% }
+[data-effect*="B.0001"]>*:hover     { border-radius: 50% 50% 50%  0  }
+[data-effect*="B.0000"]>*:hover     { border-radius: 50% 50% 50% 50% } /* circle */
+
+ /* [MAIN] HTML 'filter' options [DEMO] */
+[data-effect*="F.00"]:hover>*       { filter: blur(2px)        }
+[data-effect*="F.01"]:hover>*       { filter: brightness(100%) }
+[data-effect*="F.02"]:hover>*       { filter: contrast(100%)   }
+[data-effect*="F.03"]:hover>*       { filter: brightness(40%)  }
+[data-effect*="F.04"]:hover>*       { filter: saturate(0%)     }
+[data-effect*="F.05"]:hover>*       { filter: hue-rotate(0deg) }
+[data-effect*="F.06"]:hover>*       { filter: invert(100%)     }
+[data-effect*="F.07"]:hover>*       { filter: brightness(120%) }
+[data-effect*="F.08"]:hover>*       { filter: opacity(50%)     }
+[data-effect*="F.09"]:hover>*       { filter: saturate(100%)   }
+[data-effect*="F.0A"]:hover>*       { filter: sepia(80%)       }
+[data-effect*="F.0B"]:hover>*       { filter: drop-shadow(0 0 0 rgba(0,0,0,0)) } /* as in 'none' */
+
+[data-effect*="F.W1"]:hover>*       { filter: url('WIP') /* XLink to SVG filter? */ }
+[data-effect*="F.W2"]:hover>*       { filter: url('WIP') /* Link to image? */ }
+
+[data-effect*="F."  ]>*:hover       { filter: none }
+
+[data-effect*="F.0B.1"]>*:hover     { filter: drop-shadow(2px 2px 5px rgba(0,0,0,.1)) } 
+[data-effect*="F.0B.2"]>*:hover     { filter: drop-shadow(2px 2px 5px rgba(0,0,0,.2)) } 
+[data-effect*="F.0B.3"]>*:hover     { filter: drop-shadow(2px 2px 5px rgba(0,0,0,.3)) } 
+
+ /* [MAIN] HTML 'mix-blend-mode' options [DEMO] */
+[data-effect*="M.00"]:hover>*       { mix-blend-mode: normal      }
+[data-effect*="M.01"]:hover>*       { mix-blend-mode: multiply    }
+[data-effect*="M.02"]:hover>*       { mix-blend-mode: screen      }
+[data-effect*="M.03"]:hover>*       { mix-blend-mode: overlay     }
+[data-effect*="M.04"]:hover>*       { mix-blend-mode: darken      }
+[data-effect*="M.05"]:hover>*       { mix-blend-mode: lighten     }
+[data-effect*="M.06"]:hover>*       { mix-blend-mode: color-dodge }
+[data-effect*="M.07"]:hover>*       { mix-blend-mode: color-burn  }
+[data-effect*="M.08"]:hover>*       { mix-blend-mode: hard-light  }
+[data-effect*="M.09"]:hover>*       { mix-blend-mode: soft-light  }
+[data-effect*="M.0A"]:hover>*       { mix-blend-mode: difference  }
+[data-effect*="M.0B"]:hover>*       { mix-blend-mode: exclusion   }
+[data-effect*="M.0C"]:hover>*       { mix-blend-mode: hue         }
+[data-effect*="M.0D"]:hover>*       { mix-blend-mode: saturation  }
+[data-effect*="M.0E"]:hover>*       { mix-blend-mode: color       }
+[data-effect*="M.0F"]:hover>*       { mix-blend-mode: luminosity  }
+
+[data-effect*="M."  ]>*:hover       { mix-blend-mode: unset       }
+
+ /* [MAIN] element 'isolation' [DEMO WIP!!] (dunno specs yet) */
+[data-effect*="I.00"]:hover>*       { isolation: isolate }
+[data-effect*="I."]>*:hover         { isolation: auto    }
+
+ /* [MAIN] element 'opacity' [DEMO] */
+[data-effect*="O.T"]:hover>*        { opacity: 0   } /* 'T'ranparent */
+[data-effect*="O.O"]:hover>*        { opacity: 1   } /* 'O'paque     */
+[data-effect*="O.1"]:hover>*        { opacity: 0.1 }
+[data-effect*="O.2"]:hover>*        { opacity: 0.2 }
+[data-effect*="O.3"]:hover>*        { opacity: 0.3 }
+[data-effect*="O.4"]:hover>*        { opacity: 0.4 }
+[data-effect*="O.5"]:hover>*        { opacity: 0.5 }
+[data-effect*="O.6"]:hover>*        { opacity: 0.6 }
+[data-effect*="O.7"]:hover>*        { opacity: 0.7 }
+[data-effect*="O.8"]:hover>*        { opacity: 0.8 }
+[data-effect*="O.9"]:hover>*        { opacity: 0.9 }
+
+[data-effect*="O." ]>*:hover        { opacity: 1  }
+
+ /* [MAIN] element 'scale' [DEMO] */
+
+[data-effect*="SC." ] >*            { transform: scale(.25) }
+
+[data-effect*="SC.00"]>*:hover      { transform: scale(1)    }
+
+
+ /* [MAIN] HTML 'background-color' options [WIP] */
+[data-effect*="BG."]>*:hover        {}
+
+ /* [MAIN] HTML foreground-'color' options [WIP] */
+[data-effect*="FG."]>*:hover        {}
+
+ /* [MAIN] tint/tone/shade color options [WIP] */
+[data-effect*="C.tint" ]>*:hover    {} /* color + white */
+[data-effect*="C.tone" ]>*:hover    {} /* color + grey  */
+[data-effect*="C.shade"]>*:hover    {} /* color + black */
+
+
+ /* [MAIN] (last setting => $ 'ends width') Child element 'transition' effects [DEMO] */
+[data-effect$=".TO"]:hover>*        { transition: all   0ms ease-in-out } /* Off    */
+[data-effect$=".TF"]:hover>*        { transition: all  50ms ease-in-out } /* Fast   */
+[data-effect$=".TN"]:hover>*        { transition: all 100ms ease-in-out } /* Normal */
+[data-effect$=".TS"]:hover>*        { transition: all 150ms ease-in-out } /* Slow   */
+
+
+/* A few easy color attributes */
+[fg="black"],[fg="00"]              { color: hsla(0,0%,  0%,.9) }
+[fg="white"],[fg="01"]              { color: hsla(0,0%,100%,.9) }
+[fg="grey" ],[fg="gray"],[fg="02"]  { color: hsla(0,0%, 50%,.9) } 
+
+[bg="black"],[bg="00"]              { background-color: hsla(0,0%,  0%,.9) }
+[bg="white"],[bg="01"]              { background-color: hsla(0,0%,100%,.9) }
+[bg="grey" ],[bg="gray"],[bg="02"]  { background-color: hsla(0,0%, 50%,.9) }
+
+</style>
+
+
+
+</head>
+
+<body data-debug="1">
+<div id="layer--main-app-base">
+    <!-- order of placement: input > label > aside -->
+    <input type="checkbox"   id ="infobar--toggler" data-gone="1">
+    <label id="toggle--info" for="infobar--toggler"></label>
+
+    <aside id="infobar">
+        <header></header>
+
+        <div class="content">
+
+            <section class="demo-01">
+                <div class="tf-2">minimal &amp; simple</div>
+                <item>
+                <p><i>&lt;parent:hover&gt;</i> all kids turn yellow.</p>
+                <p><i>&lt;child:hover&gt;</i> the kid inverts its color.</p>
+                </item>
+            </section>
+
+        </div>
+
+        <footer></footer>
+    </aside>
+
+    <header></header>
+
+    <main data-effect="F.03.O.2.TN">
+        <section id="text-effects" data-effect="F.00.O.5.SC.00">
+            <item>
+                <h3>text 1</h3>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla elementum congue ipsum a tempus. Aliquam fringilla lacus a condimentum auctor. Aenean porttitor metus ut efficitur condimentum. Fusce ac justo justo. Donec consequat, augue id placerat malesuada,
+                justo nisi ornare quam, rutrum varius orci leo sed ipsum. Maecenas quam dolor, pulvinar in porta sit amet, sodales ut odio. Mauris erat arcu, tincidunt a risus ut, elementum elementum erat. Phasellus interdum tortor dolor, vitae accumsan elit
+                maximus nec. Mauris dignissim, leo at dapibus vulputate, orci tellus lobortis nisi, vitae maximus lacus turpis a ipsum. Pellentesque sit amet finibus arcu, id eleifend enim. Duis sit amet erat non purus fringilla hendrerit sed quis sem. Aliquam
+                erat volutpat. Fusce cursus luctus leo, sit amet posuere enim cursus eget. In a enim a neque pretium maximus. Morbi facilisis maximus neque ut placerat.
+            </item>
+            <item>
+                <h3>text 2</h3>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla elementum congue ipsum a tempus. Aliquam fringilla lacus a condimentum auctor. Aenean porttitor metus ut efficitur condimentum. Fusce ac justo justo. Donec consequat, augue id placerat malesuada,
+                justo nisi ornare quam, rutrum varius orci leo sed ipsum. Maecenas quam dolor, pulvinar in porta sit amet, sodales ut odio. Mauris erat arcu, tincidunt a risus ut, elementum elementum erat. Phasellus interdum tortor dolor, vitae accumsan elit
+                maximus nec. Mauris dignissim, leo at dapibus vulputate, orci tellus lobortis nisi, vitae maximus lacus turpis a ipsum. Pellentesque sit amet finibus arcu, id eleifend enim. Duis sit amet erat non purus fringilla hendrerit sed quis sem. Aliquam
+                erat volutpat. Fusce cursus luctus leo, sit amet posuere enim cursus eget. In a enim a neque pretium maximus. Morbi facilisis maximus neque ut placerat.
+            </item>
+            <item>
+                <h3>text 3</h3>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla elementum congue ipsum a tempus. Aliquam fringilla lacus a condimentum auctor. Aenean porttitor metus ut efficitur condimentum. Fusce ac justo justo. Donec consequat, augue id placerat malesuada,
+                justo nisi ornare quam, rutrum varius orci leo sed ipsum. Maecenas quam dolor, pulvinar in porta sit amet, sodales ut odio. Mauris erat arcu, tincidunt a risus ut, elementum elementum erat. Phasellus interdum tortor dolor, vitae accumsan elit
+                maximus nec. Mauris dignissim, leo at dapibus vulputate, orci tellus lobortis nisi, vitae maximus lacus turpis a ipsum. Pellentesque sit amet finibus arcu, id eleifend enim. Duis sit amet erat non purus fringilla hendrerit sed quis sem. Aliquam
+                erat volutpat. Fusce cursus luctus leo, sit amet posuere enim cursus eget. In a enim a neque pretium maximus. Morbi facilisis maximus neque ut placerat.
+            </item>
+        </section>
+
+        <section>
+            <div>
+                <dl data-effect="F.00.O.5.SC.05">
+                    <dt>name:     </dt><dd>rene van der lende</dd>
+                    <dt>email:    </dt><dd>rene.van.der.lende@gmail.com</dd><dd><a href="http://codepen.io/renevanderlende" target="_blank">on Codepen</a></dd>
+                    <dt>Location: </dt><dd>Earth</dd>
+                </dl>
+            </div>
+        </section>
+
+        <section class="demo-01">
+            <item>
+                <h3>minimal</h3>
+                <ul data-effect="minimal">
+                    <li>hover this block</li>
+                    <li>to see minimal</li>
+                    <li>hover effect</li>
+                </ul>
+            </item>
+            <item>
+                <h3>simple 1</h3>
+                <ul data-effect="simple1">
+                    <li>hover this block</li>
+                    <li>to see a simple</li>
+                    <li>hover effect</li>
+                </ul>
+            </item>
+            <item>
+                <h3>simple 2</h3>
+                <ul data-effect="simple2">
+                    <li>hover this block</li>
+                    <li>to see a combo</li>
+                    <li>hover effect</li>
+                </ul>
+            </item>
+        </section>
+
+        <section class="demo-02">
+            <item class="exam1" data-effect="B.0000.TF">
+                <h3>same settings</h3>
+                <div>A</div>
+                <div>B</div>
+                <div>C</div>
+            </item>
+
+            <item class="exam2" data-effect="B.0000.TF">
+                <h3>different effect</h3>
+                <div>D</div>
+                <div>E</div>
+                <div>F</div>
+            </item>
+        </section>
+
+        <section>
+            <div id="colors-15-effects">
+                <div style="background-color:hsl(  0,100%, 50%);" fg="01">  0&deg;</div>
+                <div style="background-color:hsl( 15,100%, 50%);" fg="01"> 15&deg;</div>
+                <div style="background-color:hsl( 30,100%, 50%);" fg="00"> 30&deg;</div>
+                <div style="background-color:hsl( 45,100%, 50%);" fg="00"> 45&deg;</div>
+                <div style="background-color:hsl( 60,100%, 50%);" fg="00"> 60&deg;</div>
+                <div style="background-color:hsl( 75,100%, 50%);" fg="00"> 75&deg;</div>
+                <div style="background-color:hsl( 90,100%, 50%);" fg="00"> 90&deg;</div>
+                <div style="background-color:hsl(105,100%, 50%);" fg="00">105&deg;</div>
+                <div style="background-color:hsl(120,100%, 50%);" fg="00">120&deg;</div>
+                <div style="background-color:hsl(135,100%, 50%);" fg="00">135&deg;</div>
+                <div style="background-color:hsl(150,100%, 50%);" fg="00">150&deg;</div>
+                <div style="background-color:hsl(165,100%, 50%);" fg="00">165&deg;</div>
+                <div style="background-color:hsl(180,100%, 50%);" fg="00">180&deg;</div>
+                <div style="background-color:hsl(195,100%, 50%);" fg="00">195&deg;</div>
+                <div style="background-color:hsl(210,100%, 50%);" fg="01">210&deg;</div>
+                <div style="background-color:hsl(225,100%, 50%);" fg="01">225&deg;</div>
+                <div style="background-color:hsl(240,100%, 50%);" fg="01">240&deg;</div>
+                <div style="background-color:hsl(255,100%, 50%);" fg="01">255&deg;</div>
+                <div style="background-color:hsl(270,100%, 50%);" fg="01">270&deg;</div>
+                <div style="background-color:hsl(285,100%, 50%);" fg="01">285&deg;</div>
+                <div style="background-color:hsl(300,100%, 50%);" fg="00">300&deg;</div>
+                <div style="background-color:hsl(315,100%, 50%);" fg="01">315&deg;</div>
+                <div style="background-color:hsl(330,100%, 50%);" fg="01">330&deg;</div>
+            </div>
+        </section>
+    </main>
+
+    <footer></footer>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html data-response="1" data-impaired="press" data-effects="0" data-design="0">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title title="({month} 2016) {document-title}">Responsive Comic Book Layout</title>
+
+<!-- 
+    Inspirations: http://codepen.io/chris22smith/pen/MyBBOe
+-->
+
+<meta name="description" content="{document-description}">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT">
+
+<style id="ers--flexbox--def">@import url('../dist/css/ers-flexbox-def.min.css'); /* [OPTIONAL] ERS flexbox custom attribute rules */</style>
+
+<style id="ers--demo--document-styles">
+/************************************************/
+/* easy RESPONSIVE|FONT|NESS                    */
+/************************************************/
+/* Responsive font: y = mx + b */
+html { font-size: calc(0.00625 * 100vmin + 11px) }
+body { font-size: 1rem; line-height: normal }
+
+/* initialize */
+html,body                       { box-sizing: border-box; width: 100%; max-width: 100% }
+*:before, *, *:after            { box-sizing: inherit }
+
+body                            { height: 100%; max-width: 100%; margin: 0 auto;
+                                  background-color: hsl(0,0%,96%) }
+
+/*body,*/
+div,
+header,main,footer,
+article,nav,aside,
+section,item,
+h1,h2,h3,h4,h5,h6,
+dl,ol,ul,li,pre,code            { display: flex; position: relative; flex-wrap: wrap }
+
+/************************************************/
+/* DEMO RULES                                   */
+/************************************************/
+.comic {
+  font-family:'Comic Sans', cursive;
+  padding:1vmin;
+  height: 100%; width: 100%; max-width: 100%; margin: 0 auto;
+}
+
+.panel {
+  background-color:#fff;
+  border:solid 2px #000;
+  box-shadow:0 6px 6px -6px #000;
+  display:inline-block;
+  flex:1 1;
+  min-height: 12.5rem;
+  margin:1vmin;
+  overflow:hidden;
+  position:relative;
+}
+
+.text {
+  background-color:#fff;
+  border:solid 2px #000;
+  margin:0;
+  padding:3px 10px;
+}
+
+.top-left {
+  left:-6px;
+  position:absolute;
+  top:-2px;
+  transform:skew(-15deg);
+}
+
+.bottom-right {
+  bottom:-2px;
+  position:absolute;
+  right:-6px;
+  transform:skew(-15deg);
+}
+
+.speech {
+  background-color:#fff;
+  border:solid 2px #000;
+  border-radius:12px;
+  display:inline-block;
+  margin:.5em;
+  padding:.5em 1em;
+  position:relative;
+}
+
+.speech:before {
+  border:solid 12px transparent;
+  border-left:solid 12px #000;
+  border-top:solid 12px #000;
+  bottom:-24px;
+  content:"";
+  height:0;
+  left:24px;
+  position:absolute;
+  transform:skew(-15deg);
+  width:0;
+}
+
+.speech:after {
+  border:solid 10px transparent;
+  border-left:solid 10px #fff;
+  border-top:solid 10px #fff;
+  bottom:-19px;
+  content:"";
+  height:0;
+  left:27px;
+  position:absolute;
+  transform:skew(-15deg);
+  width:0;
+}
+
+.panel:nth-child(1) { flex-basis: 25.0rem }
+.panel:nth-child(2) { flex-basis: 12.5rem }
+.panel:nth-child(3) { flex-basis: 12.5rem }
+.panel:nth-child(4) { flex-basis: 12.5rem }
+.panel:nth-child(5) { flex-basis: 12.5rem }
+.panel:nth-child(6) { flex-basis: 12.5rem }
+.panel:nth-child(7) { flex-basis: 25.0rem }
+.panel:nth-child(8) { flex-basis: 12.5rem }
+.panel:nth-child(9) { flex-basis: 12.5rem }
+
+/* background colours */
+.panel:nth-child(4n+1) { background-image:radial-gradient(circle, yellow, orange) }
+.panel:nth-child(4n+2) { background-image:radial-gradient(circle, lightblue, deepskyblue) }
+.panel:nth-child(4n+3) { background-image:radial-gradient(circle, palegreen, yellowgreen) }
+.panel:nth-child(4n+4) { background-image:radial-gradient(circle, lightcoral, tomato) }
+</style>
+</head>
+
+<body data-debug="0" debug-grid dir="ltr" onload="bodyAppendDebugTools();">
+    <article class="comic">
+        <div class="panel">
+            <p class="text top-left">Suddenly...</p>
+            <p class="text bottom-right">...something amazing happened</p>
+        </div>
+        <div class="panel">
+            <p class="text top-left">Try resizing...</p>
+            <p class="text bottom-right">...it's responsive</p>
+        </div>
+        <div class="panel">
+            <p class="speech">A speech bubble</p>
+        </div>
+        <div class="panel"></div>
+        <div class="panel"></div>
+        <div class="panel"></div>
+        <div class="panel"></div>
+        <div class="panel"></div>
+        <div class="panel">
+            <p class="text bottom-right">THE END</p>
+        </div>
+    </article>
+</body>
+
+<script id="ers--debug--tools" src="../dist/js/ers-debug-tools.min.js"></script>
+<style  id="ers--debug--styles">@import url("../dist/css/ers-debug-styles.min.css");</style>
+
+
+</html>

@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+/************************************************/
+/* KEYBOARD DEMO                                */
+/************************************************/
+/* Definition */
+#keyboard               { flex: 1; flex-direction: column; justify-content: flex-end; margin: 0 auto;
+                          min-width: 20rem; width: 100%; max-width: 75vw }
+#keyboard>*             { justify-content: center; justify-content: center; align-items: center } /* row of keys */
+#keyboard>*>*           { flex: 1; justify-content: center; align-items: center; height: 2.5rem } /* key */
+
+/* Styling */
+#keyboard>*>*           { margin: 1px; background-color: hsla(0,0%,94%,1); text-transform: lowercase }
+#keyboard>*>*:hover     { background-color: hsla(0,0%,90%,.1); color: white; font-weight: bold; cursor: pointer }
+#keyboard>*>*:active    { font-size: 1.3em; line-height: normal }
+
+.narrow-key             { width: 1.5rem; margin: 0 1px }
+
+#backspace              { fill: currentcolor; width: 1.5rem }

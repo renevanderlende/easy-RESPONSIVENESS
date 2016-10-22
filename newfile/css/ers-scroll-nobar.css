@@ -1,0 +1,45 @@
+@CHARSET "UTF-8";
+
+/************************************************/
+/* easy RESPONSIVE|SCROLL-NOBAR|NESS(STABLE WIP)*/
+/************************************************/
+.nobar { /* [MANDATORY] main scrolling container wrapper */
+    overflow: hidden   !important; /* Hides scrollbar for overflowing '.nobar-scroller' */
+    }
+/* Needed to hide browser scrollbar, based on widest scrollbar of CH, IE and FF */
+.nobar-scroller { /* [OPTIONAL] scroll container. When omitted, scrollbars will be hidden but no scrolling */
+    position  : relative !important;
+    height    : auto     !important;/* HTML default, to make sure of that! */ 
+    max-height: 100%     !important;/* NO(!) other height value => to get scroll effect */
+    overflow-y: scroll   !important;/* Always 'scroll', otherwise you'll get size<>width jitter */
+    overflow-x: hidden;             /* (WIP)ish, maybe later... */
+
+    padding-left : 17px !important;
+    padding-right:  0px !important;
+    left         :-17px !important; /* Left gutter to hide scrollbar */
+    right        :-17px !important; /* and right (sb-widths => FF:17px; IE:15px; CH:20px) */
+    width: calc(100% + 34px) !important } /* PLUS 34px to hide scrollbar on either side (17px is HTML default) */
+
+/* Adding support for "LTR/RTL" document swapping. (Notice required space between body[..] and .nobar)  */
+ /* Default is LTR behaviour, invert L/R if you need RTL default */
+body[dir="ltr"] .nobar-scroller { padding-left: 17px !important; padding-right:  0px !important }
+body[dir="rtl"] .nobar-scroller { padding-left:  0px !important; padding-right: 17px !important }
+
+.nobar--content { /* [OPTIONAL] Serves as a starting point => fill-parent */
+    position: relative; /* So you can add your absolute/::before/::after stuff */
+    width : 100%;
+    height: 100%;
+}
+/*
+    USAGE ('view' used as example):
+
+    <div class="[view] nobar">
+        <div class="[view-panel] nobar--scroller">
+            <element class="[view-content] or [nobar--content]">
+
+                ... your content ...
+
+            </element>
+        </div>
+    </div>
+*/

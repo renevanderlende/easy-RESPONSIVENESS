@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html data-response="1" data-impaired>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title>Block Elements</title>
+
+<meta name="description" content="Block Elements">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT">
+
+<style>
+/* HTML Default */
+h1                  { font-size: 2.00em; font-weight: bold; margin: 0.67em 0 }
+h2                  { font-size: 1.50em; font-weight: bold; margin: 0.83em 0 }
+h3                  { font-size: 1.17em; font-weight: bold; margin: 1.00em 0 }
+h4                  { font-size: 1.00em; font-weight: bold; margin: 1.33em 0 }
+h5                  { font-size: 0.83em; font-weight: bold; margin: 1.67em 0 }
+h6                  { font-size: 0.67em; font-weight: bold; margin: 2.33em 0 }
+
+/* HTML.CSS */
+
+address,article,aside,
+blockquote,body,
+center,
+dd,details,dir,div,dl,dt,
+fieldset,figcaption,figure,footer,form,
+header,hgroup,hr,html,
+legend,
+main,menu,multicol,
+nav,noframes,
+ol,option,optgroup,
+p,
+section,summary,
+ul { display: block }
+
+body {
+  margin: 8px;
+}
+
+p, dl, multicol {
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+}
+
+dd {
+  margin-inline-start: 40px;
+}
+
+blockquote, figure {
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 40px;
+  margin-inline-end: 40px;
+}
+
+address {
+  font-style: italic;
+}
+
+center {
+  text-align: -moz-center;
+}
+
+blockquote[type=cite] {
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-inline-start: 1em;
+  border-inline-start: solid;
+  border-color: blue;
+  border-width: thin;
+}
+
+span[_moz_quote=true] {
+  color: blue;
+}
+
+pre[_moz_quote=true] {
+  color: blue;
+}
+
+
+listing             { font-family: monospace; white-space: pre; margin: 1em 0; font-size: medium }
+xmp, pre, plaintext { font-family: monospace; white-space: pre; margin: 1em 0 }
+
+
+ul, menu, dir {
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  padding-inline-start: 40px;
+}
+
+ol {
+  list-style-type: decimal;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  padding-inline-start: 40px;
+}
+
+/* <hr> noshade and color attributes are handled completely by
+ * the nsHTMLHRElement attribute mapping code
+ */
+hr {
+  border: 1px inset;
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  color: gray;
+  -moz-float-edge: margin-box;
+  box-sizing: border-box;
+}
+
+hr[size="1"] {
+  border-style: solid none none none;
+}
+
+frameset {
+  display: block ! important;
+  overflow: -moz-hidden-unscrollable;
+  position: static ! important;
+  float: none ! important;
+  border: none ! important;
+}
+
+/* hidden elements */
+base, basefont, datalist, head, meta, script, style, title,
+noembed, param, template {
+   display: none;
+}
+
+area {
+  /* Don't give it frames other than its imageframe */
+  display: none ! important;
+}
+
+/* media elements */
+video > xul|videocontrols, audio > xul|videocontrols {
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-binding: url("chrome://global/content/bindings/videocontrols.xml#videoControls");
+}
+
+video:not([controls]) > xul|videocontrols,
+audio:not([controls]) > xul|videocontrols {
+  visibility: hidden;
+  -moz-binding: none;
+}
+
+*|*::-moz-html-canvas-content {
+  display: block !important;
+  /* we want to be an absolute and fixed container */
+  transform: translate(0) !important;
+}
+
+/* FORMS.CSS */
+
+legend {
+  display: block;
+}
+
+fieldset {
+  display: block;
+  margin-inline-start: 2px;
+  margin-inline-end: 2px;
+  padding-block-start: 0.35em;
+  padding-block-end: 0.75em;
+  padding-inline-start: 0.625em;
+  padding-inline-end: 0.625em;
+  border: 2px groove ThreeDLightShadow;
+}
+
+select {
+  margin: 0;
+  border-color: ThreeDLightShadow;
+  background-color: -moz-Combobox;
+  color: -moz-ComboboxText;
+  font: -moz-list;
+  /*
+   * Note that the "UA !important" tests in
+   * layout/style/test/test_animations.html depend on this rule, because
+   * they need some UA !important rule to test.  If this changes, use a
+   * different one there.
+   */
+  line-height: normal !important;
+  white-space: nowrap !important;
+  word-wrap: normal !important;
+  text-align: start;
+  cursor: default;
+  box-sizing: border-box;
+  -moz-user-select: none;
+  -moz-appearance: menulist;
+  border-width: 2px;
+  border-style: inset;
+  text-indent: 0;
+  overflow: -moz-hidden-unscrollable;
+  text-shadow: none;
+  /* No text-decoration reaching inside, by default */
+  display: inline-block;
+  page-break-inside: avoid;
+  overflow-clip-box: padding-box !important; /* bug 992447 */
+}
+
+/* Need the "select[size][multiple]" selector to override the settings on
+   'select[size="1"]', eg if one has <select size="1" multiple> */
+
+select[size],
+select[multiple],
+select[size][multiple] {
+  /* Different alignment and padding for listbox vs combobox */
+  background-color: -moz-Field;
+  color: -moz-FieldText;
+  vertical-align: text-bottom;
+  padding-block-start: 1px;
+  padding-block-end: 1px;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+  -moz-appearance: listbox;
+}
+
+select[size="0"],
+select[size="1"] {
+  /* Except this is not a listbox */
+  background-color: -moz-Combobox;
+  color: -moz-ComboboxText;
+  vertical-align: baseline;
+  padding: 0;
+  -moz-appearance: menulist;
+}
+
+select > button {
+  inline-size: 12px;
+  white-space: nowrap;
+  position: static !important;
+  background-image: url("arrow.gif") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  -moz-appearance: menulist-button;
+
+  /* Make sure to size correctly if the combobox has a non-auto height. */
+  block-size: 100% ! important;
+  box-sizing: border-box ! important;
+
+  /*
+    Make sure to align properly with the display frame.  Note that we
+    want the baseline of the combobox to match the baseline of the
+    display frame, so the dropmarker is what gets the vertical-align.
+  */
+  vertical-align: top !important;
+}
+
+select > button:active {
+  background-image: url("arrowd.gif") !important;
+}
+
+select > button[orientation="left"] {
+  background-image: url("arrow-left.gif") !important;
+}
+
+select > button[orientation="right"] {
+  background-image: url("arrow-right.gif") !important;
+}
+
+select > button[orientation="left"]:active {
+  background-image: url("arrowd-left.gif") !important;
+}
+
+select > button[orientation="right"]:active {
+  background-image: url("arrowd-right.gif") !important;
+}
+
+select:empty {
+  inline-size: 2.5em;
+}
+
+option {
+  display: block;
+  float: none !important;
+  position: static !important;
+  min-block-size: 1em;
+  line-height: normal !important;
+  -moz-user-select: none;
+  text-indent: 0;
+  white-space: nowrap !important;
+  word-wrap: normal !important;
+  text-align: match-parent;
+}
+
+select > option {
+  padding-block-start : 0;
+  padding-block-end: 0;
+  padding-inline-start: 3px;
+  padding-inline-end: 5px;
+}
+
+option:checked {
+  background-color: -moz-html-cellhighlight !important;
+  color: -moz-html-cellhighlighttext !important;
+}
+
+select:focus > option:checked,
+select:focus > optgroup > option:checked {
+  background-color: Highlight ! important;
+  color: HighlightText ! important;
+}
+
+optgroup {
+  display: block;
+  float: none !important;
+  position: static !important;
+  font: -moz-list;
+  line-height: normal !important;
+  font-style: italic;
+  font-weight: bold;
+  font-size: inherit;
+  -moz-user-select: none;
+  text-indent: 0;
+  white-space: nowrap !important;
+  word-wrap: normal !important;
+}
+
+optgroup > option {
+  padding-inline-start: 20px;
+  font-style: normal;
+  font-weight: normal;
+}
+
+optgroup:before {
+  display: block;
+  content: attr(label);
+}
+
+
+
+
+</style>
+</head>
+
+<body>
+
+<h1>h1. dit is buiten het artikel</h1>
+<h2>h2. dit is buiten het artikel</h2>
+<h3>h3. dit is buiten het artikel</h3>
+<h4>h4. dit is buiten het artikel</h4>
+<h5>h5. dit is buiten het artikel</h5>
+<h6>h6. dit is buiten het artikel</h6>
+
+<article>
+<h1>h1. in het artikel</h1>
+<h2>h2. in het artikel</h2>
+<h3>h3. in het artikel</h3>
+<h4>h4. in het artikel</h4>
+<h5>h5. in het artikel</h5>
+<h6>h6. in het artikel</h6>
+</article>
+
+</body>
+</html>

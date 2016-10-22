@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html data-response="1" data-impaired="press" data-effects="1" data-design="0">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title title="({month} 2016) {document-title}">- Newfile -</title>
+
+<!-- 
+    Inspirations: {site-links}
+-->
+
+<meta name="description" content="{document-description}">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT/Apache 2.0">
+
+<!-- link id="rvdl-link-normalize" rel="stylesheet" media="screen and (min-width:0)" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+
+<link id="rvdl-link-rcb-v2"    rel="stylesheet" media="screen and (min-width:0)" href="css/msf-cmp-responsive-component-box-v2.css">
+<link id="rvdl-link-debug"     rel="stylesheet" media="screen and (min-width:0)" href="css/base-debug-simple.css">
+<link id="rvdl-link-gradients" rel="stylesheet" media="screen and (min-width:0)" href="css/msf-clr-gradients.css"-->
+
+<link id="ers--flexbox--def" rel="stylesheet" href="css/ers-flexbox-def.css"><!-- /* [OPTIONAL] ERS default flexbox custom attribute rules */ -->
+<link id="ers--effects--def" rel="stylesheet" href="css/ers-effects-def.css"><!-- /* [OPTIONAL] ERS default element effects */ -->
+
+<style>
+@import url("http://fonts.googleapis.com/css?family=Work+Sans:100,300,400,700");
+@import url("http://fonts.googleapis.com/css?family=Roboto:100,300,400,700");
+@import url("http://fonts.googleapis.com/css?family=Merriweather:300,400,700");
+
+/************************************************/
+/* easy RESPONSIVE|FONT|NESS                    */
+/************************************************/
+/* Responsive font: y = mx + b */
+html[data-response="1"] { font-size: calc(0.00625 * 100vm   + 11px) }   /* IE11/Edge */
+html[data-response="1"] { font-size: calc(0.00625 * 100vmin + 11px) }   /* the rest  */
+html[data-response="1"] { font-weight: 300; line-height: normal }
+
+html[data-response="1"] .body { font-size: 0.625rem } /* result: html 16px = body 10px */
+
+/* Extra demo responsive sizes */
+html[data-response="1"] [data-em-ratio="1:10" ] { font-size: calc(0.1000000 * 100vmin + 1em) } /* Huge */
+html[data-response="1"] [data-em-ratio="1:20" ] { font-size: calc(0.0500000 * 100vmin + 1em) }
+html[data-response="1"] [data-em-ratio="1:40" ] { font-size: calc(0.0250000 * 100vmin + 1em) }
+html[data-response="1"] [data-em-ratio="1:60" ] { font-size: calc(0.0187500 * 100vmin + 1em) }
+html[data-response="1"] [data-em-ratio="1:80" ] { font-size: calc(0.0125000 * 100vmin + 1em) } /* Normal */
+html[data-response="1"] [data-em-ratio="1:120"] { font-size: calc(0.0093750 * 100vmin + 1em) }
+html[data-response="1"] [data-em-ratio="1:160"] { font-size: calc(0.0062500 * 100vmin + 1em) } /* Default */
+html[data-response="1"] [data-em-ratio="1:240"] { font-size: calc(0.0046875 * 100vmin + 1em) }
+html[data-response="1"] [data-em-ratio="1:320"] { font-size: calc(0.0031250 * 100vmin + 1em) } /* Tiny */
+
+/************************************************/
+/* GENERIC RULE RESET (personal preferences)    */
+/************************************************/
+/* Enable font specific settings and smooth text */
+html        { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased;
+              font-family: 'Work Sans', Arial, Helvetica, sans-serif; color: hsla(0,0%,0%,.87) }
+
+html,body   { box-sizing: border-box; height: 100%; width: 100% }
+
+body        { max-width: 100%; margin: 0 auto; overflow: auto;
+              background-color: hsla(249,7%,62%,.1)/*lilac-gray*/;
+              color: hsla(0,0%,0%,.9); cursor: default }
+
+/* take over parent's sizing behaviour */
+*:before,*,*:after  { box-sizing: inherit }
+
+*,*:focus,*:active  { outline: none }
+
+/**************************************************************************************/
+/* IMPORTANT: below almost every container element is made a flexbox container !!!!!! */
+/* use flexbox 'justify-*' and 'align-*' attributes to position content inside a box  */
+/**************************************************************************************/
+body,
+header,main,footer,
+article,nav,aside,
+section,item,
+h1,h2,h3,h4,h5,h6,
+div,span,
+dl,ol,ul,li,pre,code{ display: flex; position: relative; flex-wrap: wrap }
+
+button,input,optgroup,
+textarea,select     { font: inherit; line-height: normal }
+
+button, input       { cursor: pointer }
+
+body,ul,ol,code,
+article,aside,item  { flex-direction: column }
+aside               { flex-basis: 15%; min-width: 56px; }
+
+header,footer       { width: 100% }
+hr                  { margin: 1em 0; border-color: hsla(0,0%,0%,.05) }
+
+article             { width: 100%; max-width: 85%; margin: 0 auto }
+
+code,pre,kbd,samp   { position: relative; font-family: Consolas, monospace;
+                      font-size: 0.9em; line-height: normal; font-weight: normal }
+/* no decoration */
+a                   { text-decoration: none; background: transparent; 
+                      color: inherit; font-size: inherit }
+/* no predefined styling */
+ol,ul,li,pre        { margin: 0; padding: 0 }
+ol,ul,li            { list-style: none }
+/* ok, maybe a few... */
+p                   { margin: 0; line-height: 1.35em }
+pre                 { padding: .5em .25em; -moz-tab-size: 2; -o-tab-size: 2; tab-size: 2; overflow: auto }
+code                { padding: .5em 1.5em; background: hsla(0,0%,0%,.05); text-shadow: none }
+
+/* get rid of extra spacing below images */
+img                 { display: block; width: 100%; height: auto }
+</style>
+
+<style id="ers--demo--extra-styles--dbg">
+/************************************************/
+/* EXTRA DEMO: WIP vision impaired aids         */
+/************************************************/
+html[data-impaired="none"]   { text-shadow: none }
+html[data-impaired="press" ] { text-shadow: .1px .1px .3px hsla(0,0%,25%,.3), -.1px -.1px .1px hsla(0,0%,25%,.2) }
+.html[data-impaired="press" ] { text-shadow: hsla(0,0%,25%,.25) .1px .1px .3px }
+/* Modify these values for your preference:      ^   ^             ^   */
+
+/************************************************/
+/* EXTRA: WIP helper custom attributes          */
+/************************************************/
+[thin]              { font-weight: 300 }
+[bold]              { font-weight: 700 }
+[italic]            { font-style: italic }
+
+[white]             { color: hsla(0,0%,100%,.87) }
+[black]             { color: hsla(0,0%,  0%,.87) }
+
+[iced-coffee]       { background-color: hsla(31,31%,55%,.4) }
+[fiesta]            { background-color: hsla( 5,72%,53%,.4) }
+[buttercup]         { background-color: hsla(52,95%,61%,.4) }
+</style>
+
+
+<style id="ers--demo--document-styles">
+/************************************************/
+/* DEMO RULES                                   */
+/************************************************/
+::selection             { color: white; background-color: hsl(210,100%,60%) }
+::-moz-selection        { color: white; background-color: hsl(210,100%,60%) }
+
+#hover-effect           { max-width: 15rem; font-family: Consolas, monospace }
+#hover-effect > *       { width: 100%; margin: .5rem }
+#hover-effect > *:hover { color: white; background-color: hsl(210,100%,60%); cursor: pointer } 
+
+span { white-space: pre }
+</style>
+</head>
+
+
+<body data-debug="0" debug-grid dir="ltr" onload="bodyAppendDebugTools();">
+
+<article data-aln="ai.c">
+    <div>HOVER</div>
+
+    <ul data-effect="myEffect">
+        <li>myEffect 1</li><li>myEffect 2</li><li>myEffect 3</li>
+    </ul>
+
+
+    <ul id="hover-effect" data-fbl="C1" data-effect="O.H.blur">
+        <li>aaa</li>
+        <li>bbb</li>
+
+        <li data-effect="O.H.blur">
+            <span>Cccc </span>
+            <span> Dddd </span>
+
+            <div data-effect="O.H.blur.BG.002.FG.000">
+                <ul data-effect="O">
+                    <li>uuuu</li>
+                    <li>vvvv</li>
+                    <li>wwww</li>
+                </ul>
+
+                <ul data-effect="O">
+                    <li>xxxx</li>
+                    <li>yyyy</li>
+                    <li>zzzz</li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</article>
+</body>
+
+
+<script id="ers--debug--tools" src="js/ers-debug-tools.js"></script>
+<style  id="ers--debug--styles">@import url("css/ers-debug-styles.css");</style>
+
+</html>

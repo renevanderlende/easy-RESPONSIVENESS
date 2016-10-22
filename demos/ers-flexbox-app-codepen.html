@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html data-response="1" data-impaired="press" data-effects="0" data-design="0">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title title="({month} 2016) {document-title}">ERS Flexbox App</title>
+
+<!-- 
+    Inspirations: {site-links}
+-->
+
+<meta name="description" content="{document-description}">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT/Apache 2.0">
+
+<!-- link id="rvdl-link-normalize" rel="stylesheet" media="screen and (min-width:0)" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+
+<link id="rvdl-link-rcb-v2"    rel="stylesheet" media="screen and (min-width:0)" href="css/msf-cmp-responsive-component-box-v2.css">
+<link id="rvdl-link-debug"     rel="stylesheet" media="screen and (min-width:0)" href="css/base-debug-simple.css">
+<link id="rvdl-link-gradients" rel="stylesheet" media="screen and (min-width:0)" href="css/msf-clr-gradients.css"-->
+
+<style id="ers--flexbox--def">@import url('../dist/css/ers-flexbox-def.min.css'); /* [OPTIONAL] ERS flexbox custom attribute rules */</style>
+
+<style>
+@import url("http://fonts.googleapis.com/css?family=Work+Sans:100,300,400,700");
+@import url("http://fonts.googleapis.com/css?family=Roboto:100,300,400,700");
+@import url("http://fonts.googleapis.com/css?family=Merriweather:300,400,700");
+
+/************************************************/
+/* easy RESPONSIVE|FONT|NESS                    */
+/************************************************/
+/* Responsive font: y = mx + b */
+html[data-response="1"] { font-size: calc(0.00625 * 100vm   + 11px) }   /* IE11/Edge */
+html[data-response="1"] { font-size: calc(0.00625 * 100vmin + 11px) }   /* the rest  */
+html[data-response="1"] { font-weight: 300; line-height: normal }
+
+html[data-response="1"] body { font-size: 0.625rem } /* result: html 16px = body 10px */
+
+/* Extra demo responsive sizes */
+html[data-response="1"] [data-em-ratio="1:10" ] { font-size: calc(0.1000000 * 100vmin + 1em) } /* Huge */
+html[data-response="1"] [data-em-ratio="1:20" ] { font-size: calc(0.0500000 * 100vmin + 1em) }
+html[data-response="1"] [data-em-ratio="1:40" ] { font-size: calc(0.0250000 * 100vmin + 1em) }
+html[data-response="1"] [data-em-ratio="1:60" ] { font-size: calc(0.0187500 * 100vmin + 1em) }
+html[data-response="1"] [data-em-ratio="1:80" ] { font-size: calc(0.0125000 * 100vmin + 1em) } /* Normal */
+html[data-response="1"] [data-em-ratio="1:120"] { font-size: calc(0.0093750 * 100vmin + 1em) }
+html[data-response="1"] [data-em-ratio="1:160"] { font-size: calc(0.0062500 * 100vmin + 1em) } /* Default */
+html[data-response="1"] [data-em-ratio="1:240"] { font-size: calc(0.0046875 * 100vmin + 1em) }
+html[data-response="1"] [data-em-ratio="1:320"] { font-size: calc(0.0031250 * 100vmin + 1em) } /* Tiny */
+
+/************************************************/
+/* GENERIC RULE RESET (personal preferences)    */
+/************************************************/
+/* Enable font specific settings and smooth text */
+html        { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased;
+              font-family: 'Work Sans', Arial, Helvetica, sans-serif; color: hsla(0,0%,0%,.87) }
+
+html,body   { box-sizing: border-box; height: 100%; width: 100% }
+
+body        { max-width: 100%; margin: 0 auto; overflow: auto;
+              background-color: hsla(249,7%,62%,.1)/*lilac-gray*/;
+              color: hsla(0,0%,0%,.87); cursor: default }
+
+/* take over parent's sizing behaviour, transition to suppress certain browser jiggers */
+*:before,*,*:after  { box-sizing: inherit; transition: all 0ms linear }
+
+*,*:focus,*:active  { outline: none }
+
+/**************************************************************************************/
+/* IMPORTANT: below almost every container element is made a flexbox container !!!!!! */
+/* use flexbox 'justify-*' and 'align-*' attributes to position content inside a box  */
+/**************************************************************************************/
+body,
+header,main,footer,
+article,nav,aside,
+section,item,
+h1,h2,h3,h4,h5,h6,
+div,
+dl,ol,ul,li,pre,code{ display: flex; position: relative; flex-wrap: wrap }
+
+button,input,optgroup,
+textarea,select     { font: inherit; line-height: normal }
+
+button, input       { cursor: pointer }
+
+body,ul,ol,code,
+article,aside,item  { flex-direction: column }
+aside               { flex-basis: 15%; min-width: 56px; }
+
+header,footer       { width: 100% }
+hr                  { margin: 1em 0; border-color: hsla(0,0%,0%,.05) }
+
+code,pre,kbd,samp   { position: relative; font-family: Consolas, monospace;
+                      font-size: 0.9em; line-height: normal; font-weight: normal }
+/* no decoration */
+a                   { text-decoration: none; background: transparent; 
+                      color: inherit; font-size: inherit }
+/* no predefined styling */
+ol,ul,li,pre        { margin: 0; padding: 0 }
+ol,ul,li            { list-style: none }
+/* ok, maybe a few... */
+p                   { margin: 0; line-height: 1.35em }
+pre                 { padding: .5em .25em; -moz-tab-size: 2; -o-tab-size: 2; tab-size: 2; overflow: auto }
+code                { padding: .5em 1.5em; font-size: 1em; background: hsla(0,0%,0%,.05); text-shadow: none }
+
+/* get rid of extra spacing below images */
+img                 { display: block; width: 100%; height: auto }
+</style>
+
+<style id="ers--demo--extra-styles--dbg">
+/************************************************/
+/* EXTRA DEMO: WIP vision impaired aids         */
+/************************************************/
+html[data-impaired="none"]   { text-shadow: none }
+html[data-impaired="press" ] { text-shadow: .1px .1px .3px hsla(0,0%,25%,.3), -.1px -.1px .1px hsla(0,0%,25%,.2) }
+.html[data-impaired="press" ] { text-shadow: hsla(0,0%,25%,.25) .1px .1px .3px }
+/* Modify these values for your preference:      ^   ^             ^   */
+
+/************************************************/
+/* EXTRA DEMO: WIP parent/child hover filters   */
+/************************************************/
+/* parent elements */
+html[data-effects="1"] [data-filter-effect]:hover > *       { opacity: .5; transition: all 0ms ease }
+html[data-effects="1"] [data-filter-effect="low"]:hover > * { filter: blur(2px) saturate(0%); }
+/* child elements */
+html[data-effects="1"] [data-filter-effect] > *:hover       { opacity: 1; filter: none; transition: all 75ms ease-in-out }
+
+/************************************************/
+/* EXTRA: WIP helper custom attributes          */
+/************************************************/
+[thin]          { font-weight: 300 }
+[bold]          { font-weight: 700 }
+[italic]        { font-style: italic }
+
+[white]         { color: hsla(0,0%,100%,.87) }
+[black]         { color: hsla(0,0%,  0%,.87) }
+
+[iced-coffee]   { background-color: hsla(31,31%,55%,.4) }
+[fiesta]        { background-color: hsla( 5,72%,53%,.4) }
+[buttercup]     { background-color: hsla(52,95%,61%,.4) }
+</style>
+
+
+<style id="ers--demo--document-styles">
+/************************************************/
+/* DEMO RULES                                   */
+/************************************************/
+
+/* Buttons */
+
+.btn {
+  font-weight: 700;
+  background: #666;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin: 0 0.625rem 0 0;
+  padding: 0.625rem;
+  border-radius: 0.25rem;
+}
+
+.btn-1 { background: #dd554b }
+.btn-2 { background: #6680bf }
+.btn-3 { background: #abc066 }
+
+.btn1 { /* FLEXBOX STYLE ↓ */ flex-basis: 3.75rem }
+.btn2 { /* FLEXBOX STYLE ↓ */ flex-basis: 7.50rem }
+
+.btn:hover { background: black }
+
+/*Framework*/
+.navbar {
+  height: 5rem;
+  background: steelblue;
+  color: white;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  font-size: 2.25rem;
+  line-height: 2.25rem;
+  font-weight: 800;
+  text-align: center;
+  padding-top: 1.25rem;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, .4);
+}
+
+.panel-wrapper {
+  background: black;
+  padding: 0.25rem;
+  height: calc(100vmin - 8.6rem);
+}
+/************* SUBNAV *************/
+
+.subnav {
+  height: 60px;
+  background: #555;
+  /* FLEXBOX STYLE ↓ */
+  
+  align-items: center;
+  justify-content: center;
+}
+/************* PANELS *************/
+
+.panel-wrapper * {
+  ttransition: all 1s ease;
+}
+
+.panel {
+  background: white;
+  color: #666;
+  font-size: 1.25rem;
+  line-height: 1.25rem;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  margin: 0.25rem;
+
+  /* FLEXBOX STYLE ↓ */ flex: 1;
+}
+
+.panel1 { background: #aaa }
+.panel2 { background: #999 }
+.panel3 { background: #ddd }
+
+.title { padding: 0.625rem; font-size: 1.25rem; line-height: 1.25rem; color: white;
+
+  /* FLEXBOX STYLE ↓ */ flex: 0 0 2.5rem
+}
+
+.panel-1-2-wrapper { /* FLEXBOX STYLE ↓ */ flex-direction: column; flex: 1 }
+
+/*Panel 1 Styles*/
+
+.panel1             { overflow-y: auto; /* FLEXBOX STYLE ↓ */ flex-flow: column nowrap; flex: 1 0 calc(50vmin - 11.25rem) }
+
+.panel1.is-closed   { display: none }
+
+.panel1 .title      { background: #dd554b }
+
+.panel1 .dashboard  { overflow-y: auto; }
+
+.card               { background: white; padding: 1.25rem 1.25rem 18.75rem; margin: 0.625rem;
+  /* FLEXBOX STYLE ↓ */ flex: 18.75rem }
+
+/* Panel 2 Styles */
+.panel2 {
+  /* FLEXBOX STYLE ↓ */
+  
+  flex: 1 0 calc(50vmin - 11.25rem);
+  flex-direction: column;
+}
+
+.panel2 .title {
+  background: #6680bf;
+  /* FLEXBOX STYLE ↓ */
+  
+  flex: 0 0 2.5rem;
+}
+
+.embed-container {
+  position: relative;
+  /* FLEXBOX STYLE ↓ */
+  
+  flex: 1 1 6.25rem;
+}
+
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+/* Panel 3 Styles */
+
+.panel3 {
+  /* FLEXBOX STYLE ↓ */
+  
+  flex-direction: column;
+  flex: 1
+}
+
+.is-solo {
+  /* FLEXBOX STYLE ↓ */
+  
+  flex: 1;
+}
+
+.panel3 .title { background: #abc066 }
+
+.panel3 .action-bar {
+  background: white;
+  color: #222;
+  padding-left: 0.625rem;
+  /* FLEXBOX STYLE ↓ */
+  
+  flex: 0 0 3.75rem;
+  align-items: center;
+}
+
+.action-bar h2 {
+  font-size: 1.125rem;
+  line-height: 1.125rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 1.25rem;
+  /* FLEXBOX STYLE ↓ */
+  
+  flex: 1;
+}
+
+.panel3 .content {
+  font-size: 0.875rem;
+  line-height: 1.875rem;
+  text-transform: capitalize;
+  padding: 1.25rem;
+  overflow-y: auto;
+  /* FLEXBOX STYLE ↓ */
+  
+  flex: 1;
+}
+/* Responsive Flexing */
+
+@media (max-width: 900px) {
+  /* FLEXBOX STYLES↓ */
+  
+  .panel-1-2-wrapper {
+    flex: 1;
+  }
+  .panel3 {
+    flex: 1 1 0;
+  }
+}
+</style>
+</head>
+
+
+<body data-debug="0" debug-grid dir="ltr" onload="bodyAppendDebugTools();">
+
+<div ng-app="app" ng-controller="con" data-fbl="C1">
+  <div class="navbar">Flexbox App Framework</div>
+
+  <div class="subnav">
+    <button class="btn btn-1" ng-click="changeClass()">Panel 1</button>
+    <button class="btn btn-2" ng-click="hide2 = !hide2">Panel 2</button>
+    <button class="btn btn-3" ng-click="hide3 = !hide3">Panel 3</button>
+  </div>
+
+  <div class="panel-wrapper">
+    <div class="panel-1-2-wrapper">
+      <div class="panel panel1" ng-class="class">
+        <div class="title">panel 1</div>
+        <div class="dashboard">
+          <div class="card">My Projects</div>
+          <div class="card">My Tasks</div>
+        </div>
+      </div>
+      <div class="panel panel2" ng-hide="hide2">
+        <div class="title">panel 2</div>
+        <div class='embed-container'>
+          <!--iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3316.8914308169547!2d-84.3802843!3d33.7634713!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f504746fd42d77%3A0x93b948f3ce524e52!2s241+Ralph+McGill+Blvd+NE%2C+Atlanta%2C+GA+30308!5e0!3m2!1sen!2sus!4v1442524094999" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>'
+            width='600' height='450' style='border:0'></iframe-->
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel3" ng-hide="hide3">
+      <div class="title">panel 3 </div>
+      <div class="action-bar">
+        <h2>Lorem Ipsum Set Dolar Amit Consequtor lorem ipsum set dolarlorem</h2>
+        <button class="btn btn1">Edit</button>
+        <button class="btn btn2">Call To Action</button>
+      </div>
+      <div class="content">TEXT START. Nam pretium turpis et arcu. Fusce vulputate eleifend sapien. Duis vel nibh at velit scelerisque suscipit. Nam pretium turpis et arcu. Fusce vulputate eleifend sapien. Duis vel nibh at velit scelerisque suscipit. Nam pretium turpis et
+        arcu. Fusce vulputate eleifend sapien. Duis vel nibh at velit scelerisque suscipit. Nam pretium turpis et arcu. Fusce vulputate eleifend sapien. Duis vel nibh at velit scelerisque suscipit. Nam pretium turpis et arcu. Fusce vulputate eleifend
+        sapien. Duis vel nibh at velit scelerisque suscipit. Nam pretium turpis et arcu. Fusce vulputate eleifend sapien. Duis vel nibh at velit scelerisque suscipit. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Quisque id odio.
+        Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque ut nisi. Nam pretium turpis et arcu. Fusce vulputate eleifend sapien. Duis vel nibh at velit scelerisque suscipit. Nam pretium turpis et arcu.
+        Fusce vulputate eleifend sapien. Duis vel nibh at velit scelerisque suscipit. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Quisque id odio. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
+        egestas. Quisque ut nisi. Nam pretium turpis et arcu. Fusce vulputate eleifend sapien. Duis vel nibh at velit scelerisque suscipit.Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Quisque id odio. Pellentesque habitant morbi
+        tristique senectus et netus et malesuada fames ac turpis egestas. Quisque ut nisi. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi. In turpis. Duis leo. Praesent congue erat at massa. Phasellus
+        dolor. Vestibulum fringilla pede sit amet augue. Cras varius. Sed mollis, eros et ultrices tempus, mauris ipsum aliquam libero, non adipiscing dolor urna a orci. Nam pretium turpis et arcu. Fusce vulputate eleifend sapien. Duis vel nibh at velit
+        scelerisque suscipit. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Quisque id odio. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque ut nisi. Donec interdum, metus et
+        hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi. In turpis. Duis leo. Praesent congue erat at massa. Phasellus dolor. Vestibulum fringilla pede sit amet augue. Cras varius. Sed mollis, eros et ultrices tempus,
+        mauris ipsum aliquam libero, non adipiscing dolor urna a orci. Quisque ut nisi. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi. In turpis. Duis leo. Praesent congue erat at massa. Phasellus
+        dolor. Vestibulum fringilla pede sit amet augue. Cras varius. Sed mollis, eros et ultrices tempus, mauris ipsum aliquam libero, non adipiscing dolor urna a orci. END OF TEXT.
+      </div>
+      <div class="action-bar">
+        <button class="btn btn1">CTA</button>
+        <button class="btn btn2">CTA</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+
+<script id="ers--debug--tools" src="../dist/js/ers-debug-tools.min.js"></script>
+<style  id="ers--debug--styles">@import url("../dist/css/ers-debug-styles.min.css");</style>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js"></script>
+<script>
+var app = angular.module("app",[]);
+
+    app.controller("con",function($scope){
+    $scope.class = "is-open";
+
+    $scope.changeClass = function(){
+        if ($scope.class === "is-open")   $scope.class = "is-closed";
+        else                              $scope.class = "is-open";
+    };
+});
+</script>
+
+</html>

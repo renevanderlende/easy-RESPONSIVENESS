@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title title="({month} 2016) {document-title}">ERS Unsplash.it</title>
+
+<!-- 
+    Inspirations: http://codepen.io/geoffyuen/pen/VLqwgm
+-->
+
+<meta name="description" content="{document-description}">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT">
+
+<style id="ers--demo--document-styles">
+/************************************************/
+/* easy RESPONSIVE|FONT|NESS                    */
+/************************************************/
+/* Responsive font: y = mx + b */
+html { font-size: calc(0.00625 * 100vmin + 0.625rem) }
+body { font-size: 1rem; line-height: normal }
+
+/************************************************/
+/* DEMO RULES                                   */
+/************************************************/
+@import url(http://fonts.googleapis.com/css?family=Lato:300);
+* {
+  box-sizing: border-box;
+}
+
+html {
+  line-height: 1.8;
+  font-size: 13px;
+  background: #000;
+  font-family: Lato, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+}
+
+.panel {
+  min-height: 90vh;
+  margin: 20px;
+  background: url(https://unsplash.it/g/900/900) no-repeat 50% 50%;
+  background-size: cover;
+  background-attachment: fixed;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 2em;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.panel:nth-child(2) {
+  background-image: url(https://unsplash.it/g/901/600);
+}
+.panel:nth-child(3) {
+  background-image: url(https://unsplash.it/g/900/601);
+}
+.panel:nth-child(4) {
+  background-image: url(https://unsplash.it/g/900/601?image=0);
+}
+.panel:nth-child(5) {
+  background-image: url(https://unsplash.it/g/900/601?image=577);
+}
+
+.content {
+  max-width: 400px;
+  text-align: center;
+  padding: 2em;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px dashed #888;
+  box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.8);
+  color: #fff;
+}
+.content *:first-child {
+  margin-top: 0;
+}
+.content *:last-child {
+  margin-bottom: 0;
+}
+.content h1, .content h2 {
+  padding-bottom: 1em;
+  border-bottom: 1px dashed #888;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="panel">
+  <div class="content">
+    <h1>One of those modern, fixed-background layouts</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo nihil pariatur tempora quaerat veritatis aut, error ullam soluta ea ducimus blanditiis expedita reprehenderit vero dolor iste sapiente, rerum deleniti excepturi.</p>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="content">
+    <h2>Here is where we say we handcraft our code</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo nihil pariatur tempora quaerat veritatis aut, error ullam soluta ea ducimus blanditiis expedita reprehenderit vero dolor iste sapiente, rerum deleniti excepturi.</p>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="content">
+    <h2>And this is where we say we're code ninjas and font nerds</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo nihil pariatur tempora quaerat veritatis aut, error ullam soluta ea ducimus blanditiis expedita reprehenderit vero dolor iste sapiente, rerum deleniti excepturi.</p>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="content">
+    <h2>Man, I wish I could afford a Macbook</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo nihil pariatur tempora quaerat veritatis aut, error ullam soluta ea ducimus blanditiis expedita reprehenderit vero dolor iste sapiente, rerum deleniti excepturi.</p>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="content">
+    <h2>Why do designers like antlers so much?</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo nihil pariatur tempora quaerat veritatis aut, error ullam soluta ea ducimus blanditiis expedita reprehenderit vero dolor iste sapiente, rerum deleniti excepturi.</p>
+  </div>
+</div>
+
+</body>
+</html>

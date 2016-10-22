@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1">
+
+<title title="(July 2016) ERS BASE-001">ERS BASE-000</title>
+
+<meta name="description" content="{document-description}">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT/APACHE/SLI/SNIL/NSA/CIA/DoD/WIP">
+
+<link rel="stylesheet" href="css/ers-base-init.css"   ><!-- [MANDATORY] Generic initialization, flexbox settings, etc. -->
+<!--link rel="stylesheet" href="css/ers-base-app.css" >< [MANDATORY] Base application structure -->
+<link rel="stylesheet" href="css/ers-masterslide.css" ><!-- [OPTIONAL]  extra top-toppier-toppiest drawer -->
+<link rel="stylesheet" href="css/ers-scroll-nobar.css"><!-- [OPTIONAL]  scroll nobar element -->
+
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,900">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Alegreya+Sans:300,400,700,900|Alegreya+Sans+SC:300,400,700,900">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Rubik:300,400,700,900|Rubik+Mono+One:400|Rubik+One:400">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Biryani:300,400,700,900">
+
+<style>
+/************************************************/
+/* DEFAULT APPLICATION STRUCTURE          (WIP) */
+/************************************************/
+/* ---------------------------- */
+/* --- Flexbox Layout (FBL) --- */
+/* ---------------------------- */
+/* All main layers are flexbox layout containers */
+[id^="layer--"]                             { display: flex; position: relative }
+[id^="block--"]                             { display: flex; position: relative }
+
+/* All elements designated as "app--" made FBL by default */
+[id^="app--"]                               { display: flex; flex-wrap: wrap; position: relative }
+
+/* ----------------------- */
+/* --- Main App Layers --- */
+/* ----------------------- */
+    /* Z-INDEXes serve as both 'stacking context' and demo hierachy visualisation (modify as required) */
+#layer--masterslides                        { z-index: 950 } /* C [OPTIONAL] topmost layer containing anything you want on top */
+#layer--hero                                { z-index: 900 } /* C [OPTIONAL] topmost container holding heroic stuff */
+#layer--main-app-base                       { z-index:   0 } /* C [MANDATORY] Main wrapper  */
+  #overlay--modals                          { z-index: 800 } /* R [OPTIONAL] container holding modal content */
+  #overlay--toggles                         { z-index: 700 } /* R [OPTIONAL][fixed] used for on/off, show/hide toggles */
+  #overlay--buttons                         { z-index: 600 } /* R [OPTIONAL] used for app buttons, fab's */
+  #layer--main-application                  { z-index: 100 } /* C [MANDATORY] */
+    #layer--app-slides                      { z-index: 400 } /* R [OPTIONAL][fixed] anything will do: menu, lists */
+    #block--app-drawer-top                  { z-index: 300 } /* R [OPTIONAL][fixed] for logo, header */
+    #layer--app-content                     { z-index: 200 } /* R [MANDATORY] Main application content container */
+      #block--app-drawer-bottom             { z-index: 100 } /* R [OPTIONAL][fixed] for messages, snacks etc */
+  #layer--information                       { z-index:   1 } /* R [OPTIONAL][fixed] Info, contact, credits, map, etc */
+#layer--specials                            { z-index:  -1 } /* R [OPTIONAL][fixed] Backgrounds, playground */
+
+#layer--app-content, #layer--information,
+#layer--specials                            { flex-wrap: wrap }
+
+#layer--hero, #layer--main-app-base, #layer--main-application, #layer--information,
+#layer--app-slides>*                        { flex-direction: column }
+
+/* ----------------------------- */
+/* --- Sizes and positioning --- */
+/* ----------------------------- */
+/* All overlays are merely content containers serving as stacking context */
+[id^="overlay--"]                           { width: 0px; height: 0px } /* and no FBL */
+[id^="overlay--"]>*                         { position: relative }      /* used for absolute ::before and ::after */
+
+/* LAYER--HERO */
+#layer-hero, #layer-hero>*                  { width: 100% }
+
+#layer--hero                                {}
+
+/* LAYER--MAIN-APP-BASE: Main wrapper, meant to act as 'body' for the application */
+#layer--main-app-base                       { width: 100%; max-width: 100% }
+/* For scroll over/under purposes margin-bottom should be at #layer--information.height */
+
+/* 
+    LAYER--MAIN-APPLICATION
+
+    Main container holding all app and content related layers
+    Each action on the webpage takes place inside this layer.
+
+*/
+#layer--main-application                    { min-height: 100vh }
+body                                        { margin-bottom: 100vh }
+
+/* APP-DRAWERS (+ provisions) (horizontal toolbars) */
+#layer--information, #layer--app-slides>*   { padding-top: 5rem }
+
+#block--app-drawer-top,
+#block--app-drawer-bottom                   { position: fixed; left: 0; right: 0 }
+#block--app-drawer-top                      { top:    0; height: 5rem }
+#block--app-drawer-bottom                   { bottom: 0; height: 4rem }
+
+/* APP-SLIDES (vertical toolbars) */                                                    /* 100vw - 4rem - scrollbar */
+#layer--app-slides>*                        { position: fixed; top: 0; bottom: 0; max-width: calc(100vw - 5.0625rem) }
+#block--app-slide-left                      { left:  0; width: 20rem } /* 320 */
+#block--app-slide-right                     { right: 0; width:  4rem } /*  64 */
+
+/* layer--app-content */
+#layer--app-content,
+#block--app-content                         { flex: 1; width: 100%; max-width: 100%; margin: 0 auto }
+.content                                    { width: 100%; height: 100% }
+
+/* LAYER--INFORMATION / LAYER-SPECIALS (+ provisions) */
+#layer--information, #layer--specials       { flex: 1; height: 100%; width: 100% }
+
+#layer--information                         { min-height: 100vh }
+#block--information-top,
+#block--information-bottom                  { width: 100% }
+
+#layer--specials                            { position: fixed; top: 0; left: 0 }
+
+
+#block--app-content-top                     { height: 15rem;
+                                              bbackground-color: hsl(50,100%,50%);
+                                              bbackground: linear-gradient(0deg, hsl(0,0%,96%) 0%, hsl(50,100%,50%) 75% ); 
+                                            }
+
+#block--app-content-top [data-panel="left"],
+#block--app-content-top [data-panel="right"]  { justify-content: flex-start; border-bottom: 1px solid hsl(50,100%,50%) }
+#block--app-content-top [data-panel="center"] { justify-content: center; font-size: 2rem }
+
+/************************************************/
+/* DEFAULT OVERLAY TOGGLES SETTINGS             */
+/************************************************/
+/* Assign some default FBL behaviour */
+#overlay--toggles > *           { justify-content: center; align-content: center;
+                                  align-items: center; text-align: center;
+                                  outline: none; border: none; text-decoration: none }
+
+/* Assign default styling */
+#overlay--toggles > *           { position: fixed; overflow: hidden; cursor: pointer;
+                                  width: 3rem; height: 3rem; line-height: 3rem;
+                                  font-size: 2rem; font-weight: bold;
+                                  background-color: transparent; color: hsla(0,0%,0%,1); }
+
+#overlay--toggles > *:hover     { transform: scale(1.2); color: hotpink; }
+
+
+#toggle-app-slide-left          { top: .5rem; left:   0.5rem }
+#toggle-app-slide-right         { top: .5rem; right:  0.5rem }
+
+
+
+
+
+/************************************************/
+/* BLOCK--* content rules            [OPTIONAL] */
+/************************************************/
+[id^="app--content"]                                 { flex-direction: column }
+
+[data-panel]         , [id^="block--"]>*             { padding: .5rem }
+[data-panel="top"   ], [id^="block--"][id$="top"   ] { min-height: 4rem; width: 100% }
+[data-panel="middle"], [id^="block--"][id$="middle"] { flex: 1; width: 100% }
+[data-panel="bottom"], [id^="block--"][id$="bottom"] { min-height: 4rem; width: 100% }
+
+[data-panel="left"  ], [id^="block--"][id$="left"  ] { min-width: 4rem; height: 100%  }
+[data-panel="center"], [id^="block--"][id$="center"] { flex: 1; height: 100% }
+[data-panel="right" ], [id^="block--"][id$="right" ] { min-width: 4rem; height: 100%  }
+
+
+
+/************************************************/
+/* DATA-PATCH                             (WIP) */
+/************************************************/
+[data-nine-patch], [data-nine-patch]>*      { display: flex; flex-flow: row wrap }
+[data-nine-patch]                           { flex: 1 1 calc(100% / 3); height: calc(100% / 3) }
+[data-nine-patch]>*                         { width: 100%; height: 100% }
+
+/************************************************/
+/* easy RESPONSIVE|3D|NESS                      */
+/************************************************/
+[data-effect*="3D."  ]          { perspective: 600px; overflow: visible }
+[data-effect*="3D."  ]:hover>*  { z-index: 1; outline: 2px solid transparent; transition: .25s transform }
+[data-effect*="3D.30"]>*:hover  { transform: rotateY(30deg); box-shadow: -1rem .5rem 1rem  hsla(0,0%,0%,.15) } 
+
+[data-effect*="SC."  ]>*        { transform: scale(.25) }
+[data-effect*="SC.00"]>*:hover  { transform: scale(1)   }
+
+/************************************************/
+/* (DEMO)            (DEMO)              (DEMO) */
+/************************************************/
+body[demo="1"]                              { font-family: Biryani }
+body[demo="1"] #layer--hero                 { justify-content: space-between;
+                                              height: 90vh; min-height: 90vh;
+                                              font-size: 3rem; font-weight: 700; line-height: normal;
+                                              background-color: hsla(50,100%,50%,1); /* egg yolk */
+                                            }
+
+body[demo="1"] #layer--hero [threed="object"] { background-color: hsl(50,100%,50%); }
+
+body[demo="1"] #block--hero-top             { height: 15% }
+body[demo="1"] #block--hero-content         { flex: 1 }
+body[demo="1"] #block--hero-bottom          { height: 15% }
+
+body[demo="1"] #layer--hero>*               { flex: 1 1 calc(100% / 3); height: calc(100% / 3) }
+body[demo="1"] #layer--hero>*>*             { flex: 1 1 calc(100% / 3);
+                                              justify-content: center; align-content: center; align-items: center; }
+
+body[demo="1"] #layer--hero::after          { position: absolute;
+                                              top: 0; left: 0; width: 100%; height: 100%;
+                                              content: ''; /* !!!! content must be defined */
+                                              z-index: -1; /* -1 puts it behind #block--s */
+                                              bbbackground-image: url("http://unsplash.it/840/640?image=855");
+                                              background-color: hsl(50,100%,50%);
+                                              background-size: cover;
+                                              background-repeat: no-repeat;
+                                              background-attachment: fixed;
+                                              background-position: 100% 100% }
+
+body[demo="1"] #layer--main-app-base        { background-color: hsl(0,0%,96%); color: hsl(0,0%,56%) }
+body[demo="1"] #layer--main-application     { background-color: hsl(0,0%,96%) }
+
+body[demo="1"] #block--app-slide-left       { background-color: white }
+body[demo="1"] #block--app-slide-right      { background-color: hsl(210, 13%, 65%); color: hsl(50,100%,50%)  }
+body[demo="1"] [id^="block--app-drawer"]    { background-color: hsla(0,0%,75%,.85); }
+
+body[demo="1"] #layer--information          { background-color: gray; color: white}
+
+body[demo="1"] #block--information-top      { height: 35% }
+body[demo="1"] #block--information-bottom   { height: 65% }
+body[demo="1"] #block--information-top>*    { flex: 1 1 calc(100% / 2); height: 100% }
+body[demo="1"] #block--information-bottom>* { flex: 1 1 calc(100% / 3); height: 100% }
+
+body[demo="1"] #layer--specials             { background-color: black;
+                                              background-attachment: fixed; 
+                                              background-repeat: no-repeat;
+                                              background-size: cover }
+
+body[demo="1"] [data-nine-patch]>*          { justify-content: center; align-content: center; align-items: center;
+                                              font-size: 4rem; color: hsla(0,0%,100%,.9);
+                                              color: hsla(0,0%,100%,.9);
+                                              text-shadow: 2px 2px 1px hsla(0,0%,0%,.4),
+                                                           2px 2px 6px hsla(0,0%,0%,.4) }
+
+/************************************************/
+/* LOCAL RULES                                  */
+/************************************************/
+/* Single side */
+[data-style*="bd.T"]   { border-top:    1px solid rgba(0,0,0,.20) }   /* Needs to be a bit darker to see, just optics */
+[data-style*="bd.R"]   { border-right:  1px solid rgba(0,0,0,.14) }
+[data-style*="bd.B"]   { border-bottom: 1px solid rgba(0,0,0,.14) }
+[data-style*="bd.L"]   { border-left:   1px solid rgba(0,0,0,.14) }
+[data-style*="bd.L.Y"] { border-left-color: hsl(50,100%,50%) }
+
+</style>
+<style>
+#box-test            { flex-flow: column wrap; max-width: 85%; margin: 0 auto }
+#box-test > *        { flex-flow: row wrap; justify-content: center }
+
+.box                 { background-color: hsl(210, 100%, 60%); color: white; margin: .5rem; mmargin-right: auto;
+                       border: 2px solid hsl(210, 100%, 30%);
+                       background-image: url("http://unsplash.it/840/640?image=855");
+                       background-color: hsl(50,100%,50%);
+                       background-size: cover;
+                       background-repeat: no-repeat;
+                       bbackground-attachment: fixed;
+                       background-position: 100% 100% }
+
+/* Multiplication factor */
+[data-calcbase="10"] { font-size: calc( 1   * 0.06250 * 100vmin) } 
+[data-calcbase="15"] { font-size: calc( 1.5 * 0.06250 * 100vmin) } 
+[data-calcbase="20"] { font-size: calc( 2   * 0.06250 * 100vmin) } 
+[data-calcbase="25"] { font-size: calc( 2.5 * 0.06250 * 100vmin) } 
+[data-calcbase="30"] { font-size: calc( 3   * 0.06250 * 100vmin) } 
+[data-calcbase="35"] { font-size: calc( 3.5 * 0.06250 * 100vmin) } 
+[data-calcbase="40"] { font-size: calc( 4   * 0.06250 * 100vmin) } 
+[data-calcbase="45"] { font-size: calc( 4.5 * 0.06250 * 100vmin) } 
+[data-calcbase="50"] { font-size: calc( 5   * 0.06250 * 100vmin) } 
+[data-calcbase="60"] { font-size: calc( 6   * 0.06250 * 100vmin) } 
+[data-calcbase="70"] { font-size: calc( 7   * 0.06250 * 100vmin) } 
+[data-calcbase="80"] { font-size: calc( 8   * 0.06250 * 100vmin) } 
+[data-calcbase="90"] { font-size: calc( 9   * 0.06250 * 100vmin) } 
+[data-calcbase="A0"] { font-size: calc(10   * 0.06250 * 100vmin) } 
+
+/* set font-sizes of content (back) to default, otherwise content will inherit the multiplied font-size */
+[data-calcbase] > *  { font-size: 1rem; line-height: normal }
+
+/* Ratio preference PORTRAIT => NOTICE the usage of EM instead of REM.
+   Sizing will be based on inherited font-sizes of CALCBASE above
+   (or parent if CALCBASE is omitted, up to you) ! */
+[data-ratio^="16:10"] { width: 1em; height: 1.6em     } @media (orientation: landscape) { [data-ratio^="16:10"]:not([data-ratio$=".0"]) { width: 1.6em;     height: 1em } }
+[data-ratio^="16:9"]  { width: 1em; height: 1.77778em } @media (orientation: landscape) { [data-ratio^="16:9" ]:not([data-ratio$=".0"]) { width: 1.77778em; height: 1em } }
+[data-ratio^="3:2" ]  { width: 1em; height: 1.5em     } @media (orientation: landscape) { [data-ratio^= "3:2" ]:not([data-ratio$=".0"]) { width: 1.5em;     height: 1em } }
+[data-ratio^="4:3" ]  { width: 1em; height: 1.33333em } @media (orientation: landscape) { [data-ratio^= "4:3" ]:not([data-ratio$=".0"]) { width: 1.33333em; height: 1em } }
+[data-ratio^="5:3" ]  { width: 1em; height: 1.66667em } @media (orientation: landscape) { [data-ratio^= "5:3" ]:not([data-ratio$=".0"]) { width: 1.66667em; height: 1em } }
+
+/* Ratio preference LANDSCAPE */
+[data-ratio^="10:16"] { height: 1em; height: 1.6em    } @media (orientation: landscape) { [data-ratio^="10:16"]:not([data-ratio$=".0"]) { height: 1.6em;     width: 1em } }
+[data-ratio^="9:16"]  { height: 1em; width: 1.77778em } @media (orientation: landscape) { [data-ratio^= "9:16"]:not([data-ratio$=".0"]) { height: 1.77778em; width: 1em } }
+[data-ratio^="2:3" ]  { height: 1em; width: 1.5em     } @media (orientation: landscape) { [data-ratio^= "2:3" ]:not([data-ratio$=".0"]) { height: 1.5em;     width: 1em } }
+[data-ratio^="3:4" ]  { height: 1em; width: 1.33333em } @media (orientation: landscape) { [data-ratio^= "3:4" ]:not([data-ratio$=".0"]) { height: 1.33333em; width: 1em } }
+[data-ratio^="3:5" ]  { height: 1em; width: 1.66667em } @media (orientation: landscape) { [data-ratio^= "3:5" ]:not([data-ratio$=".0"]) { height: 1.66667em; width: 1em } }
+
+[data-flip="R.Y180"] { transform: rotateY(180deg) } /* wtf? */
+[data-flip="R.X180"] { transform: rotateX(180deg) }
+[data-flip="R.XY180"]{ transform: rotateX(180deg) rotateY(180deg) }
+
+</style>
+
+<style>
+
+.outerdivs
+{
+  background-color: #ddd;
+  background-image: url('http://loremflickr.com/400/200');
+  height: 200px;
+  position: relative;
+  width: 400px;
+}
+
+.outerdivs > h3
+{
+  color: rgb(255, 102, 2);
+  height: 30px;
+  left: 0;
+  line-height: 30px;
+  margin-top: -15px;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  width: 100%;
+  z-index: 10;
+}
+
+.outerdivs .innerdivs
+{
+  background-color: #fff;
+  background-image: url('http://loremflickr.com/400/200');
+  background-position: center center;
+  filter: blur(2px);
+  height: 20%;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  transform: translateY( -50% );
+  transition: height 0.2s ease;
+  width: 100%;
+  z-index: 9;
+}
+.outerdivs .innerdivs img
+{
+  left: 50%;
+  opacity: 0.8;
+  position: absolute;
+  top: 50%;
+  transform: translate( -50%, -50% );
+}
+
+.outerdivs:hover .innerdivs
+{
+  height: 100%;
+}
+
+/*
+
+<div class="outerdivs">
+  <h3>Title</h3>
+  <div class="innerdivs">
+    <img src="http://loremflickr.com/400/200" alt="" />
+  </div>
+</div>
+
+
+*/
+
+</style>
+
+
+<style id="ers--demo--contact-form">
+.container {
+  width: 900px;
+  height: 650px;
+  margin: 5% auto;
+}
+.map {
+  width: 45%;
+}
+.contact-form {
+  width: 53%;
+}
+.contact-form .title {
+  font-size: 2.5em;
+  font-family: "Libre Franklin", sans-serif;
+  font-weight: 700;
+  color: #242424;
+  margin: 5% 8%;
+}
+.contact-form .subtitle {
+  font-size: 1.2em;
+  font-weight: 400;
+  margin: 0 4% 5% 8%;
+}
+.contact-form input,
+.contact-form textarea {
+  width: 330px;
+  padding: 3%;
+  margin: 2% 8%;
+  color: #242424;
+  border: 1px solid #B7B7B7;
+}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #242424;
+}
+.contact-form .btn-send {
+  background: #A383C9;
+  width: 180px;
+  height: 60px;
+  color: #FFFFFF;
+  font-weight: 700;
+  margin: 2% 8%;
+  border: none;
+}
+
+
+</style>
+
+
+<!-- Last in document <head> as some utils require ability to override other styles   -->
+<link rel="stylesheet" href="css/ers-base-utils.css" ><!-- [OPTIONAL] Handy utilities -->
+
+</head>
+
+<body data-debug="0" demo="1">
+<div id="overlay--modals" ></div><!-- #overlay--modals  -->
+
+<div id="overlay--toggles">
+    <button id="toggle-app-slide-left" data-display="1"
+            onclick="toggleCapabilityById('ern--toggle-sidebar-left--opt')">&#x2261;</button>
+
+    <button id="toggle-app-slide-right" data-display="1"
+            onclick="toggleCapabilityById('ern--toggle-sidebar-right--opt')">&#x22ee;</button>
+</div><!-- #overlay--toggles -->
+
+<div id="overlay--buttons"></div><!-- #overlay--buttons -->
+
+<div id="layer--masterslides" data-gone="1">
+    <input type="checkbox" id ="masterslide--toggler" data-gone="1">
+    <label id="toggle--masterslide" for="masterslide--toggler"></label>
+
+    <aside id="block--masterslide-left">
+        <div></div>
+        <div>MASTER SLIDE</div>
+        <div></div>
+    </aside>
+</div>
+
+<div id="layer--hero" data-gone="0">
+    <div id="block--hero-top">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div><!-- #block--hero-top -->
+    <div id="block--hero-content">
+        <div></div>
+        <div>BANANAS</div>
+        <div></div>
+    </div><!-- #block--hero-content -->
+    <div id="block--hero-bottom">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div><!-- #block--hero-bottom -->
+</div><!-- #layer--hero -->
+
+<div id="layer--main-app-base">
+    <div id="layer--main-application">
+        <div id="layer--app-slides" data-gone="1">
+            <div id="block--app-slide-left" data-style="bd.R">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div id="block--app-slide-right" data-style="bd.L.Y">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div><!-- #layer--app-slides -->
+
+        <div id="block--app-drawer-top" data-gone="1">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div><!-- #block--app-drawer-top -->
+
+        <div id="block--app-content-top">
+            <div data-panel="left"  >chapter one</div>
+            <div data-panel="center">
+                <div>easy RESPONSIVE<span>|FONT|</span>NESS</div>
+            </div>
+            <div data-panel="right" >the final chapter</div>
+        </div><!-- #block--app-content-header -->
+
+        <div id="layer--app-content">
+            <div id="block--app-content">
+                <!-- *--------------------------------------------------* -->
+                <!-- Put all your user/reader/app content below this text -->
+                <!-- *--------------------------------------------------* -->
+
+                <div id="app--content-left"   data-panel="left"  ></div>
+                <div id="app--content-center" data-panel="center">
+                
+                    <section id="box-test">
+                        <item>
+                            <div class="box" data-calcbase="20" data-ratio="16:9.0"><p>20</p></div>
+                            <div class="box" data-calcbase="20" data-ratio="16:9.0"><p>20</p></div>
+                            <div class="box" data-calcbase="20" data-ratio="16:9.0"><p>20</p></div>
+                            <div class="box" data-calcbase="20" data-ratio="16:9.0"><p>20</p></div>
+                            <div class="box" data-calcbase="20" data-ratio="16:9.0"><p>20</p></div>
+                            <div class="box" data-calcbase="20" data-ratio="16:9.0"><p>20</p></div>
+                            <div class="box" data-calcbase="20" data-ratio="16:9.0"><p>20</p></div>
+                            <div class="box" data-calcbase="20" data-ratio="16:9.0"><p>20</p></div>
+                            <div class="box" data-calcbase="20" data-ratio="16:9.0"><p>20</p></div>
+                            <div class="box" data-calcbase="20" data-ratio="16:9.0"><p>20</p></div>
+                        </item>
+                        <item>
+                            <div class="box" data-calcbase="20" data-ratio="16:9"><p>20</p></div>
+                            <div class="box" data-calcbase="30" data-ratio="16:9"><p>20</p></div>
+                            <div class="box" data-calcbase="20" data-ratio="16:9"><p>20</p></div>
+                            <div class="box" data-calcbase="20" data-ratio="16:9"><p>20</p></div>
+                            <div class="box" data-calcbase="20" data-ratio="16:9"><p>20</p></div>
+                            <div class="box" data-calcbase="20" data-ratio="9:16"><p>20</p></div>
+                            <div class="box" data-calcbase="20" data-ratio="16:9"><p>20</p></div>
+                            <div class="box" data-calcbase="20" data-ratio="16:9"data-flip="R.Y180" ><p>20</p></div>
+                            <div class="box" data-calcbase="20" data-ratio="16:9"data-flip="R.X180" ><p>20</p></div>
+                            <div class="box" data-calcbase="20" data-ratio="16:9"data-flip="R.XY180"><p>20</p></div>
+                        </item>
+                    </section>
+                    
+                
+                </div>
+                <div id="app--content-right"  data-panel="right" ></div>
+
+                <!-- *--------------------------------------------------* -->
+                <!-- Put all your user/reader/app content above this text -->
+                <!-- *--------------------------------------------------* -->
+            </div><!-- #block--app-content -->
+
+            <div id="block--app-drawer-bottom" data-gone="1">
+                <div></div>
+                <div>DRAWER</div>
+                <div></div>
+            </div><!-- #block--app-drawer-bottom -->
+        </div><!-- #layer--app-content -->
+
+        <div id="block--app-content-bottom">
+            <div data-panel="left"  ></div>
+            <div data-panel="center">FOOTER</div>
+            <div data-panel="right" ></div>
+        </div><!-- #block--app-content-footer -->
+    </div><!-- #layer--main-application -->
+
+    <div id="layer--information" data-gone="0">
+        <div id="block--information-top"   >
+            <div></div>
+            <div></div>
+        </div>
+        <div id="block--information-bottom">
+            <div></div>
+
+            <div>
+                <div class="container">
+                    <section class="contact-form">
+                        <header>
+                            <h1 class="title">get in touch &#x1f6c8;</h1>
+                            <h2 class="subtitle">We are here to assist</h2>
+                        </header>
+
+                        <form action="">
+                            <input type="text"  name="name"   placeholder="Your Name" />
+                            <input type="email" name="e-mail" placeholder="Your E-mail Adress"/>
+                            <input type="tel"   name="phone"  placeholder="Your Phone Number"/>
+
+                            <textarea name="text" id="" rows="5" placeholder="Your Message"></textarea>
+
+                            <button class="btn-send">Get a Call Back</button>
+                        </form>
+
+                    </section>
+                    <div class="map">
+                        <!-- iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d1217.914256005999!2d4.893406636770616!3d52.37352944992672!3m2!1i1024!2i768!4f13.1!5e0!3m2!1snl!2snl!4v1469027208574" width="100%" height="100%" style="border:0" allowfullscreen></iframe-->
+                    </div>
+                </div>
+            </div>
+
+            <div></div>
+        </div>
+    </div><!-- #layer--information -->
+</div><!-- #layer--main-app-base -->
+
+<div id="layer--specials" data-gone="0">
+    <div data-nine-patch="1"><div></div></div>
+    <div data-nine-patch="2"><div></div></div>
+    <div data-nine-patch="3"><div></div></div>
+    <div data-nine-patch="4"><div></div></div>
+    <div data-nine-patch="5"><div></div></div>
+    <div data-nine-patch="6"><div></div></div>
+    <div data-nine-patch="7"><div></div></div>
+    <div data-nine-patch="8"><div></div></div>
+    <div data-nine-patch="9"><div></div></div>
+</div><!-- #layer--specials -->
+</body>
+</html>

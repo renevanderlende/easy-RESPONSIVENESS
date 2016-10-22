@@ -1,0 +1,112 @@
+@CHARSET "UTF-8";
+
+/************************************************/
+/* easy RESPONSIVE|SCALE|NESS      (STABLE WIP) */
+/************************************************/
+/*
+    Two options:
+
+      1) .SCALE-TO                 - single class to simply scale an element
+      2) .SCALE_SWITCH and SCALE   - to scale an element with a checkbox trigger
+    
+    Margins will not get scaled by HTML engine, these classes resize the margins to the proper scale.
+    Override margins if you want regular HTML behaviour.    
+
+*/
+/* Scale toggling lobotomized owl for generic use */
+[class*="scale-to-12" ],.scale-switch-12  + * { transform: scale(.125) }
+[class*="scale-to-25" ],.scale-switch-25  + * { transform: scale(.25 ) }
+[class*="scale-to-33" ],.scale-switch-33  + * { transform: scale(.3333)}
+[class*="scale-to-50" ],.scale-switch-50  + * { transform: scale(.5  ) }
+[class*="scale-to-67" ],.scale-switch-67  + * { transform: scale(.6667)}
+[class*="scale-to-75" ],.scale-switch-75  + * { transform: scale(.75 ) }
+[class*="scale-to-100"],.scale-switch-100 + * { transform: scale(1   ) }
+
+[class*="scale-switch"] + *         { /*transition: all 50ms ease-in-out*/ }
+[class*="scale-switch"]:checked + * { /*transition: all 50ms ease-in-out;*/
+    transform: scale(1.0); z-index: 9999; /* switch to full screen, on top of the rest */
+    position: fixed; top: 0; left:0; 
+    width: 100%; height: 100%; 
+    margin: 0; /* Resets negative margins below */
+}
+
+[class*="scale-switch"]:checked + *[data-view*="MX"] {
+    max-width: 100%; max-height: 100%; 
+}
+
+[class^="scale-switch"]:checked + *:hover,
+[class^="scale-switch"]:checked + * { border-radius: 0; filter: none; box-shadow: none }
+
+/*
+    Margins will not get scaled by HTML engine, so we have to do it by hand:
+    TODO: ratio now fixed at 2:3 => make variable and work with 'easy RESPONSIVE|RATIO|NESS'
+*/
+.scale-to-12 ,.scale-12         { margin: calc(-1 * (32rem - .125  * 32rem)/2 + .25rem) calc(-1 * (18rem - .125  * 18rem)/2 + .25rem) }
+.scale-to-25 ,.scale-25         { margin: calc(-1 * (32rem - .25   * 32rem)/2 + .25rem) calc(-1 * (18rem - .25   * 18rem)/2 + .25rem) }
+.scale-to-33 ,.scale-33         { margin: calc(-1 * (32rem - .3333 * 32rem)/2 + .25rem) calc(-1 * (18rem - .3333 * 18rem)/2 + .25rem) }
+.scale-to-50 ,.scale-50         { margin: calc(-1 * (32rem - .5    * 32rem)/2 + .25rem) calc(-1 * (18rem - .5    * 18rem)/2 + .25rem) }
+.scale-to-67 ,.scale-67         { margin: calc(-1 * (32rem - .6667 * 32rem)/2 + .25rem) calc(-1 * (18rem - .6667 * 18rem)/2 + .25rem) }
+.scale-to-75 ,.scale-75         { margin: calc(-1 * (32rem - .75   * 32rem)/2 + .25rem) calc(-1 * (18rem - .75   * 18rem)/2 + .25rem) }
+.scale-to-100,.scale-100        { margin: .25rem }
+
+.scale-to-12sq ,.scale-12sq     { margin: calc(-1 * (18rem - .125  * 18rem)/2 + .25rem) }
+.scale-to-25sq ,.scale-25sq     { margin: calc(-1 * (18rem - .25   * 18rem)/2 + .25rem) }
+.scale-to-33sq ,.scale-33sq     { margin: calc(-1 * (18rem - .3333 * 18rem)/2 + .25rem) }
+.scale-to-50sq ,.scale-50sq     { margin: calc(-1 * (18rem - .5    * 18rem)/2 + .25rem) }
+.scale-to-67sq ,.scale-67sq     { margin: calc(-1 * (18rem - .6667 * 18rem)/2 + .25rem) }
+.scale-to-75sq ,.scale-75sq     { margin: calc(-1 * (18rem - .75   * 18rem)/2 + .25rem) }
+.scale-to-100sq,.scale-100sq    { margin: .25rem }
+
+/* 
+    FORMULA for T/B and L/R margins:
+
+    margin: calc(-1 * (full-scale-height - scale * full-scale-height)/ 2 + wanted scaled element T/B margin )
+            calc(-1 * (full-scale-width  - scale * full-scale-width )/ 2 + wanted scaled element L/R margin )
+
+    - original unscaled element width and height
+    - negative (-1) to scale down ('remove') HTML unscaled margin
+    - calculated margin / 2 for either side T/B and L/R
+    - plus actually wanted margin
+
+    NOTES: - Because of 'box-sizing: border-box' padding will get scaled properly by HTML engine.
+           - !!ALL calc()'s in REM so they comply with 'easy RESPONSIVE|FONT|NESS' font-sizing.
+           - Obviously you need four calc()'s when all margins differ.
+
+    Finally, play with scales and sizes to get the hang of it.
+*/
+
+#the-scale-trigger                                 { /* trigger styling */ cursor: pointer }
+.scale-switch-N + #target-element-wrapper-which-is { /* scale N size */ }
+.scaleN                                            { /* scale N margins */ }
+
+/* Generic  */ [class^="scale-switch"]:checked + *,    
+/* Specific */ .scale-switch-N:checked + #target-element-wrapper-which-is { /* full-screen/unscaled size */ }
+
+/* (yes, that's all there is to it...really) */
+/*
+    GENERIC USAGE:
+    
+        <div id="target-element-wrapper-which-is" class="scaled-to-N">
+            <header>some header</header>
+            <div>
+
+                <!-- your content -->
+
+            </div>
+            <footer>some footer</footer>
+        </div>
+
+        OR
+
+        <input id="your-hidden-trigger" class="scale-switch-N" type="checkbox" data-gone="1"/>
+        <div id="target-element-wrapper-which-is" class="scale-N">
+            <label id="the-scale-trigger" for="your-hidden-trigger">alternate checkbox trigger as header</label>
+            <div>
+
+                <!-- your content -->
+
+            </div>
+            <footer>some footer</footer>
+        </div>
+*/
+

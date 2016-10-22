@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title>ERS harmonica 1 (FBL)</title>
+
+<meta name="description" content="part 1: y= mx+b - easy responsive||ness series">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT">
+
+<style>
+/************************************************/
+/* PREFERED STANDARDS                  (STABLE) */
+/************************************************/
+html,body,main          { box-sizing: border-box; width: 100%; margin: 0 auto; padding: 0 }
+*::before, *::after, *  { box-sizing: inherit } /* calculate elements sizes including their padding and borders */
+
+ /* Check height info: https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient => NOTES */
+html                    { height: 100%; min-height: 100vh; font-family: Arial, Helvetica, sans-serif }
+body,main               { max-width: 100%; height: 100%; overflow: auto }
+/************************************************/
+/* PREFERED THIS AND THATS             (STABLE) */
+/************************************************/
+/* modern smoothing and typface ligature usage */
+html                    { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased;
+                          font-variant-ligatures: common-ligatures discretionary-ligatures historical-ligatures }
+/* Disallow users to select any page content (for copy/paste) by default */
+body                    { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none }
+/************************************************/
+/* UTILS                               (STABLE) */
+/************************************************/
+/* Show a dotted outline for easy debugging of element sizing */
+[data-debug*="1"] *     { outline: 1px dashed black }
+/* slow down page buildup to follow transtion or check responsiveness */
+[data-debug*="T"] *     { transition: all 1.0s ease-in-out }
+[data-debug*="t"] *     { transition: all 0.5s ease-in-out }
+/* Absolutely, positively hide the element from view and voice-readers */
+[data-gone="1"]         { display:none; position:absolute; overflow:hidden; clip:rect(0 0 0 0);
+                          z-index:-999999; top:-999999px; margin:-1px; padding:0; border:0;
+                          height:1px; width:1px; min-height:0; min-width:0; max-height:0; max-width:0 }
+/************************************************/
+/* DEFAULT APPLICATION CURSORS         (STABLE) */
+/************************************************/
+body  { cursor: default } /* plain arrow for everything, but */
+input { cursor: auto }    /* use HTML default cursor on inputs, unless it is a: */
+input[list="datalist"],input[type="button"],input[type="checkbox"],input[type="radio"],
+input[type="color"],input[type="range"],input[type="reset"],input[type="file"],input[type="submit"],
+a,button,select,keygen   { cursor: pointer } 
+[contenteditable="true"] { cursor: text }
+</style>
+
+<style>
+/************************************************/
+/* easy RESPONSIVE|FONT|NESS       (STABLE WIP) */
+/************************************************/
+/* Responsive font: y = mx + b => 12px at 320 ... 16px at 960 => 1 full pixel per 160px screen size */
+html    { font-size: calc(0.00625 * 100vmin + 0.625rem); font-weight: normal; line-height: normal }
+[crisp] { text-shadow: .2px .2px .3px hsla(0,0%,25%,.2), -.1px -.1px .1px hsla(0,0%,25%,.1) }
+/* subtle shadow to improve text readability */
+</style>
+
+<style>
+/************************************************/
+/* easy RESPONSIVE|HARMONICA|NESS         (WIP) */
+/************************************************/
+/*
+    .harmonicaX or
+    [data-harmonica]: use to define a flexbox (FBL) parent container holding the harmonica "folding" elements.
+
+    .harmonicaX or
+    data-harmonica > * - harmonica "folding" elements (flexed child elements)
+
+    data-harmonica: H - Horizontal  a row of several folds next to eachother     (.harmonicaH)
+                    V - Vertical    a column of several folds below to eachother (.harmonicaV)
+
+    Explanation:
+
+    - grow hovered flexed child element to given flex-basis
+    - shrink the other flexed child elements to: (width [or height] * flex-basis) / (#elements - 1)
+    - optionally adjust them to specified flexed element width/height constraints (or fill parent, the default)
+
+    A flex-basis of 100% hides sibling child elements when they have no minimum sizes, 80% or 90% works best
+
+*/
+/***************************************************/
+/* EITHER: Simple out of the box harmonica classes */
+/***************************************************/
+/* [MANDATORY] */
+[class^="harmonica"]            { display: flex; height: 100%; width: 100% }
+.harmonicaH                     { flex-flow: row nowrap }
+.harmonicaV                     { flex-flow: column nowrap }
+
+[class^="harmonica"]>*          { flex: 1; overflow: hidden }
+[class^="harmonica"]>*:hover    { flex-basis: 80% }
+
+/* [OPTIONAL] */
+.harmonicaH>*                   { height: 100%; max-height: 100%; min-width : 1rem }
+.harmonicaV>*                   { width : 100%; max-width : 100%; min-height: 1rem }
+
+/***************************************************/
+/* OR: Equal effect but now with custom attributes */
+/***************************************************/
+/* [MANDATORY] */
+[data-harmonica]                { display: flex; height: 100%; width: 100% }
+[data-harmonica^="H"]           { flex-flow: row nowrap }
+[data-harmonica^="V"]           { flex-flow: column nowrap }
+
+[data-harmonica]>*              { flex: 1; overflow: hidden }
+[data-harmonica]>*:hover        { flex-basis: 80% }
+
+/* [OPTIONAL] */
+[data-harmonica^="H"]>*         { height: 100%; max-height: 100%; min-width : 1rem }
+[data-harmonica^="V"]>*         { width : 100%; max-width : 100%; min-height: 1rem }
+</style>
+
+
+<style>
+/************************************************/
+/* easy RESPONSIVE|BEHAVIOUR|NESS         (WIP) */
+/************************************************/
+/*
+    [data-behaviour] modifies the actions/effect of child elements
+
+    data-behaviour   0  - disable       to (temporary) disable any element behaviour
+                     1  - enable
+
+                     t  - transition    
+                    [x] - anything else you can come up with
+
+*/
+[data-behaviour]>*              { transition: all 150ms ease-in-out /*default values*/ }
+ /* toggle values */
+[data-behaviour*="t0"]>*        { transition: all 0ms ease-in-out }
+[data-behaviour*="t1"]>*        { transition: all 150ms ease-in-out }
+</style>
+
+
+<style>
+/************************************************/
+/* easy RESPONSIVE|FUNCTION|NESS          (WIP) */
+/************************************************/
+/*
+    data-function:  S - Switch      a [hidden] checkbox/radio input element which remembers its current state
+                    T - Trigger     a label/element which is used to toggle the switch
+*/
+[data-function="S"]             { }
+[data-function="T"]             { cursor: pointer }
+
+</style>
+
+
+<style>
+/************************************************/
+/* EXTRAS (WIP): maximize element when clicked  */
+/************************************************/
+[data-harmonica]:not([data-behaviour^="0"])>*:hover { flex-basis: 75% }
+ /* Hide Switch */
+[data-harmonica]>*[data-function="S"] { display:none; position:absolute; overflow:hidden; clip:rect(0 0 0 0);
+                                        z-index:-999999; top:-999999px; margin:-1px; padding:0; border:0;
+                                        height:1px; width:1px; min-height:0; min-width:0; max-height:0; max-width:0 }
+
+ /* Maximize and fix har-mo-ni-ca's in place */
+[data-harmonica*="M"]>*[data-function="S"]         + [data-function="T"] {}
+[data-harmonica*="M"]>*[data-function="S"]:checked + [data-function="T"] { width: 100% } /* Play with this */
+
+</style>
+
+<style>
+ /* EXTRAS: add a nice filter hover filter effect */
+[data-effect="blur"]:hover>*:not(:hover)   { filter: blur(2px); opacity: .6 } /* demo, anything goes */
+</style>
+
+<style>
+main                            { display: flex; flex-flow: row wrap; max-width: 50% }
+section                         { flex: 1; padding-top: 3rem }
+item                            { padding-bottom: 3rem }
+/* Toying with FBL harmonica */
+item[data-harmonica]>*          { border: .5px solid hsla(0,0%,0%,.1)  }
+item[data-harmonica]>*:hover    { font-weight: bold }
+
+/* Toying with hidden checkboxes */
+[data-harmonica*="M"]>*[data-function="S"]:checked + [data-function="T"] { background: hsl(210, 100%, 60%); color: white }
+
+</style>
+
+</head>
+
+<body data-debug="1">
+<main>
+    <section>
+        <item class="harmonicaV" data-behaviour>
+            <div>V1</div>
+            <div>V2</div>
+            <div>V3</div>
+        </item>
+        <item data-harmonica="HM" data-effect="blur" data-behaviour>
+            <input id="C1" type="checkbox" data-function="S" name="G1" /><label for="C1" data-function="T"><span>H1</span></label>
+            <input id="C2" type="checkbox" data-function="S" name="G1" /><label for="C2" data-function="T"><span>H2</span></label>
+            <input id="C3" type="checkbox" data-function="S" name="G1" /><label for="C3" data-function="T"><span>H3</span></label>
+        </item>
+        <item data-harmonica="HM" data-effect="blur" data-behaviour>
+            <input id="R1" type="radio" data-function="S" name="G2" /><label for="R1" data-function="T"><span>H1</span></label>
+            <input id="R2" type="radio" data-function="S" name="G2" /><label for="R2" data-function="T"><span>H2</span></label>
+            <input id="R3" type="radio" data-function="S" name="G2" /><label for="R3" data-function="T"><span>H3</span></label>
+            <input id="R4" type="radio" data-function="S" name="G2" /><label for="R4" data-function="T"><span>H4</span></label>
+            <input id="R5" type="radio" data-function="S" name="G2" /><label for="R5" data-function="T"><span>H5</span></label>
+            <input id="R6" type="radio" data-function="S" name="G2" /><label for="R6" data-function="T"><span>H6</span></label>
+            <input id="R7" type="radio" data-function="S" name="G2" /><label for="R7" data-function="T"><span>H7</span></label>
+            <input id="R8" type="radio" data-function="S" name="G2" /><label for="R8" data-function="T"><span>H8</span></label>
+            <input id="R9" type="radio" data-function="S" name="G2" /><label for="R9" data-function="T"><span>H9</span></label>
+        </item>
+    </section>
+</main>
+</body>
+</html>

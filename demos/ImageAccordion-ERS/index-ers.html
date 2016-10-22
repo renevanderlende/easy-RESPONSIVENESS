@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+	<title title="({month} 2015) miss sflex - make it super smart: simplified flexbox layout">MSF in-search-of-alternative-to-carousel</title>
+
+	<!-- Inspiration: http://stackoverflow.com/questions/33771897 -->
+
+    <meta name="description" content="miss sflex - make it super smart: simplified flexbox layout">
+    <meta name="author"      content="rene van der lende">
+    <meta name="copyright"   content="(c) 2015 - rene van der lende">
+    <meta name="license"     content=" Apache-2">
+
+<style id="msf-def--main-rules">
+/***********************************************/
+/*          MANDATORY global rules             */
+/***********************************************/
+@import url("http://fonts.googleapis.com/css?family=Questrial|Work+Sans|Poiret+One|Oswald|Raleway");
+
+html, body      { box-sizing: border-box; height: 100%; width: 100%;
+                  margin: 0px; padding: 0px; border: 0px; cursor: default }
+
+body            { font-family: 'Questrial','Work Sans', Arial, sans-serif; font-weight: 400; font-size: 15px; color: #333;
+                  background: #ddd url(images/bg.jpg) repeat top left;
+                  -webkit-user-select: none; -moz-user-select: none; 
+                      -ms-user-select: none;      user-select: none
+                }
+*, *:before, 
+*:after         { box-sizing:  border-box }
+
+/* *             { outline: 1px dashed red } /* [MUST HAVE] just for debugging */
+</style>
+
+
+<style id="msf-cmp--accordion">
+/***********************************************/
+/*         MANDATORY Accordion rules           */
+/***********************************************/
+/* [MOSTLY MANDATORY] removes the gap below image elements */
+img { display: block
+}
+
+[R],[C] { display: flex }
+[R]     { height: 100% }
+[C]     { width: 100%; flex-direction: column }
+
+/* [MANDATORY] define flex container (defaults to flex-flow: row nowrap) */
+.facc { display: flex }
+
+/* [MANDATORY] tiny flex-basis to succom transition jitter (case dependend) */
+.facc > * {
+    flex: 1 1 99px;                    /* [MANDATORY] collapsed size, modify as required */
+    overflow: hidden;                   /* [MANDATORY] no accordion behaviour without it */
+    transition: flex 150ms ease-in-out  /* [OPTIONAL] slow things down a bit */
+}
+
+.facc > .main       { position: relative }
+.facc > .sub        { transition: all 150ms ease-in-out;  }
+.facc > .sub:hover  { height: 200px; width: 100% }
+
+/* [MANDATORY] grow hovered child to flex-basis + N% of it's width */
+.facc *:hover       { flex: 1 1 90%; cursor: pointer }        
+</style>
+
+
+<style id="msf-simple-accordion">
+/***********************************************/
+/* [OPTIONAL] demo styling only, fiddle away!  */
+/***********************************************/
+/* Uses class .facc, just simple demo styling here */
+#acc-1          { height: 50px; line-height: 50px; width: 80%; font-size: 24px; margin: 0 auto }
+#acc-1 *        { padding: 0; text-align: center; background: rgba(247,214,199,.9); z-index: 1;
+                  box-shadow: 0 0 0 1px rgba(255,255,255,0.6) }
+</style>
+
+
+<style id="msf-mod-codrops-accodion-example">
+/***********************************************/
+/* [OPTIONAL] demo styling only, fiddle away!  */
+/***********************************************/
+
+ .facc.ia-container *:hover { flex: 1 1 100%; cursor: pointer }        
+
+.ia-container {
+    width: 695px; /* or 36% */
+    margin: 0 auto;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.08);
+    border: 7px solid rgba(255,255,255,0.6);
+}
+.ia-container figure {
+    padding: 0; margin: 0;                      /* [OPTIONAL] remove HTML defaults */
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.6);/* functions as border */
+}
+figure {
+    position: relative;                         /* Needed to position 'figcaption span' */
+}
+figcaption span {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    left: 1px;
+    text-align: center;
+    background: rgba(87, 73, 81, 0.2);
+    line-height: 24px;
+    font-size: 20px;
+    opacity: 0;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-weight: bold;
+    padding: 20px;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+} 
+figure:hover span {
+    opacity: 1;
+    transition: opacity 150ms ease-in-out;
+}
+</style>
+
+
+<style id="msf-demo--styling">
+item                        { position: relative; display: block; padding: 30px 0 50px 0 }
+item:not(:last-child):after { content: ''; height: 1px; width: 100%; position: absolute; bottom: 0px; left: 0px;
+                              background: rgba(0,0,0,.1); box-shadow: 0px 1px 0px 0px rgba(255,255,255,.7) }
+
+h1              { font-family: Oswald, Arial, sans-serif;  } 
+h2              { font-family: 'Work Sans', serif }
+
+h1              { position: relative; padding: 0px 0px 5px 0px; text-align: center;
+                  font-size: 32px; line-height: 32px; font-weight: 400; text-transform: uppercase;
+                  color: #111; text-shadow: 0px 0px 1px rgba(0,0,0,.5) }
+
+h2, h1 span     { color: rgba(247,214,199,1); text-shadow: 0px 1px 1px rgba(0,0,0,.1) }
+h2 a            { text-decoration: none; outline: none; color: rgba(0,0,0,.87); font-weight: 400 }
+h2              { font-size: 17px; padding: 0px 0px 15px 0px; margin: 0; text-align: center }
+
+[utf]:before    { content: attr(utf); font-style: normal; font-size: 24px; line-height: 50px; display: inline-block; }
+</style>
+
+
+<style id="msf-def--responsive-component-box">
+.rcb { /* [MANDATORY] Main 'Responsive Component Box' container */ 
+    display: flex;
+    overflow-x: hidden; /* Content wraps vertically, no horizontal scollbar needed */
+    overflow-y: auto;   /* Vertical scrollbar when needed */
+    min-width:  350px;  /* MDL, best value is a multiple or division of image+margin for all types of devices */
+    width: 80%;         /* [OPTIONAL] Maximum width within parent element (use .rcb-center when <100%) */
+    height: auto;       /* [OPTIONAL] Adjust height to child element needs */
+    padding: 15px;      /* Needed to get from under autohide IE scrollbar, check difference with FF/CH */
+
+    position: relative; /* For if you want to do something absolute :before or :after */
+}
+.rcb-center {
+    margin: 0 auto
+}
+.rcb-cmp-list { /* [MANDATORY] Component list, direct child of RCB, controls the flexbox behaviour */
+    display: flex;      /* make element a flexible layout container */
+    flex-wrap: wrap;    /* a row of N columns, wrapping within parent frame*/
+    position: relative; /* For if you want to do something absolute :before or :after */
+}
+.rcb-cmp-item { /* [RECOMMENDED] RCB component list item, default RCB influences flexbox behaviour of parent list */
+    flex: 1 1 320px;    /* mod to auto or 0, or mod some min required width (fiddle away!) */
+    position: relative; /* For if you want to do something absolute :before or :after (overlay text?) */
+    overflow: hidden;   /* Chop off outside content */
+
+    min-width: 320px;   /* best value is a multiple or division of 330px for all types of devices */
+    min-height: auto;   /* override if you want to set minimum; interacts with flex/flex-basis! */
+
+    /*max-width:  512px;  *//* Don't make this too small, leave as is or make it a multiple of min-width */
+    max-height: 100%;   /* ditto */
+    margin: 16px;       /* nice little space between boxes */
+
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.6), 0px 4px 9px rgba(42, 47, 57, 0.2); 
+    transition: all 150ms ease-in-out;
+
+}
+.rcb-cmp-item-cnt > * { /* [OPTIONAL] RCB component list content container, fully occupies parent  */
+    min-width: 100%;    /* min/max 100% makes sizes fixed to parent */    
+    max-width: 100%;
+    text-align: center
+}
+.rcb-cmp-item:hover {   /* [OPTIONAL] */
+    box-shadow: 0px 5px 9px rgba(42, 47, 57, 0.5);
+    transform: scale(1.1); cursor: pointer
+}
+</style>
+
+</head>
+
+<body>
+
+<item>
+    <h1>Flexbox Accordion <span>simple text</span></h1>
+    <div R id="acc-1" class="facc">
+        <div>one</div>
+        <div>two</div>
+        <div>three</div>
+        <div>four</div>
+        <div>five</div>
+        <div>six</div>
+        <div>seven</div>
+        <div>eight</div>
+        <div>nine</div>
+        <div>ten</div>
+    </div>
+</item>
+
+<item>
+    <h1>Flexbox Accordion <span>images with caption on hover</span></h1>
+    <h2>
+        Original idea an design <a href="http://tympanus.net/codrops/2012/06/06/image-accordion-with-css3/" target="_blank">'Codrops - Ring Wang'</a><br>
+        Images by <a href="http://www.behance.net/gallery/Laquarelle/433242" target="_blank">'Andrey &amp; Lili'</a><br>
+        Background Pattern from <a href="http://subtlepatterns.com/" target="_blank">'Subtle Patterns'</a><br>
+    </h2>
+    <div class="facc ia-container">
+        <figure><img src="images/1.jpg"><figcaption><span>True Colors         </span></figcaption></figure>
+        <figure><img src="images/2.jpg"><figcaption><span>Honest Light        </span></figcaption></figure>
+        <figure><img src="images/3.jpg"><figcaption><span>Silent Serenity     </span></figcaption></figure>
+        <figure><img src="images/4.jpg"><figcaption><span>Warm Welcome        </span></figcaption></figure>
+        <figure><img src="images/5.jpg"><figcaption><span>Sensible Magic      </span></figcaption></figure>
+        <figure><img src="images/6.jpg"><figcaption><span>Lovely Midnight     </span></figcaption></figure>
+        <figure><img src="images/7.jpg"><figcaption><span>Illuminated Darkness</span></figcaption></figure>
+        <figure><img src="images/8.jpg"><figcaption><span>Happy Child         </span></figcaption></figure>
+    </div>
+</item>
+
+<item>
+    <h1>Flexbox <span>Responsive Component Box</span></h1>
+    <h2>
+        Images courtesy of <a href="https://unsplash.it" target="_blank">'Unsplash It'</a><br>
+    </h2>
+    <div id="rcb-control-1" class="rcb rcb-center"><!-- https://unsplash.it/250/200?image=859 -->
+        <div class="rcb-cmp-list">
+            <figure class="rcb-cmp-item rcb-cmp-item-cnt"><img src="https://unsplash.it/480/300?image=041"><figcaption><span>#041 - Nithya Ramanujam</span></figcaption></figure>
+            <figure class="rcb-cmp-item rcb-cmp-item-cnt"><img src="https://unsplash.it/480/300?image=042"><figcaption><span>#042 - Luke Chesser    </span></figcaption></figure>
+            <figure class="rcb-cmp-item rcb-cmp-item-cnt"><img src="https://unsplash.it/480/300?image=225"><figcaption><span>#225 - Vee O           </span></figcaption></figure>
+            <figure class="rcb-cmp-item rcb-cmp-item-cnt"><img src="https://unsplash.it/480/300?image=691"><figcaption><span>#691 - David Mao       </span></figcaption></figure>
+            <figure class="rcb-cmp-item rcb-cmp-item-cnt"><img src="https://unsplash.it/480/300?image=227"><figcaption><span>#227 - Andrea Boldizsar</span></figcaption></figure>
+            <figure class="rcb-cmp-item rcb-cmp-item-cnt"><img src="https://unsplash.it/480/300?image=344"><figcaption><span>#344 - Alex Gindin     </span></figcaption></figure>
+            <figure class="rcb-cmp-item rcb-cmp-item-cnt"><img src="https://unsplash.it/480/300?image=859"><figcaption><span>#859 - Brennan Ehrhardt</span></figcaption></figure>
+            <figure class="rcb-cmp-item rcb-cmp-item-cnt"><img src="https://unsplash.it/480/300?image=761"><figcaption><span>#761 - Buzac Marius    </span></figcaption></figure>
+        </div>
+    </div>
+</item>
+
+</body>
+</html>

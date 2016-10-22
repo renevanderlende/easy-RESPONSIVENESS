@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title title="(July 2016) ERS BASE-001">ERS BASE-001</title>
+
+<meta name="description" content="{document-description}">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT/APACHE/SLI/SNIL/NSA/CIA/DoD/WIP">
+
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Alegreya+Sans+SC:100,300,400,900|Source+Sans+Pro:300,700,900">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Rubik:300,400|Rubik+Mono+One:400|Rubik+One:400">
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+<style>
+@import url("css/ers-base-init.css");
+@import url("css/ers-base-app.css");
+@import url("css/ers-base-utils.css");
+@import url("css/ers-effects-def.css");
+
+/************************************************/
+/* DEMO RULES                                   */
+/************************************************/
+#layer--hero::after         { position: absolute;
+                              top: 0; left: 0; width: 100%; height: 100%;
+                              content: ''; z-index: -1; /* !!!! content must be defined, -1 puts it behind #blocks */
+                              bbackground-image: url("http://unsplash.it/840/640?image=855");
+                              background-color: hsla(308, 22%, 47%,.5);
+                              background-size: cover;
+                              background-repeat: no-repeat;
+                              background-attachment: fixed;
+                              background-position: 100% 100%;
+                              filter: blur(1px) }
+
+#block--hero-top            {}
+#block--hero-teaser         {}
+
+#block--hero-content        { color: hsla(0,0%,100%,.6) } /* off white */
+
+[id^="block--hero"]         { font-size: 4rem; font-weight: 700; justify-content: center; align-items: center }
+
+#layer--main-application    { background-color: hsla(0,0%,96%,1); padding-top: 10rem }
+
+#app-sidebar-left           { background-color: hsla(0,0%,100%,1) } /* white */
+#app-sidebar-right          { background-color: hsla(0,0%, 75%,1) } /* silver */
+
+#block--app-drawer-top,
+#block--app-drawer-bottom   { background-color: cornflowerblue; opacity: .8 }
+
+#app-content                { max-width: 85%; padding: 15% 0 }
+
+section:nth-child(even)     { background-color: hsla( 33, 15%,87%,1); color: hsla(0,0%,0%,.9) }
+section:nth-child(odd)      { background-color: hsla(210, 13%,75%,1); color: hsla(0,0%,0%,.9) }
+
+section                     { counter-reset: columns }
+item                        { background-color: hsla(0,0%,100%,.2); color: inherit }
+
+#layer--information         { background-color: gray; filter: drop-shadow(2px 2px 2px hsla(0,0%,0%,.5)); }
+
+#layer--specials            { background-color: hsl(261, 46%, 74%); color: hsla(249, 7%,62%,.9);
+                              font-size: 4rem; font-weight: 700; line-height: 6rem }
+</style>
+
+<style>
+/************************************************/
+/* STYLE GUIDE                                  */
+/************************************************/
+#ers-style-guide            { flex-flow: column nowrap }
+
+</style>
+
+<style>
+
+/* Icon */
+
+    .icon {
+        text-decoration: none;
+        border-bottom: none;
+        position: relative;
+    }
+
+        .icon:before {
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            font-family: FontAwesome;
+            font-style: normal;
+            font-weight: normal;
+            text-transform: none !important;
+        }
+
+        .icon > .label {
+            display: none;
+        }
+
+        .icon.style2 {
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+            background-color: transparent;
+            border: solid 1px #c9c9c9;
+            border-radius: 4px;
+            width: 2.65rem;
+            height: 2.65rem;
+            display: inline-block;
+            text-align: center;
+            line-height: 2.65rem;
+            color: inherit;
+        }
+
+            .icon.style2:before {
+                font-size: 1.1rem;
+            }
+
+            .icon.style2:hover {
+                color: #f2849e;
+                border-color: #f2849e;
+            }
+
+            .icon.style2:active {
+                background-color: rgba(242, 132, 158, 0.1);
+            }
+
+/* List */
+
+    ol {
+        list-style: decimal;
+        margin: 0 0 2rem 0;
+        padding-left: 1.25rem;
+    }
+
+        ol li {
+            padding-left: 0.25rem;
+        }
+
+    ul {
+        list-style: disc;
+        margin: 0 0 2rem 0;
+        padding-left: 1rem;
+    }
+
+        ul li {
+            padding-left: 0.5rem;
+        }
+
+        ul.alt {
+            list-style: none;
+            padding-left: 0;
+        }
+
+            ul.alt li {
+                border-top: solid 1px #c9c9c9;
+                padding: 0.5rem 0;
+            }
+
+                ul.alt li:first-child {
+                    border-top: 0;
+                    padding-top: 0;
+                }
+
+        ul.icons {
+            cursor: default;
+            list-style: none;
+            padding-left: 0;
+            margin: -1rem 0 2rem -1rem;
+        }
+
+            ul.icons li {
+                display: inline-block;
+                padding: 1rem 0 0 1rem;
+            }
+
+        ul.actions {
+            cursor: default;
+            list-style: none;
+            padding-left: 0;
+        }
+
+            ul.actions li {
+                display: inline-block;
+                padding: 0 1rem 0 0;
+                vertical-align: middle;
+            }
+
+                ul.actions li:last-child {
+                    padding-right: 0;
+                }
+
+            ul.actions.small li {
+                padding: 0 0.5rem 0 0;
+            }
+
+            ul.actions.vertical li {
+                display: block;
+                padding: 1rem 0 0 0;
+            }
+
+                ul.actions.vertical li:first-child {
+                    padding-top: 0;
+                }
+
+                ul.actions.vertical li > * {
+                    margin-bottom: 0;
+                }
+
+            ul.actions.vertical.small li {
+                padding: 0.5rem 0 0 0;
+            }
+
+                ul.actions.vertical.small li:first-child {
+                    padding-top: 0;
+                }
+
+            ul.actions.fit {
+                display: table;
+                margin-left: -1rem;
+                padding: 0;
+                table-layout: fixed;
+                width: calc(100% + 1rem);
+            }
+
+                ul.actions.fit li {
+                    display: table-cell;
+                    padding: 0 0 0 1rem;
+                }
+
+                    ul.actions.fit li > * {
+                        margin-bottom: 0;
+                    }
+
+                ul.actions.fit.small {
+                    margin-left: -0.5rem;
+                    width: calc(100% + 0.5rem);
+                }
+
+                    ul.actions.fit.small li {
+                        padding: 0 0 0 0.5rem;
+                    }
+
+
+</style>
+
+<style id="ers-scroll-no-bar">
+/************************************************/
+/* SCROLL-NO-BAR RULES, DON'T CHANGE (it works) */
+/************************************************/
+.scroll-no-bar { /* [MANDATORY] main scrolling container */
+    position  : relative          !important;   /* relative for absolute '.scroller' */
+    overflow  : hidden            !important;   /* Hides '.scroller' scrollbar   */
+
+/*    border: 20px solid hsla(0,0%,100%,.9); */
+}
+.scroller { /* [MANDATORY] */
+    padding-left : 17px; /* Default LTR behaviour, invert L/R if you need RTL default */
+    padding-right:  4px;
+
+    position  : absolute          !important;   /* For placement inside '.scroll-no-bar' */
+    max-height: 100%              !important;   /* Any value for scroll effect */
+    max-width : calc(100% + 34px) !important;   /* PLUS 40px to hide scrollbar on either side */
+    left      : -17px             !important;   /* Left gutter to hide scrollbar */
+    right     : -17px             !important;   /* and right (sb-widths => FF:17px; IE:15px; CH:20px) */
+    overflow-y: scroll            !important;   /* Always 'scroll', otherwise you get size jitter */
+    overflow-x: hidden;
+}
+/* [MANDATORY] for "LTR/RTL" document swapping */
+body[dir="ltr"] *.scroller { padding-left : 17px; padding-right:  4px }
+body[dir="rtl"] *.scroller { padding-left :  4px; padding-right: 17px }
+
+.scroller-content { /* [OPTIONAL] but advised, serves as a starting point */
+    /* All up to you */
+    position: relative;
+    width : 100%;
+    height: 100%;
+}
+
+.scroller-content               { counter-reset: titles } /* initialize title counter */
+
+.scroller-content :last-child   { margin-bottom: 5px } /* height of box-shadow */
+
+[card] {
+    background: hsla(0,0%,100%,.1);
+    border-radius: 2px;
+    box-shadow: 0px 2px 2px  0px rgba(0,0,0,.14), 
+                0px 3px 1px -2px rgba(0,0,0,.20),
+                0px 1px 5px  0px rgba(0,0,0,.12);
+}
+.column { 
+    flex: 1 1 20rem;                /* [MANDATORY] width or flex-basis > 0 <> auto */
+    height: 60%;                    /* [MANDATORY] some value > 0 and <> auto */
+    margin: 24px 12px;
+
+    counter-increment: columns;
+}
+.title              {
+    margin-bottom: 8px;
+    font-size: 1.3rem; line-height: 1.5rem; 
+    font-weight: 600; color: hsla(218, 40%, 69%, 1); /* serenity */
+
+    text-align: right; text-transform: uppercase;
+    border-bottom: 1px solid hsla(218, 40%, 69%,.4); /* serenity */
+
+    counter-increment: titles;
+}
+.title:after        { content: "title " counters(columns,"") "." counters(titles,"") } /* show counters */
+
+.column .title      { color: hsla(218, 40%, 69%, 1) } /* serenity */
+
+
+</style>
+
+
+<style id="owl">
+
+.owl            { padding: 0 1ch 1ch; }  
+.owl > *        { margin-top: 1ch; }
+
+.owl h2 + h3    { margin-top: 1em; }  
+.owl p + h3     { margin-top: 2em; }  
+</style>
+
+<style id="pct-grid">
+/*http://codepen.io/drus/pen/MwEZVe*/
+@import url(http://fonts.googleapis.com/css?family=Montserrat:700);
+.module {
+  display: block;
+  font-family: Montserrat;
+  float: left;
+  width: 98%;
+  margin-left: 2%;
+  margin-bottom: 2%;
+  background-color: #212121;
+  color: white;
+  padding: 1em;
+  min-height: 60px;
+  transition: all 50ms linear;
+}
+.grid {
+  display: block;
+  margin-left: -2%;
+  padding: 2%;
+  *zoom: 1;
+}
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+@media only screen and (min-width: 481px) {
+  .tablet-1 {
+    width: 6.33333333%;
+  }
+  .tablet-1:after {
+    content: ' (8%)';
+    color: #666;
+  }
+  .tablet-2 {
+    width: 14.66666667%;
+  }
+  .tablet-2:after {
+    content: ' (17%)';
+    color: #666;
+  }
+  .tablet-3 {
+    width: 23%;
+  }
+  .tablet-3:after {
+    content: ' (25%)';
+    color: #666;
+  }
+  .tablet-4 {
+    width: 31.33333333%;
+  }
+  .tablet-4:after {
+    content: ' (33%)';
+    color: #666;
+  }
+  .tablet-5 {
+    width: 39.66666667%;
+  }
+  .tablet-5:after {
+    content: ' (42%)';
+    color: #666;
+  }
+  .tablet-6 {
+    width: 48%;
+  }
+  .tablet-6:after {
+    content: ' (50%)';
+    color: #666;
+  }
+  .tablet-7 {
+    width: 56.33333333%;
+  }
+  .tablet-7:after {
+    content: ' (58%)';
+    color: #666;
+  }
+  .tablet-8 {
+    width: 64.66666667%;
+  }
+  .tablet-8:after {
+    content: ' (67%)';
+    color: #666;
+  }
+  .tablet-9 {
+    width: 73%;
+  }
+  .tablet-9:after {
+    content: ' (75%)';
+    color: #666;
+  }
+  .tablet-10 {
+    width: 81.33333333%;
+  }
+  .tablet-10:after {
+    content: ' (83%)';
+    color: #666;
+  }
+  .tablet-11 {
+    width: 89.66666667%;
+  }
+  .tablet-11:after {
+    content: ' (92%)';
+    color: #666;
+  }
+  .tablet-12 {
+    width: 98%;
+  }
+  .tablet-12:after {
+    content: ' (100%)';
+    color: #666;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .desktop-1 {
+    width: 6.33333333%;
+  }
+  .desktop-1:after {
+    content: ' (8%)';
+    color: #666;
+  }
+  .desktop-2 {
+    width: 14.66666667%;
+  }
+  .desktop-2:after {
+    content: ' (17%)';
+    color: #666;
+  }
+  .desktop-3 {
+    width: 23%;
+  }
+  .desktop-3:after {
+    content: ' (25%)';
+    color: #666;
+  }
+  .desktop-4 {
+    width: 31.33333333%;
+  }
+  .desktop-4:after {
+    content: ' (33%)';
+    color: #666;
+  }
+  .desktop-5 {
+    width: 39.66666667%;
+  }
+  .desktop-5:after {
+    content: ' (42%)';
+    color: #666;
+  }
+  .desktop-6 {
+    width: 48%;
+  }
+  .desktop-6:after {
+    content: ' (50%)';
+    color: #666;
+  }
+  .desktop-7 {
+    width: 56.33333333%;
+  }
+  .desktop-7:after {
+    content: ' (58%)';
+    color: #666;
+  }
+  .desktop-8 {
+    width: 64.66666667%;
+  }
+  .desktop-8:after {
+    content: ' (67%)';
+    color: #666;
+  }
+  .desktop-9 {
+    width: 73%;
+  }
+  .desktop-9:after {
+    content: ' (75%)';
+    color: #666;
+  }
+  .desktop-10 {
+    width: 81.33333333%;
+  }
+  .desktop-10:after {
+    content: ' (83%)';
+    color: #666;
+  }
+  .desktop-11 {
+    width: 89.66666667%;
+  }
+  .desktop-11:after {
+    content: ' (92%)';
+    color: #666;
+  }
+  .desktop-12 {
+    width: 98%;
+  }
+  .desktop-12:after {
+    content: ' (100%)';
+    color: #666;
+  }
+}
+header {
+  text-align: center;
+  margin-bottom: 1em;
+}
+header h1 {
+  text-transform: uppercase;
+  font-size: 2.5em;
+}
+footer {
+  text-align: center;
+}
+.cf {
+  *zoom: 1;
+}
+.cf:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+
+
+</style>
+</head>
+
+
+<body data-debug="0">
+<div id="layer--hero" data-gone="0">
+    <div id="block--hero-top"     data-gone="0">top</div>    <!-- #block--hero-top -->
+    <div id="block--hero-content" data-gone="0">
+        <div id="hero--content-left"   data-panel-left  >left</div>
+        <div id="hero--content-center" data-panel-center>center</div>
+        <div id="hero--content-right"  data-panel-right >right</div>
+    </div><!-- #block--hero-content -->
+    <div id="block--hero-teaser"  data-gone="0">bottom</div> <!-- #block--hero-teaser -->
+</div><!-- #layer--hero -->
+
+<div id="layer--main-app-base">
+    <div id="overlay--modals" ></div><!-- #overlay--modals  -->
+    <div id="overlay--toggles"></div><!-- #overlay--toggles -->
+    <div id="overlay--buttons"></div><!-- #overlay--buttons -->
+
+    <div id="layer--main-application">
+        <div id="block--app-sidebars"   data-gone="1">
+            <div id="app-sidebar-left"  data-gone="0">
+                <div data-panel-top>
+                    <h2>Menu</h2>
+                </div>
+                <div data-panel-content>
+                    <nav>
+                        <ul>
+                            <li><a href="#layer--main-application">home        </a></li>
+                            <li><a href="#ers-intro"              >introduction</a></li>
+                            <li><a href="#ers-examples"           >examples    </a></li>
+                            <li><a href="#ers-style-guide"        >style guide </a></li>
+                            <li><a href="#layer--information"     >information </a></li>
+                            <li><a href="#layer--specials"        >specials    </a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div data-panel-bottom></div>
+            </div>
+            <div id="app-sidebar-right" data-gone="0">
+                <div data-panel-top   >top</div>
+                <div data-panel-middle>sidebar</div>
+                <div data-panel-bottom>bottom</div>
+            </div>
+        </div><!-- #block--app-sidebars -->
+
+        <div id="block--app-drawer-top" data-gone="0">
+            <div id="app-drawer-top-left"   data-panel-left   >left</div><!-- left -->
+            <div id="app-drawer-top-center" data-panel-content>center</div><!-- center -->
+            <div id="app-drawer-top-right"  data-panel-right  >right</div><!-- right -->
+        </div><!-- #block--app-drawer-top -->
+
+        <div id="block--app-header" data-gone="0">app header</div><!-- #block--app-header -->
+
+        <div id="block--app-content">
+
+            <div id="app-content">
+                <!-- *--------------------------------------------------* -->
+                <!-- Put all your user/reader/app content below this text -->
+                <!-- *--------------------------------------------------* -->
+
+                <div id="ers-intro"></div>
+
+                <!-- Main -->
+                <div id="ers-style-guide">
+                    <h1>Elements</h1>
+
+                    <section><!-- Text -->
+                        <header><h2>Text</h2></header>
+                        <item>
+                            <p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
+                            This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
+                            This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>. Finally, <a href="#">this is a link</a>.</p>
+                            <hr />
+                            <p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit tempus accumsan.</p>
+                            <hr />
+                            <h2>Heading Level 2</h2>
+                            <h3>Heading Level 3</h3>
+                            <h4>Heading Level 4</h4>
+                            <hr />
+                            <h3>Blockquote</h3>
+                            <blockquote>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan faucibus. Vestibulum ante ipsum primis in faucibus lorem ipsum dolor sit amet nullam adipiscing eu felis.</blockquote>
+                            <h3>Preformatted</h3>
+                            <pre><code>i = 0;
+
+    while (!deck.isInOrder()) {
+        print 'Iteration ' + i;
+        deck.shuffle();
+        i++;
+    }
+    
+    print 'It took ' + i + ' iterations to sort the deck.';
+                            </code></pre>
+                        </item>
+                        <footer>sc foot</footer>
+                    </section><!-- Text -->
+
+                    <section><!-- Lists -->
+                        <header><h2>Lists</h2></header>
+                        
+                        <item>
+                            <header><h3>Unordered</h3></header>
+                            <ul>
+                                <li>Dolor pulvinar etiam.</li>
+                                <li>Sagittis adipiscing.</li>
+                                <li>Felis enim feugiat.</li>
+                            </ul>
+                        </item>
+                        <item>
+                            <header><h3>Alternate</h3></header>
+                            <ul class="alt">
+                                <li>Dolor pulvinar etiam.</li>
+                                <li>Sagittis adipiscing.</li>
+                                <li>Felis enim feugiat.</li>
+                            </ul>
+                        </item>
+                        <item>
+                            <header><h3>Ordered</h3></header>
+                            <ol>
+                                <li>Dolor pulvinar etiam.</li>
+                                <li>Etiam vel felis viverra.</li>
+                                <li>Felis enim feugiat.</li>
+                                <li>Dolor pulvinar etiam.</li>
+                                <li>Etiam vel felis lorem.</li>
+                                <li>Felis enim et feugiat.</li>
+                            </ol>
+                        </item>
+                        <item>
+                            <header><h3>Icons</h3></header>
+                            <ul class="icons">
+                                <li><a href="#" class="icon style1 fa-twitter"><span class="label">Twitter</span></a></li>
+                                <li><a href="#" class="icon style1 fa-facebook"><span class="label">Facebook</span></a></li>
+                                <li><a href="#" class="icon style1 fa-instagram"><span class="label">Instagram</span></a></li>
+                                <li><a href="#" class="icon style1 fa-github"><span class="label">Github</span></a></li>
+                            </ul>
+                        </item>
+                        <item>
+                            <ul class="icons">
+                                <li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
+                                <li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
+                                <li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
+                                <li><a href="#" class="icon style2 fa-github"><span class="label">Github</span></a></li>
+                            </ul>
+                        </item>
+                    </section><!-- Lists -->
+
+                    <section><!-- Actions -->
+                        <header><h2>Actions</h2></header>
+                        <item>
+                            <ul class="actions">
+                                <li><a href="#" class="button special">Default</a></li>
+                                <li><a href="#" class="button">Default</a></li>
+                            </ul>
+                            <ul class="actions small">
+                                <li><a href="#" class="button special small">Small</a></li>
+                                <li><a href="#" class="button small">Small</a></li>
+                            </ul>
+                            <ul class="actions vertical">
+                                <li><a href="#" class="button special">Default</a></li>
+                                <li><a href="#" class="button">Default</a></li>
+                            </ul>
+                            <ul class="actions vertical small">
+                                <li><a href="#" class="button special small">Small</a></li>
+                                <li><a href="#" class="button small">Small</a></li>
+                            </ul>
+                        </item>
+                        <item>
+                            <ul class="actions vertical">
+                                <li><a href="#" class="button special fit">Default</a></li>
+                                <li><a href="#" class="button fit">Default</a></li>
+                            </ul>
+                            <ul class="actions vertical small">
+                                <li><a href="#" class="button special small fit">Small</a></li>
+                                <li><a href="#" class="button small fit">Small</a></li>
+                            </ul>
+                        </item>
+                    </section><!-- Actions -->
+
+                    <section><!-- Table -->
+                        <h2>Table</h2>
+                        <h3>Default</h3>
+                        <item>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Item One</td>
+                                        <td>Ante turpis integer aliquet porttitor.</td>
+                                        <td>29.99</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Item Two</td>
+                                        <td>Vis ac commodo adipiscing arcu aliquet.</td>
+                                        <td>19.99</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Item Three</td>
+                                        <td> Morbi faucibus arcu accumsan lorem.</td>
+                                        <td>29.99</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Item Four</td>
+                                        <td>Vitae integer tempus condimentum.</td>
+                                        <td>19.99</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Item Five</td>
+                                        <td>Ante turpis integer aliquet porttitor.</td>
+                                        <td>29.99</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td>100.00</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </item>
+
+                        <h3>Alternate</h3>
+                        <item>
+                            <table class="alt">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Item One</td>
+                                        <td>Ante turpis integer aliquet porttitor.</td>
+                                        <td>29.99</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Item Two</td>
+                                        <td>Vis ac commodo adipiscing arcu aliquet.</td>
+                                        <td>19.99</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Item Three</td>
+                                        <td> Morbi faucibus arcu accumsan lorem.</td>
+                                        <td>29.99</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Item Four</td>
+                                        <td>Vitae integer tempus condimentum.</td>
+                                        <td>19.99</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Item Five</td>
+                                        <td>Ante turpis integer aliquet porttitor.</td>
+                                        <td>29.99</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td>100.00</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </item>
+                    </section><!-- Table -->
+
+                    <section><!-- Buttons -->
+                        <h3>Buttons</h3>
+                        <ul class="actions">
+                            <li><a href="#" class="button special">Special</a></li>
+                            <li><a href="#" class="button">Default</a></li>
+                        </ul>
+                        <ul class="actions">
+                            <li><a href="#" class="button big">Big</a></li>
+                            <li><a href="#" class="button">Default</a></li>
+                            <li><a href="#" class="button small">Small</a></li>
+                        </ul>
+                        <ul class="actions fit">
+                            <li><a href="#" class="button special fit">Fit</a></li>
+                            <li><a href="#" class="button fit">Fit</a></li>
+                            <li><a href="#" class="button fit">Fit</a></li>
+                        </ul>
+                        <ul class="actions fit small">
+                            <li><a href="#" class="button special fit small">Fit + Small</a></li>
+                            <li><a href="#" class="button fit small">Fit + Small</a></li>
+                            <li><a href="#" class="button fit small">Fit + Small</a></li>
+                        </ul>
+                        <ul class="actions">
+                            <li><a href="#" class="button special icon fa-download">Icon</a></li>
+                            <li><a href="#" class="button icon fa-upload">Icon</a></li>
+                            <li><a href="#" class="button icon fa-save">Icon</a></li>
+                        </ul>
+                        <ul class="actions">
+                            <li><span class="button special disabled">Disabled</span></li>
+                            <li><span class="button disabled">Disabled</span></li>
+                        </ul>
+                    </section><!-- Buttons -->
+
+                    <section><!-- Form -->
+                        <h2>Form</h2>
+                        <form method="post" action="#">
+                            <div>
+                                <div>
+                                    <input type="text" name="demo-name" id="demo-name" value="" placeholder="Name" />
+                                </div>
+                                <div>
+                                    <input type="email" name="demo-email" id="demo-email" value="" placeholder="Email" />
+                                </div>
+                                <div>
+                                    <div>
+                                        <select name="demo-category" id="demo-category">
+                                            <option value="">- Category -</option>
+                                            <option value="1">Manufacturing</option>
+                                            <option value="1">Shipping</option>
+                                            <option value="1">Administration</option>
+                                            <option value="1">Human Resources</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <input type="radio" id="demo-priority-low" name="demo-priority" checked>
+                                    <label for="demo-priority-low">Low</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="demo-priority-normal" name="demo-priority">
+                                    <label for="demo-priority-normal">Normal</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="demo-priority-high" name="demo-priority">
+                                    <label for="demo-priority-high">High</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="demo-copy" name="demo-copy">
+                                    <label for="demo-copy">Email me a copy</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="demo-human" name="demo-human" checked>
+                                    <label for="demo-human">Not a robot</label>
+                                </div>
+                                <div>
+                                    <textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
+                                </div>
+                                <div>
+                                    <ul class="actions">
+                                        <li><input type="submit" value="Send Message" class="special" /></li>
+                                        <li><input type="reset" value="Reset" /></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </form>
+                    </section><!-- Form -->
+
+                    <section><!-- Image -->
+                        <h2>Image</h2>
+                        <h3>Fit</h3>
+                        <item>
+                            <!--div>
+                                <div><span><img block src="http://dummyimage.com/320x320" alt="" /></span></div>
+                                <div><span><img block src="http://dummyimage.com/320x320" alt="" /></span></div>
+                                <div><span><img block src="http://dummyimage.com/320x320" alt="" /></span></div>
+                                <div><span><img block src="http://dummyimage.com/320x320" alt="" /></span></div>
+                                <div><span><img block src="http://dummyimage.com/320x320" alt="" /></span></div>
+                                <div><span><img block src="http://dummyimage.com/320x320" alt="" /></span></div>
+                                <div><span><img block src="http://dummyimage.com/320x320" alt="" /></span></div>
+                                <div><span><img block src="http://dummyimage.com/320x320" alt="" /></span></div>
+                                <div><span><img block src="http://dummyimage.com/320x320" alt="" /></span></div>
+                                <div><span><img block src="http://dummyimage.com/320x320" alt="" /></span></div>
+                            </div-->
+                        </item>
+                        <h3>Left &amp; Right</h3>
+                        <item>
+                        <p><span><img src="http://dummyimage.com/320x320" alt="" /></span>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
+                        <p><span><img src="http://dummyimage.com/320x320" alt="" /></span>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
+                        </item>
+                    </section><!-- Image -->
+
+                </div><!-- #ers-style-guide -->
+
+                <div id="column-1" class="scroll-no-bar column">
+                    <div class="scroller">
+                    <!-- start of demo content 1 -->
+                    <section class="scroller-content ">
+                        <item card>
+                            <div class="title"></div>
+                            <ul class="menu">
+                                <li>Link One</li>
+                                <li>Link Two</li>
+                                <li>Link Twenty-five</li>
+                                <li>Link Seventy</li>
+                                <li>Link One Hundred Fifty-two</li>
+                                <li>Link Zero</li>
+                            </ul>
+                            <div class="title"></div>
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, 
+                               sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
+                               aliquam erat volutpat.Lorem ipsum dolor sit amet, consectetuer 
+                               adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
+                               dolore magna aliquam erat volutpat.Lorem ipsum dolor sit amet,
+                               consectetuer adipiscing elit, sed diam nonummy nibh euismod
+                               tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, 
+                               sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
+                               aliquam erat volutpat.Lorem ipsum dolor sit amet, consectetuer 
+                               adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
+                               dolore magna aliquam erat volutpat.Lorem ipsum dolor sit amet,
+                               consectetuer adipiscing elit, sed diam nonummy nibh euismod
+                               tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                        </item>
+                        <item card>
+                            <div class="title"></div>
+                            <ul class="menu">
+                                <li>Link One</li>
+                                <li>Link Two</li>
+                                <li>Link Twenty-five</li>
+                                <li>Link Seventy</li>
+                                <li>Link One Hundred Fifty-two</li>
+                                <li>Link Zero</li>
+                            </ul>
+                        </item>
+                        <item card>
+                            <div class="title"></div>
+                            <div>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, 
+                               sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
+                               aliquam erat volutpat.Lorem ipsum dolor sit amet, consectetuer 
+                               adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
+                               dolore magna aliquam erat volutpat.Lorem ipsum dolor sit amet,
+                               consectetuer adipiscing elit, sed diam nonummy nibh euismod
+                               tincidunt ut laoreet dolore magna aliquam erat volutpat.</div>
+                
+                            <div>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, 
+                               sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
+                               aliquam erat volutpat.Lorem ipsum dolor sit amet, consectetuer 
+                               adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
+                               dolore magna aliquam erat volutpat.Lorem ipsum dolor sit amet,
+                               consectetuer adipiscing elit, sed diam nonummy nibh euismod
+                               tincidunt ut laoreet dolore magna aliquam erat volutpat.</div>
+                        </item>
+                    </section><!-- end of demo content 1 -->
+
+
+                    <!--section class="grid">
+                            <article class="module desktop-3 tablet-4">1</article>
+                            <article class="module desktop-3 tablet-4">2</article>
+                            <article class="module desktop-3 tablet-4">3</article>
+                            <article class="module desktop-3 tablet-6">4</article>
+                            <article class="module desktop-4 tablet-6">5</article>
+                            <article class="module desktop-4 tablet-12">6</article>
+                            <article class="module desktop-4 tablet-6">7</article>
+                            <article class="module desktop-6 tablet-6">8</article>
+                            <article class="module desktop-6 tablet-12">9</article>
+                            <article class="module desktop-2 tablet-4">10</article>
+                            <article class="module desktop-2 tablet-4">11</article>
+                            <article class="module desktop-2 tablet-4">12</article>
+                            <article class="module desktop-2 tablet-4">13</article>
+                            <article class="module desktop-2 tablet-4">14</article>
+                            <article class="module desktop-2 tablet-4">15</article>
+                    </section-->
+
+
+                    </div><!-- end of scroller 1 -->
+                </div><!-- end of scroll-no-bar 1 -->
+
+                <!-- *--------------------------------------------------* -->
+                <!-- Put all your user/reader/app content above this text -->
+                <!-- *--------------------------------------------------* -->
+            </div><!-- #app-content -->
+
+            <div id="block--app-drawer-bottom" data-gone="1">
+                <div id="app-drawer-bottom-left"   data-panel-left></div>
+                <div id="app-drawer-bottom-center" data-panel-content></div>
+                <div id="app-drawer-bottom-right"  data-panel-right></div>
+            </div><!-- #block--app-drawer-bottom -->
+
+        </div><!-- #block--app-content -->
+
+        <div id="block--app-footer" data-gone="0"></div><!-- #block--app-footer -->
+
+    </div><!-- #layer--main-application -->
+
+    <div id="layer--information">
+        <section>
+            <item>
+                <h2>Get in touch</h2>
+                <form method="post" action="#">
+                    <div class="field half first">
+                        <input type="text" name="name" id="name" placeholder="Name" />
+                    </div>
+                    <div class="field half">
+                        <input type="email" name="email" id="email" placeholder="Email" />
+                    </div>
+                    <div class="field">
+                        <textarea name="message" id="message" placeholder="Message"></textarea>
+                    </div>
+                    <ul class="actions">
+                        <li><input type="submit" value="Send" class="special" /></li>
+                    </ul>
+                </form>
+            </item>
+            <item>
+                <h2>Follow</h2>
+                <ul class="icons">
+                    <li><a href="#" class="icon style2 fa-twitter"   ><span class="label">Twitter</span></a></li>
+                    <li><a href="#" class="icon style2 fa-facebook"  ><span class="label">Facebook</span></a></li>
+                    <li><a href="#" class="icon style2 fa-instagram" ><span class="label">Instagram</span></a></li>
+                    <li><a href="#" class="icon style2 fa-dribbble"  ><span class="label">Dribbble</span></a></li>
+                    <li><a href="#" class="icon style2 fa-github"    ><span class="label">GitHub</span></a></li>
+                    <li><a href="#" class="icon style2 fa-500px"     ><span class="label">500px</span></a></li>
+                    <li><a href="#" class="icon style2 fa-phone"     ><span class="label">Phone</span></a></li>
+                    <li><a href="#" class="icon style2 fa-envelope-o"><span class="label">Email</span></a></li>
+                </ul>
+            </item>
+        </section>
+        <section>
+            <ul class="copyright">
+                <li>&copy; Untitled. All rights reserved</li>
+                <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+                <li>Demo Images: <a href="http://unsplash.com">Unsplash</a></li>
+            </ul>
+        </section>
+    </div><!-- #layer--information -->
+
+</div><!-- #layer--main-app-base -->
+
+<div id="layer--specials">
+    <div data-nine-patch="1"><div data-display="1">1</div></div>
+    <div data-nine-patch="2"><div data-display="1">2</div></div>
+    <div data-nine-patch="3"><div data-display="1">3</div></div>
+    <div data-nine-patch="4"><div data-display="1">4</div></div>
+    <div data-nine-patch="5"><div data-display="1">5</div></div>
+    <div data-nine-patch="6"><div data-display="1">6</div></div>
+    <div data-nine-patch="7"><div data-display="1">7</div></div>
+    <div data-nine-patch="8"><div data-display="1">8</div></div>
+    <div data-nine-patch="9"><div data-display="1">9</div></div>
+</div><!-- #layer--specials -->
+
+</body>
+</html>

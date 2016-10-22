@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title>easy responsive|y=mx+b|ness</title>
+
+<meta name="description" content="part 1: y= mx+b - easy responsive||ness series">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,600,700|Open+Sans:300,400,600,800">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Prompt:100,200,300,400,500,600,700,800,900">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial|Erica+One|Roboto+Condensed:300">
+
+<style>
+/************************************************/
+/* PREFERED STANDARDS                  (STABLE) */
+/************************************************/
+html,body               { box-sizing: border-box; width: 100%; margin: 0; padding: 0 }
+*::before, *::after, *  { box-sizing: inherit } /* calculate elements sizes including their padding and borders */
+
+ /* Check height info: https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient => NOTES */
+html                    { height: 100%; min-height: 100vh; font-family: Arial, Helvetica, sans-serif }
+body                    { max-width: 100%; height: 100%; overflow: auto }
+/************************************************/
+/* PREFERED THIS AND THATS             (STABLE) */
+/************************************************/
+/* modern smoothing and typface ligature usage */
+html                    { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased;
+                          font-variant-ligatures: common-ligatures discretionary-ligatures historical-ligatures }
+/* Disallow users to select any page content (for copy/paste) by default */
+body                    { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none }
+/************************************************/
+/* UTILS                               (STABLE) */
+/************************************************/
+/* Show a dotted outline for easy debugging of element sizing */
+[data-debug*="1"] *     { outline: 1px dashed black }
+/* slow down page buildup to follow transtion or check responsiveness */
+[data-debug*="T"] *     { transition: all 1.0s ease-in-out }
+[data-debug*="t"] *     { transition: all 0.5s ease-in-out }
+/* Absolutely, positively hide the element from view and voice-readers */
+[data-gone="1"]         { display:none; position:absolute; overflow:hidden; clip:rect(0 0 0 0);
+                          z-index:-999999; top:-999999px; margin:-1px; padding:0; border:0;
+                          height:1px; width:1px; min-height:0; min-width:0; max-height:0; max-width:0 }
+/************************************************/
+/* DEFAULT APPLICATION CURSORS         (STABLE) */
+/************************************************/
+body  { cursor: default } /* plain arrow for everything, but */
+input { cursor: auto }    /* use HTML default cursor on inputs, unless it is a: */
+input[list="datalist"],input[type="button"],input[type="checkbox"],input[type="radio"],
+input[type="color"],input[type="range"],input[type="reset"],input[type="file"],input[type="submit"],
+a,button,select,keygen   { cursor: pointer } 
+[contenteditable="true"] { cursor: text }
+</style>
+<style>
+/************************************************/
+/* FLEXBOX (FBL)                   (STABLE WIP) */
+/************************************************/
+/*!!IMPORTANT!!IMPORTANT!!IMPORTANT!!IMPORTANT!!*/
+/* Most major content container elements are FBL*/
+/*    **** Love it, hate it, go with it ****    */
+
+main,article,nav,aside,item,form,ol,ul,
+header,footer,h1,h2,h3,h4,h5,h6,section,div { display: flex; max-width: 100%  }
+
+main,article,nav,aside,item,form,ol,ul      { flex-direction: column }
+header,footer,h1,h2,h3,h4,h5,h6,section,div { flex-direction: row }
+
+code,pre,li,label,input,button              { display: inline-flex }
+
+section,item,form                           { flex-wrap: wrap }
+
+section                                     { justify-content: center }
+header,footer,nav,article                   { align-items: center }
+
+main,article,section,form,
+header>*,footer>*                           { flex: 1 }
+</style>
+<style>
+/************************************************/
+/* ERS ELEMENTS                           (WIP) */
+/************************************************/
+[id^="ers-"]            {}
+#ers-toolbar            { justify-content: space-between }
+  #ers-toolbar>*        { flex: 1 }
+
+/************************************************/
+/* ERS CLASSES                            (WIP) */
+/************************************************/
+.ers-top                { }
+.ers-middle             { flex: 1 }
+.ers-bottom             { }
+
+.ers-left               { }
+.ers-center             { flex: 1 }
+.ers-right              { }
+</style>
+<style>
+/************************************************/
+/* NON FBL DEFAULTS                (STABLE WIP) */
+/************************************************/
+main,header,footer      { width: 100% }
+main                    { min-height: 100vh } /* for when content doesn't fill the screen */
+
+code,pre,kbd,samp       { position: relative; font-family: Consolas, monospace }
+
+section,form            {/* Later... */}
+item                    { min-width: 9rem; max-width: 100%; padding: .5rem; margin: 0 .5rem 1.5rem .5rem }
+
+ /* get rid of extra spacing below images when designated as [block] */
+img[block]              { display: block; max-width: 100% }
+.img                    { width: 100%; height: auto; object-fit: scale-down }
+
+ /* no decoration */
+a                       { text-decoration: none; background: transparent; color: inherit; font-size: inherit }
+
+ /* no predefined styling */
+ol,ul,li                { list-style: none; padding: 0 }
+
+ /* ok, maybe a few... */
+hr                      { width: 100%; border-color: hsla(0,0%,0%,.15) }
+p                       { padding: .5rem; hyphens: auto }
+pre                     { padding: .5rem; overflow: auto }
+code                    { text-shadow: none }
+
+[data-header],
+[data-footer]           { width : 100%; max-width : 100% }
+[data-aside]            { height: 100%; max-height: 100% }
+
+/************************************************/
+/* easy RESPONSIVE|THEME|NESS             (WIP) */
+/************************************************/
+/* TODO: turn into theme, for now: PREFERED */
+body,main               { background-color: hsl(0,0%,98%); color: hsla(0,0%,0%,.56) }
+
+#ers-toolbar,
+body>header             { background-color: hsla(210,100%,60%,1  ); color: hsla(0,0%,100%,1 ) }
+body>footer             { background-color: hsla(  0,  0%,22%,1  ); color: hsla(0,0%,100%,.8) }
+code,pre                { background-color: hsla(  0,  0%, 0%,.04); color: hsla(0,0%, 22%,1 ) }
+
+
+</style>
+<style>
+/************************************************/
+/* easy RESPONSIVE|FONT|NESS       (STABLE WIP) */
+/************************************************/
+/* Responsive font: y = mx + b => 12px at 320 ... 16px at 960 => 1 full pixel per 160px screen size */
+html    { font-size: calc(0.00625 * 100vmin + 0.625rem); font-weight: normal; line-height: normal }
+[neat]  { text-shadow: .2px .2px .3px hsla(0,0%,25%,.2), -.1px -.1px .1px hsla(0,0%,25%,.1) }
+/* subtle shadow to improve text readability */
+
+/* Later: vertical rythm...
+html                    { line-height: 1.5rem }
+hgroup,hr,h1,h2,h3,h4,h5,h6,p,pre,ul,ol,dd,
+table,fieldset,figure   { margin-bottom: 1.5rem }
+*/
+header,footer           { font-weight: 400; overflow: hidden }
+
+code,pre,kbd,samp       { font-size: 0.8725rem; letter-spacing: -0.01rem; font-weight: normal; line-height: normal }
+
+[data-typo]             { font-size: inherit; line-height: normal; margin: 0; /*margin-bottom: 1.5rem*/ }
+
+[data-typo^="h"]        { width : 100%; max-width : 100%; font-weight: 600 } /* !!! personal preference: fill FBL parent width !!! */
+
+[data-typo^="xx"]       { font-size: calc(0.04      * 100vmin + 4rem      ) }
+[data-typo^="hx"]       { font-size: calc(0.03      * 100vmin + 3rem      ) }
+[data-typo^="hl"]       { font-size: calc(0.025     * 100vmin + 2.5rem    ) }
+[data-typo^="h0"]       { font-size: calc(0.02      * 100vmin + 2rem      ) }
+[data-typo^="h1"]       { font-size: calc(0.0125    * 100vmin + 1.25rem   ) }
+[data-typo^="h2"]       { font-size: calc(0.009375  * 100vmin + 0.9375rem ) }
+[data-typo^="h3"]       { font-size: calc(0.0073125 * 100vmin + 0.73125rem) }
+[data-typo^="h4"]       { font-size: calc(0.00625   * 100vmin + 0.625rem  ) }
+[data-typo^="h5"]       { font-size: calc(0.0051875 * 100vmin + 0.81875rem) }
+[data-typo^="h6"]       { font-size: calc(0.0041875 * 100vmin + 0.41875rem) }
+
+[data-typo^="p1"]       { font-size: 1rem }
+
+html                    { font-family: Prompt,Arial,Helvetica,sans-serif }
+
+[data-typo^="h"],header,
+h1,h2,h3,h4,h5,h6       { font-family: Raleway,Arial,Helvetica,sans-serif }
+
+
+/* Default HTML5 settings in most browsers, just for reference...
+html                    { font-size: 16px; line-height: normal }
+h1                      { font-size: 2.00em; font-weight: bold; margin: 0.67em 0 }
+h2                      { font-size: 1.50em; font-weight: bold; margin: 0.83em 0 }
+h3                      { font-size: 1.17em; font-weight: bold; margin: 1.00em 0 }
+h4                      { font-size: 1.00em; font-weight: bold; margin: 1.33em 0 }
+h5                      { font-size: 0.83em; font-weight: bold; margin: 1.67em 0 }
+h6                      { font-size: 0.67em; font-weight: bold; margin: 2.33em 0 }
+p                       { font-size: 1.00em; margin: 1em 0 }
+*/
+</style>
+<style>
+/************************************************/
+/* easy RESPONSIVE|SUSI|NESS       (STABLE WIP) */
+/************************************************/
+ /* Default are 'fixed' header and footer (fallback), */
+#ers-toolbar { z-index:  1; position: fixed; top: 0; height: 3rem; width: 100% }
+body>header  { z-index:  1; position: fixed; top: 3rem; height: calc(2.5 * 0.03 * 100vmin + 3rem) } /* place above 'main' */
+main         { z-index:  0; padding-top: calc(3 * 0.03 * 100vmin + 10rem); margin-bottom: 100vh }   /* [OPTIONAL] z-index (stacking context) */
+body>footer  { z-index: -1; position: fixed; bottom: 0; height: calc(100vh - 3rem); overflow: auto } /* some initial height */
+
+ /* but override with 'sticky' when supported (and supports @supports) */
+@supports ( position: sticky ){ main { padding-top: 8rem } body>header,body>footer { position: sticky } } /* Firefox/DE 48+ */
+</style>
+<style>
+/************************************************/
+/* easy RESPONSIVE|GRID|NESS              (WIP) */
+/************************************************/
+/* base flexbox grid structure */
+[data-patch],[data-patch]>*         { display: flex; flex-wrap: wrap; position: relative;
+                                      width: 100%; height: 100%; margin: 0; overflow: hidden }
+/* Default grid ratio 3x3 => 9-patch */
+[data-patch^= "3x"]>* { flex: 1 1 33.33333%; max-width: 33.33333% } [data-patch$= "x3"]>* { height: 33.33333%; max-height: 33.33333% }
+
+[data-patch^= "1x"]>* { flex:1 1 100%      ; max-width:100%       } [data-patch$= "x1"]>* { height:100%      ; max-height:100%       }
+[data-patch^= "2x"]>* { flex:1 1  50%      ; max-width: 50%       } [data-patch$= "x2"]>* { height: 50%      ; max-height: 50%       }
+[data-patch^= "4x"]>* { flex:1 1  25%      ; max-width: 25%       } [data-patch$= "x4"]>* { height: 25%      ; max-height: 25%       }
+[data-patch^= "5x"]>* { flex:1 1  20%      ; max-width: 20%       } [data-patch$= "x5"]>* { height: 20%      ; max-height: 20%       }
+[data-patch^= "6x"]>* { flex:1 1  16.66667%; max-width: 16.66667% } [data-patch$= "x6"]>* { height: 16.66667%; max-height: 16.66667% }
+[data-patch^= "7x"]>* { flex:1 1  14.28571%; max-width: 14.28571% } [data-patch$= "x7"]>* { height: 14.28571%; max-height: 14.28571% }
+[data-patch^= "8x"]>* { flex:1 1  12.5%    ; max-width: 12.5%     } [data-patch$= "x8"]>* { height: 12.5%    ; max-height: 12.5%     }
+[data-patch^= "9x"]>* { flex:1 1  11.11111%; max-width: 11.11111% } [data-patch$= "x9"]>* { height: 11.11111%; max-height: 11.11111% }
+[data-patch^="10x"]>* { flex:1 1  10%      ; max-width: 10%       } [data-patch$="x10"]>* { height: 10%      ; max-height: 10%       }
+[data-patch^="11x"]>* { flex:1 1   9.09091%; max-width:  9.09091% } [data-patch$="x11"]>* { height:  9.09091%; max-height:  9.09091% }
+[data-patch^="12x"]>* { flex:1 1   8.33333%; max-width:  8.33333% } [data-patch$="x12"]>* { height:  8.33333%; max-height:  8.33333% }
+[data-patch^="13x"]>* { flex:1 1   7.69231%; max-width:  7.69231% } [data-patch$="x13"]>* { height:  7.69231%; max-height:  7.69231% }
+[data-patch^="14x"]>* { flex:1 1   7.14286%; max-width:  7.14286% } [data-patch$="x14"]>* { height:  7.14286%; max-height:  7.14286% }
+[data-patch^="15x"]>* { flex:1 1   6.66667%; max-width:  6.66667% } [data-patch$="x15"]>* { height:  6.66667%; max-height:  6.66667% }
+
+[fill ="" ]>*:last-child,
+[fill*="W"]>*:last-child { max-width : 100% } /* when less elements than given ratios */
+[fill*="H"]>*:last-child { max-height: 100% }
+
+/************************************************/
+/* easy RESPONSIVE|HARMONICA|NESS         (WIP) */
+/************************************************/
+[data-harmonica]                { display: flex; /* and specify W/H (or fill parent) */ }
+
+[data-harmonica^="H"]           { flex-flow: row nowrap; }
+[data-harmonica^="V"]           { flex-flow: column nowrap; }
+
+[data-harmonica]>*              { flex: 1; overflow: hidden; transition: all 50ms ease-in-out }
+[data-harmonica^="H"]>*         { height: 100%; max-height: 100% }
+[data-harmonica^="V"]>*         { width : 100%; max-width : 100% }
+
+[data-harmonica*="h"]>*:hover   { flex-basis: 80% } /* override as required */
+/*
+    Explanation:
+
+    - grow hovered flexed element to given flex-basis
+    - shrink the other flexed elements to: (width [or height] * flex-basis) / (#elements - 1)
+    - optionally adjust them to specified flexed element width/height constraints (or to parent container)
+
+    A flex-basis of 100% hides sibling child elements when they have no minimum sizes (or padding!! quirk?)
+*/
+/* EXTRA: maximize hovered element when clicked */
+ /* Hide checkboxes (same as data-gone="1" util) */
+[data-harmonica]>input[type="checkbox"]     { display:none; position:absolute; overflow:hidden; clip:rect(0 0 0 0);
+                                              z-index:-999999; top:-999999px; margin:-1px; padding:0; border:0;
+                                              height:1px; width:1px; min-height:0; min-width:0; max-height:0; max-width:0 }
+ /* Maximize and fix har-mo-ni-ca's in place */
+[data-harmonica*="m"]>input[type="checkbox"] + label         { cursor: pointer /* up to you */ }
+[data-harmonica*="m"]>input[type="checkbox"]:checked + label { flex-basis: 100% }
+
+/* EXTRAS: add a blur filter */
+[data-harmonica*="blur"]:hover>*:not(:hover)   { filter: blur(2px); opacity: .7 }
+</style>
+
+
+
+<style>
+/************************************************/
+/* Demo global                                  */
+/************************************************/
+main                    { padding-bottom: 5rem }
+body>footer             { flex-flow: column wrap; padding: 1.5rem 0 3rem 0 }
+
+/************************************************/
+/* Header logo                                  */
+/************************************************/
+#logo       { flex-flow: column wrap }
+#logo                   { align-items: center }
+ #logo-text             { padding: 1em 0; align-items: flex-end }
+ #logo-text>*           { margin-bottom: 0 }
+  #logo-main            { letter-spacing: -.03em; font-weight: 600 }
+  #logo-yell            { justify-content: flex-end; position: relative; top: -1rem; color: black  }
+  #logo-yell span       { color: hsla(0,0%,100%,.9) }
+
+/************************************************/
+/* Demo rulers                                  */
+/************************************************/
+/* Some rulers to help measure screen width. Ab'using <HR> for that (just because I can) */
+#demo-rulers item       { padding: 0; margin: 0; width: 100%; overflow: hidden }
+[hr]                    { height: 1rem; margin-bottom: .5rem; background: hsl(0,0%,74%);
+                          border-style: solid; border-color: hsla(0,0%,0%,.4) red; border-width: 1px 2px  }
+[hr]:after              { display: flex; justify-content: center; content: attr(hr)'px';
+                          color: black; font-size: .75rem; line-height: 1rem }
+[hr= "320"]             { width:  320px }
+[hr= "360"]             { width:  360px }
+[hr= "480"]             { width:  480px }
+[hr= "569"]             { width:  569px }
+[hr= "640"]             { width:  640px }
+[hr= "800"]             { width:  800px }
+[hr= "960"]             { width:  960px }
+[hr="1120"]             { width: 1120px }
+[hr="1280"]             { width: 1280px }
+[hr="1440"]             { width: 1440px }
+
+/************************************************/
+/* toolbar-layer                                */
+/************************************************/
+
+
+/************************************************/
+/* blogpost-layer                               */
+/************************************************/
+
+
+/************************************************/
+/* Background-layer                             */
+/************************************************/
+#layer-back             { background: hsla(50,100%,50%,.0); margin: 0; font-weight: 600;
+                          padding: 2rem; width: 100vw; height: calc(100vh - 3rem) }
+
+#layer-back>*,
+#layer-back>* *         { justify-content: center; align-items: center; text-align: center }
+
+#layer-back>*           { font-size: 1rem }
+#layer-back>*>*         { position: relative }
+
+[data-harmonica*="f"]>*,
+#layer-back>[data-patch]>* { border: .5px solid hsla(0,0%,0%,.1) }
+
+/* Toying with counters */
+#layer-back             { counter-reset: nine-patch }
+#layer-back>*           { counter-reset: patch; counter-increment: nine-patch }
+#layer-back>*>*         { counter-increment: patch }
+
+#layer-back>*>*:before  { position: absolute; top: 0; right: .5rem; font-size: .75rem; color: hsla(0,0%,0%,.1);
+                          content: counter(nine-patch) "." counter(patch) " " }
+
+/* Toying with FBL harmonica */
+[data-harmonica]>*:hover { font-size: 1.5rem; font-weight: bold }
+
+/* Toying with hidden checkboxes */
+[data-harmonica*="m"]>input[type="checkbox"]:checked + label { background: hsl(210, 100%, 60%); color: white }
+
+/************************************************/
+/* more-layer                                   */
+/************************************************/
+
+
+/************************************************/
+/* even-more-layer                              */
+/************************************************/
+</style>
+</head>
+
+
+<body data-debug="0" neat>
+<div id="ers-toolbar">
+</div>
+<header>
+    <div id="logo">
+        <div id="logo-text">
+
+            <div id="logo-main" data-typo="hl">
+                <span data-typo="xx">ERS</span>&nbsp;primer
+            </div>
+            <div id="logo-yell" data-typo="p1">easy responsive<span>||</span>ness series</div>
+        </div>
+    </div>
+</header>
+<main>
+    <article>
+        <div>easy responsive||ness Series</div>
+        <section id="demo-intro">intro</section>
+
+        <section id="sec-y-is-mx-plus-b">
+            <div data-header="section" data-typo="hx">y = mx + b</div>
+            <item>
+                <p>item p 1</p>
+                <p>item p 2</p>
+            </item>
+        </section>
+
+        <section>
+            <item><pre id="demo-code-1"></pre></item>
+            <item><pre id="demo-code-2"></pre></item>
+        </section>
+        <section>
+            <item>
+                <p data-typo="p1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ille enim occurrentia nescio quae comminiscebatur; Varietates autem iniurasque fortunae facile veteres philosophorum praeceptis instituta vita superabat. Plane idem, inquit, et maxima quidem, qua fieri nulla maior potest. Cur igitur, cum de re conveniat, non malumus usitate loqui? Positum est a nostris in
+                    iis esse rebus, quae secundum naturam essent, non dolere;</p>
+                <p data-typo="p1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ille enim occurrentia nescio quae comminiscebatur; Varietates autem iniurasque fortunae facile veteres philosophorum praeceptis instituta vita superabat. Plane idem, inquit, et maxima quidem, qua fieri nulla maior potest. Cur igitur, cum de re conveniat, non malumus usitate loqui? Positum est a nostris in
+                    iis esse rebus, quae secundum naturam essent, non dolere;</p>
+            </item>
+        </section>
+        <section id="demo-rulers">
+            <item>
+                <hr hr="1440">
+                <hr hr="1280">
+                <hr hr="1120">
+                <hr hr="960">
+                <hr hr="800">
+                <hr hr="640">
+                <hr hr="569">
+                <hr hr="480">
+                <hr hr="360">
+                <hr hr="320">
+            </item>
+        </section>
+        <section>
+            <item>
+                <h2>data-typo</h2>
+                <div data-typo="h1">h1. dit is buiten het artikel</div>
+                <div data-typo="h2">h2. dit is buiten het artikel</div>
+                <div data-typo="h3">h3. dit is buiten het artikel</div>
+                <div data-typo="h4">h4. dit is buiten het artikel</div>
+                <div data-typo="h5">h5. dit is buiten het artikel</div>
+                <div data-typo="h6">h6. dit is buiten het artikel</div>
+
+                <div data-typo="h0">big</div>
+                <div data-typo="hl">large</div>
+                <div data-typo="hx">extra large</div>
+            </item>
+            <item>
+                <h1>h1. dit is buiten het artikel</h1>
+                <h2>h2. dit is buiten het artikel</h2>
+                <h3>h3. dit is buiten het artikel</h3>
+                <h4>h4. dit is buiten het artikel</h4>
+                <h5>h5. dit is buiten het artikel</h5>
+                <h6>h6. dit is buiten het artikel</h6>
+            </item>
+        </section>
+    </article>
+    <article>
+        <section>
+            <item>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ille enim occurrentia nescio quae comminiscebatur; Varietates autem iniurasque fortunae facile veteres philosophorum praeceptis instituta vita superabat. Plane idem, inquit, et maxima quidem, qua fieri nulla maior potest. Cur igitur, cum de re conveniat, non malumus usitate loqui? Positum est a nostris in iis esse rebus,
+                    quae secundum naturam essent, non dolere.</p>
+                <p>Te enim iudicem aequum puto, modo quae dicat ille bene noris. Tu quidem reddes; Quae quidem sapientes sequuntur duce natura tamquam videntes; Illud dico, ea, quae dicat, praeclare inter se cohaerere. Gerendus est mos, modo recte sentiat.</p>
+                <p>Stulti autem malorum memoria torquentur, sapientes bona praeterita grata recordatione renovata delectant. Duo Reges: constructio interrete. Totum autem id externum est, et quod externum, id in casu est. Neque enim civitas in seditione beata esse potest nec in discordia dominorum domus; Quamvis enim depravatae non sint, pravae tamen esse possunt. Quasi ego id curem, quid ille
+                    aiat aut neget. Est enim effectrix multarum et magnarum voluptatum. Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus.</p>
+                <p>Sed quae tandem ista ratio est? Quid de Pythagora? Licet hic rursus ea commemores, quae optimis verbis ab Epicuro de laude amicitiae dicta sunt. Tu quidem reddes; Sin laboramus, quis est, qui alienae modum statuat industriae? Hoc enim identidem dicitis, non intellegere nos quam dicatis voluptatem. Itaque hic ipse iam pridem est reiectus; Itaque mihi non satis videmini
+                    considerare quod iter sit naturae quaeque progressio. Qui autem esse poteris, nisi te amor ipse ceperit? Nam, ut paulo ante docui, augendae voluptatis finis est doloris omnis amotio.</p>
+                <p>Non modo carum sibi quemque, verum etiam vehementer carum esse? Quia dolori non voluptas contraria est, sed doloris privatio. Quae cum essent dicta, discessimus. Dici enim nihil potest verius. Addidisti ad extremum etiam indoctum fuisse. Maximas vero virtutes iacere omnis necesse est voluptate dominante. Si qua in iis corrigere voluit, deteriora fecit.</p>
+            </item>
+            <item>
+                <h1>h1. in het artikel</h1>
+                <h2>h2. in het artikel</h2>
+                <h3>h3. in het artikel</h3>
+                <h4>h4. in het artikel</h4>
+                <h5>h5. in het artikel</h5>
+                <h6>h6. in het artikel</h6>
+            </item>
+        </section>
+        <section>
+            <item>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ille enim occurrentia nescio quae comminiscebatur; Varietates autem iniurasque fortunae facile veteres philosophorum praeceptis instituta vita superabat. Plane idem, inquit, et maxima quidem, qua fieri nulla maior potest. Cur igitur, cum de re conveniat, non malumus usitate loqui? Positum est a nostris in iis esse rebus,
+                    quae secundum naturam essent, non dolere;</p>
+                <p>Te enim iudicem aequum puto, modo quae dicat ille bene noris. Tu quidem reddes; Quae quidem sapientes sequuntur duce natura tamquam videntes; Illud dico, ea, quae dicat, praeclare inter se cohaerere. Gerendus est mos, modo recte sentiat.</p>
+                <p>Stulti autem malorum memoria torquentur, sapientes bona praeterita grata recordatione renovata delectant. Duo Reges: constructio interrete. Totum autem id externum est, et quod externum, id in casu est. Neque enim civitas in seditione beata esse potest nec in discordia dominorum domus; Quamvis enim depravatae non sint, pravae tamen esse possunt. Quasi ego id curem, quid ille
+                    aiat aut neget. Est enim effectrix multarum et magnarum voluptatum. Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus.</p>
+                <p>Sed quae tandem ista ratio est? Quid de Pythagora? Licet hic rursus ea commemores, quae optimis verbis ab Epicuro de laude amicitiae dicta sunt. Tu quidem reddes; Sin laboramus, quis est, qui alienae modum statuat industriae? Hoc enim identidem dicitis, non intellegere nos quam dicatis voluptatem. Itaque hic ipse iam pridem est reiectus; Itaque mihi non satis videmini
+                    considerare quod iter sit naturae quaeque progressio. Qui autem esse poteris, nisi te amor ipse ceperit? Nam, ut paulo ante docui, augendae voluptatis finis est doloris omnis amotio.</p>
+                <p>Non modo carum sibi quemque, verum etiam vehementer carum esse? Quia dolori non voluptas contraria est, sed doloris privatio. Quae cum essent dicta, discessimus. Dici enim nihil potest verius. Addidisti ad extremum etiam indoctum fuisse. Maximas vero virtutes iacere omnis necesse est voluptate dominante. Si qua in iis corrigere voluit, deteriora fecit.</p>
+            </item>
+        </section>
+    </article>
+</main>
+<footer>
+    <section data-typo="h2">the least interesting info</section>
+    <section data-typo="h2">less interesting info</section>
+    <section>
+        <div data-header="section">as</div>
+        <item>
+            <div data-typo="h4">i am an item data-typo=h4 div header</div>
+            <form>i am a form item</form>
+        </item>
+        <item>
+            <div>i am a div item</div>
+        </item>
+        <item>
+            <h4>i am an item h4 header</h4>
+            <p>a p explaining what the below li's mean:
+            <ul>
+                <li>i am a li in an ul item
+                <li>me too
+                <li>and me
+                <li>dito
+            </ul>
+        </item>
+    </section>
+</footer>
+
+<section id="layer-back" data-typo="h2" data-patch="3x3">
+    <div data-patch="1x1"> <div>a little demo showing easy flexbox grid construction.</div></div>
+
+    <div data-harmonica="Vhf.blur">
+        <input id="pa1" type="checkbox"/><label for="pa1"><span>you are looking at a 9-patch grid</span></label>
+        <input id="pa2" type="checkbox"/><label for="pa2"><span>containing patches from</span></label>
+    </div>
+
+    <div data-patch="3x1"> <div>1</div><div>to</div><div>9</div></div>
+    <div data-patch="1x4"> <div></div><div></div><div></div><div></div> </div>
+
+    <div data-harmonica="Hhmf.blur">
+        <input id="pb1" type="checkbox"/><label for="pb1"><span>plz</span></label>
+        <input id="pb2" type="checkbox"/><label for="pb2"><span>taz</span></label>
+        <input id="pb3" type="checkbox"/><label for="pb3"><span>one</span></label>
+        <input id="pb4" type="checkbox"/><label for="pb4"><span>of </span></label>
+        <input id="pb5" type="checkbox"/><label for="pb5"><span>us </span></label>
+    </div>
+
+    <div data-patch="1x6"> <div></div><div></div><div></div><div></div><div></div><div></div> </div>
+    <div data-patch="7x1"> <div></div><div></div><div></div><div></div><div></div><div></div><div></div> </div>
+    <div data-patch="1x8"> <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div> </div>
+
+    <div data-patch="9x1">
+        <div data-harmonica="Vhmf.blur">
+            <input id="pc1" type="checkbox"/><label for="pc1"><span>1</span></label>
+        </div>
+        <div data-harmonica="Vhmf.blur">
+            <input id="pd1" type="checkbox"/><label for="pd1"><span>1</span></label>
+            <input id="pd2" type="checkbox"/><label for="pd2"><span>2</span></label>
+        </div>
+        <div data-harmonica="Vhmf.blur">
+            <input id="pe1" type="checkbox"/><label for="pe1"><span>1</span></label>
+            <input id="pe2" type="checkbox"/><label for="pe2"><span>2</span></label>
+            <input id="pe3" type="checkbox"/><label for="pe3"><span>3</span></label>
+        </div>
+        <div data-harmonica="Vhmf.blur">
+            <input id="pf1" type="checkbox"/><label for="pf1"><span>1</span></label>
+            <input id="pf2" type="checkbox"/><label for="pf2"><span>2</span></label>
+            <input id="pf3" type="checkbox"/><label for="pf3"><span>3</span></label>
+            <input id="pf4" type="checkbox"/><label for="pf4"><span>4</span></label>
+        </div>
+        <div data-harmonica="Vhmf.blur">
+            <input id="pg1" type="checkbox"/><label for="pg1"><span>1</span></label>
+            <input id="pg2" type="checkbox"/><label for="pg2"><span>2</span></label>
+            <input id="pg3" type="checkbox"/><label for="pg3"><span>3</span></label>
+            <input id="pg4" type="checkbox"/><label for="pg4"><span>4</span></label>
+            <input id="pg5" type="checkbox"/><label for="pg5"><span>5</span></label>
+        </div>
+        <div data-harmonica="Vhmf.blur">
+            <input id="ph1" type="checkbox"/><label for="ph1"><span>1</span></label>
+            <input id="ph2" type="checkbox"/><label for="ph2"><span>2</span></label>
+            <input id="ph3" type="checkbox"/><label for="ph3"><span>3</span></label>
+            <input id="ph4" type="checkbox"/><label for="ph4"><span>4</span></label>
+        </div>
+        <div data-harmonica="Vhmf.blur">
+            <input id="pi1" type="checkbox"/><label for="pi1"><span>1</span></label>
+            <input id="pi2" type="checkbox"/><label for="pi2"><span>2</span></label>
+            <input id="pi3" type="checkbox"/><label for="pi3"><span>3</span></label>
+        </div>
+        <div data-harmonica="Vhmf.blur">
+            <input id="pj1" type="checkbox"/><label for="pj1"><span>1</span></label>
+            <input id="pj2" type="checkbox"/><label for="pj2"><span>2</span></label>
+        </div>
+        <div data-harmonica="Vhmf.blur">
+            <input id="pk1" type="checkbox"/><label for="pk1"><span>1</span></label>
+        </div>
+    </div>
+</section>
+</body>
+
+
+
+<style>
+#demo-code-1::after
+{ padding: .5rem; content:
+    'html { font-size: calc(0.00625 * 100vmin + 0.625rem)          }\A'
+    'h1   { font-size: 2.00em; font-weight: bold; margin: 0.67em 0 }\A'
+    'h2   { font-size: 1.50em; font-weight: bold; margin: 0.83em 0 }\A'
+    'h3   { font-size: 1.17em; font-weight: bold; margin: 1.00em 0 }\A'
+    'h4   { font-size: 1.00em; font-weight: bold; margin: 1.33em 0 }\A'
+    'h5   { font-size: 0.83em; font-weight: bold; margin: 1.67em 0 }\A'
+    'h6   { font-size: 0.67em; font-weight: bold; margin: 2.33em 0 }\A'
+}
+#demo-code-2::after
+{ padding: .5rem; content:
+    '.base { font-size: calc(0.00625   * 100vmin + 0.625rem)  }\A'
+    '.h1   { font-size: calc(0.0125    * 100vmin + 1.25em   ) }\A'
+    '.h2   { font-size: calc(0.009375  * 100vmin + 0.9375em ) }\A'
+    '.h3   { font-size: calc(0.0073125 * 100vmin + 0.73125em) }\A'
+    '.h4   { font-size: calc(0.00625   * 100vmin + 0.625em  ) }\A'
+    '.h5   { font-size: calc(0.0051875 * 100vmin + 0.81875em) }\A'
+    '.h6   { font-size: calc(0.0041875 * 100vmin + 0.41875em) }\A'
+    '\A'
+    '.h0   { font-size: calc(0.015     * 100vmin + 1.5em    ) }\A'
+    '.hl   { font-size: calc(0.03      * 100vmin + 3em      ) }\A'
+    '.xl   { font-size: calc(0.045     * 100vmin + 4.5em    ) }\A'
+}
+</style>
+
+</html>

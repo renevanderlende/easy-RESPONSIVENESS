@@ -1,0 +1,85 @@
+@CHARSET "UTF-8";
+/************************************************/
+/*    HTML hover filters (WIP but stable)       */
+/************************************************/
+
+/* NOTE: Nesting and combining [MAIN] effects is possible. Maximum is one per [MAIN] */
+
+/*
+    - Simplified minimum effect structure
+
+        .parent:hover > .children   { modify all child elements to effect default }
+        .parent > .children:hover   { modify hovered child element effect }
+
+
+    - When using debugTools() effect MUST be cancelled if html[data-effects="0"] => <html> no effect support
+    - Preferably use (*)-selectors, so the effect can be used on most HTML <tags>. 
+
+*/
+/* Minimal example */
+[data-effect="myEffect"]:hover>*                            { color: red   }
+[data-effect="myEffect"]>*:hover                            { color: green }
+
+/* (Temporary) disable effect support */
+html[data-effects="0"] [data-effect="myEffect"]:hover>*     { color: inherit }
+html[data-effects="0"] [data-effect="myEffect"]>*:hover     { color: currentcolor }
+
+
+/************************************************/
+/*              parent container                */
+/************************************************/
+/* GENERIX */
+[data-effect]           { /* height: 0; width: 0 */      } /* effect rule for all parent elements */
+[data-effect]:hover>*   { /* transition: all 0ms ease */ } /* effect rule for all child elements */
+
+/* SPECIFIX */
+/* [MAIN] HTML filter options */
+[data-effect*="H.blur"       ]:hover>*  { filter: blur(2px) }                /* blur-px */
+[data-effect*="H.brightness" ]:hover>*  { filter: brightness(100%) }         /* percent */
+[data-effect*="H.contrast"   ]:hover>*  { filter: contrast(100%) }           /* percent */
+[data-effect*="H.darken"     ]:hover>*  { filter: brightness(40%) }          /* percent */
+[data-effect*="H.greyscale"  ]:hover>*  { filter: saturate(0%) }             /* percent */
+[data-effect*="H.hue-rotate" ]:hover>*  { filter: hue-rotate(0deg) }         /* rotation degree */
+[data-effect*="H.invert"     ]:hover>*  { filter: invert(100%) }             /* percent */
+[data-effect*="H.lighten"    ]:hover>*  { filter: brightness(120%) }         /* percent */
+[data-effect*="H.opacity"    ]:hover>*  { filter: opacity(50%) }             /* percent */
+[data-effect*="H.saturate"   ]:hover>*  { filter: saturate(100%) }           /* percent */
+[data-effect*="H.sepia"      ]:hover>*  { filter: sepia(80%) }               /* percent */
+[data-effect*="H.drop-shadow"]:hover>*  { filter: drop-shadow(0 0 0 black) } /* x y blur-px color */
+[data-effect*="H.url"        ]:hover>*  { filter: url('') }                  /* (x)link(:) */
+
+/* [MAIN] Element opacity */
+[data-effect*="O"]:hover>*              { opacity: .3 }
+
+/* Your [MAIN] effect additions */
+[data-effect*="BG.001"     ]:hover>*    { background-color: hsl(150,100%,70%) } /* red(ish) */
+[data-effect*="BG.002"     ]:hover>*    { background-color: hsl(150,100%,70%) } /* green(ish) */
+[data-effect*="BG.003"     ]:hover>*    { background-color: hsl(150,100%,70%) } /* blue(ish) */
+
+[data-effect*="FG.000"     ]:hover>*    { color: #000 } /* black */
+[data-effect*="FG.FFF"     ]:hover>*    { color: #fff } /* white */
+
+/************************************************/
+/*          child element/containers            */
+/************************************************/
+/* GENERIX */
+[data-effect]>*                         { /* TODO: nice scaling+transition during effect */ }
+
+/* SPECIFIX */
+[data-effect*="H"]>*:hover              { filter: none; transition: all 0ms ease /* transform: scale(1.03) */ }
+[data-effect*="O"]>*:hover              { opacity: 1 }
+[data-effect="H.drop-shadow"]>*:hover   { filter: drop-shadow(2px 2px 5px rgba(0,0,0,.3)) } 
+
+/************************************************/
+/*    Cancel effect when HTML disables it       */
+/************************************************/
+/* SPECIFIX only */
+html[data-effects="0"] [data-effect*="H" ]:hover>*  { filter: none }
+html[data-effects="0"] [data-effect*="H" ]>*:hover  { filter: none }
+
+html[data-effects="0"] [data-effect*="O" ]:hover>*  { opacity: 1 }
+html[data-effects="0"] [data-effect*="BG"]:hover>*  { background-color: inherit }
+html[data-effects="0"] [data-effect*="FG"]:hover>*  { color: inherit }
+
+
+

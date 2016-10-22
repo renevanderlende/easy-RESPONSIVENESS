@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html data-response="1" data-impaired>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title title="({month} 2016) {document-title}">{document-title}</title>
+
+<!-- 
+    Inspirations: {site-links}
+-->
+
+<meta name="description" content="{document-description}">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT">
+
+<style>
+/************************************************/
+/* DEMO RULES                                   */
+/************************************************/
+body {
+  height: 100%;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  font-style: normal;
+  font-weight: normal;
+  font-stretch: normal;
+}
+
+#demo-blend             { background: url(http://unsplash.it/1499/1000);
+                          background-size: 100%;
+                          background-size: cover;
+                          background-repeat: no-repeat }
+
+[xoxo="black"]          { color: hsl(0, 0%, 0%) }
+[xoxo="blue"]           { background: hsl(222, 94%, 50%) }
+[xoxo="yellow"]         { color: hsl(61, 100%, 52%) }
+[xoxo="white"]          { color: hsl(0, 0%, 100%) }
+
+
+#blend-me {
+  position: fixed; z-index: 1;
+  top: 50%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  font-family: 'Raleway', sans-serif;
+  font-size: 7vw;
+  font-weight: 800;
+  letter-spacing: 8px;
+  line-height: 60px;
+  text-align: center;
+  padding: 35px;
+  margin: 0;
+  background: hsla(210,100%,60%,1);
+  color: white;
+  mix-blend-mode: multiply;
+}
+
+.blend {
+  mix-blend-mode: exclusion;
+  color: white;
+  display: block;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 6vw;
+}
+
+.red         { color: red   }
+.green       { color: green }
+.blue        { color: blue  }
+
+
+</style>
+<style>
+
+.container {
+  margin: 1em auto;
+  width: 100%;
+  max-width: 814px;
+  position: relative;
+}
+
+.container-2 {
+  /* uncomment this if you want to isolate the contents of the container */
+
+  opacity: .99;
+}
+
+.container-1 img {
+  max-width: 100%;
+  mix-blend-mode: luminosity;
+}
+
+.container-1 h1,
+.container-2 h1 {
+  position: absolute;
+  bottom: 0;
+  color: white;
+  text-align: center;
+  font-size: 5vw;
+  width: 100%;
+  text-transform: uppercase;
+  margin-top: 5em;
+  background-color: red;
+  padding: .5em .25em;
+  mix-blend-mode: difference;
+}
+
+.source {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  mix-blend-mode: overlay;
+}
+
+.container-4 {
+  border: 1px solid #aaa;
+  padding: 1em;
+  background-color: white;
+}
+
+.container-4 h1 {
+  width: 100%;
+  text-align: center;
+  font-size: 7em;
+  font-weight: bold;
+  isolation: isolate;
+  letter-spacing: -5px;
+}
+
+.container-4 h1 span {
+  display: block;
+  color: deepPink;
+}
+
+.container-4 h1 span:last-child {
+  margin-top: -1em;
+  color: #1AD6AC;
+  mix-blend-mode: difference;
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+        <section id="demo-blend">
+            <item class="blend">
+              <blockquote class="red"  >“Attack design doldrums with stylistic souplesse”</blockquote>
+              <blockquote class="blue" >“Comprehensive characters for culturally correct creations”</blockquote>
+              <blockquote class="green">“Fashionable figures break away from the populist peloton”</blockquote>
+            </item>
+        </section>
+
+
+        <div id="blend-me">BLEND ME</div>
+
+
+        <div class="container container-1">
+          <img src="http://tympanus.net/codrops-playground/assets/images/cssref/properties/mix-blend-mode/scene.jpg" alt="Nature scene.">
+          <h1>Breathe</h1>
+        </div>
+        <div class="container container-2">
+          <img src="http://tympanus.net/codrops-playground/assets/images/cssref/properties/mix-blend-mode/scene.jpg" alt="Nature scene.">
+          <h1>Breathe</h1>
+        </div>
+        <div class="container container-3">
+          <img src="http://tympanus.net/codrops-playground/assets/images/cssref/properties/mix-blend-mode/scene.jpg" alt="Nature scene.">
+          <img src="http://tympanus.net/codrops-playground/assets/images/cssref/properties/mix-blend-mode/bird.jpg" alt="Bird image." class="source">
+        </div>
+        <div class="container container-4">
+          <h1><span>Colorful</span><span>Ideas</span></h1>
+        </div>
+
+
+
+
+</body>
+</html>

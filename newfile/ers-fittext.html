@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title title="({month} 2016) {document-title}">Pure CSS FitText</title>
+
+<!-- 
+    Inspirations: http://codepen.io/hans/pen/WxBkoQ
+-->
+
+<meta name="description" content="{document-description}">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT">
+
+<style id="ers--demo--document-styles">
+@import "https://fonts.googleapis.com/css?family=Baloo+Paaji";
+/************************************************/
+/* easy RESPONSIVE|FONT|NESS                    */
+/************************************************/
+/* Responsive font: y = mx + b */
+html { font-size: calc(0.00625 * 100vmin + 0.625rem) }
+body { font-size: 1rem; line-height: normal }
+
+/************************************************/
+/* DEMO RULES                                   */
+/************************************************/
+.fittext {
+  font-size: 8.8vw;
+  line-height: 1;
+  text-align: center;
+}
+
+.fittext2 {
+  font-size: 5vw;
+  margin-top: 0;
+}
+
+body {
+  background-color: #c44032;
+  color: #f4f1de;
+  font-family: 'Baloo Paaji', 'Impact';
+}
+
+h1 {
+  margin-bottom: 0;
+  text-align: center;
+  text-shadow: #863027 0.01em 0.01em 0, #863027 0.02em 0.02em 0, #863027 0.03em 0.03em 0, #863027 0.04em 0.04em 0, #863027 0.05em 0.05em 0, #863027 0.06em 0.06em 0, #863027 0.07em 0.07em 0, #863027 0.08em 0.08em 0, #863027 0.09em 0.09em 0, #863027 0.1em 0.1em 0;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1 class="fittext">Fit me to browser width</h1>
+<h1 class="fittext2">and me to half of it</h1>
+
+<!-- The only thing that requires js -->
+<h1 class="fittext-dynamic" data-width="100">and I'm dyamic!</h1>
+
+<!-- Only necessary on document load, not window resize -->
+
+</body>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script>
+'use strict';
+$('.fittext-dynamic').each(function () {
+    var t = $(this), width = t.data('width') * 2, characters = t.html().length, size = width / characters;
+    $(this).css('font-size', size + 'vw');
+});
+</script>
+
+</html>

@@ -1,0 +1,120 @@
+@CHARSET "UTF-8";
+
+/************************************************/
+/*         DEBUG/DESIGN RULES (WIPWIP)          */
+/************************************************/
+/*
+    MAXIMUM Z-INDEX VALUE: 2^31 - 1 => 2.147.483.648 - 1
+
+    BEWARE: depending on browser higher values may become unpredicatable
+            or elements disappear (Firefox), but will mostly default to 2.147.483.647
+*/
+#debug--landscape { display: none }
+@media all and (orientation: landscape) { #debug--portrait  { display: none } }
+
+#debug--landscape, #debug--portrait     { position: fixed; top: 40px; right: 1em }
+             /* SVG rulers use none relative px, so above 'top' in px also */
+
+/* DEBUG ACTIVATION (screen only) */
+@media screen {
+    body[data-debug*="0"] #debug--orientation   { display: none }
+    body[data-debug*="1"] #debug--orientation   { display: flex; width: 100%; justify-content: flex-end }
+
+    body[data-debug*="1"] *                     { outline: 1px dashed black; transition: all .5s ease-in-out }
+
+    body[data-debug*="1"] [id^="debug--"],
+    body[data-debug*="1"] [id^="debug--"] *     { outline: 0px; transition: none }
+
+    
+    body[data-debug*="0"] #debug--rulers svg    { width: 0%;   height: 0% }
+    body[data-debug*="1"] #debug--rulers svg    { width: 100%; height: 100% }
+
+    body[data-debug*="0"] #debug--rulers        { display: none }
+    body[data-debug*="1"] #debug--rulers        { display: flex; position: fixed;
+                                                  top: 0; left: 0; right: 0; bottom: 0;
+                                                  background-color: hsla(0,0%,90%,.6) }
+    ul  [id*="debug"],
+    li  [id*="debug"],
+    div [id*="debug"]                           { display: flex; position: relative; flex-wrap: wrap }
+
+    #debug--layer-design                        { z-index: 999999 }
+
+    #debug-button-list[data-debug*="0"]         { display: none } 
+    #debug-button-list[data-debug*="1"]         { display: block; position: absolute; top: 1.65rem; right: 0 }
+
+    #debug-button-list > *                      { width: 100% }
+    
+    #debug--tools-panel                         { display: flex; flex-flow: column wrap; align-items: center;
+                                                  position: fixed; top: calc(100vh - 8.25rem); 
+                                                  max-width: 3.5rem; padding: .25rem; font-size: 1rem }
+
+    body[dir="ltr"] #debug--tools-panel         { left: 3.5rem; right: auto }
+    body[dir="rtl"] #debug--tools-panel         { left: auto; right: 3.5rem }
+
+    [id^="toggle--debug"]:after                 { font-family: sans-serif; cursor: pointer;
+                                                  width: 3rem; height: 3rem; margin-top: .25rem;
+                                                  font-size: 1.2rem; font-weight: 600; line-height: 3rem;
+                                                  text-align: center; border-radius: 50%; }
+
+    [id^="toggle--debug"]:hover:after           { transform: scale(1.1) }
+
+    #toggle--debug-tools:after                  { content: '\22ee'; 
+                                                  background-color: hsl(212, 13%, 25%); color: hsla(0,0%,100%,.87);
+                                                  /*box-shadow: 0 0 0 2px hsl(50,100%,50%)*/ }
+   
+    #toggle--debug-dbg:after                            { content: '\2b1a' }
+    body[data-debug*="0"] #toggle--debug-dbg:after      { background-color: hsla(  5,72%,53%,1); color: hsla(0,0%,100%,.87) }
+    body[data-debug*="1"] #toggle--debug-dbg:after      { background-color: hsla(205,96%,26%,1); color: hsla(0,0%,100%,.87) }
+
+    body[dir="ltr"] #toggle--debug-dir:after            { content: 'ltr'; background-color: hsla( 31,31%,55%,1); color: hsla(0,0%,100%,.87) }
+    body[dir="rtl"] #toggle--debug-dir:after            { content: 'rtl'; background-color: hsla( 31,31%,55%,1); color: hsla(0,0%,100%,.87) }
+
+    #toggle--debug-imp:after                            { content: '\2711' }
+    html[data-impaired="none" ] #toggle--debug-imp:after{ background-color: hsla(  5,72%,53%,1); color: hsla(0,0%,100%,.87) }
+    html[data-impaired="press"] #toggle--debug-imp:after{ background-color: hsla(100,51%, 55%, 1) }
+
+    #toggle--debug-fx:after                             { content: '\192\1d4cd'; }
+    html[data-effects="0"] #toggle--debug-fx:after      { background-color: hsla(  5,72%,53%,1); color: hsla(0,0%,100%,.87) }
+    html[data-effects="1"] #toggle--debug-fx:after      { background-color: hsla(181,51%,73%,1) }
+
+    #toggle--debug-rsp:after                            { content: ' \1ac\3c4'; }
+    html[data-response="0"] #toggle--debug-rsp:after    { background-color: hsla(  5,72%,53%,1); color: hsla(0,0%,100%,.87)  }
+    html[data-response="1"] #toggle--debug-rsp:after    { background-color: hsla( 52,95%,61%,1) }
+
+    #toggle--debug-dsn:after                            { content: ' \1ac\3c4'; }
+    html[data-design="0"] #toggle--debug-dsn:after      { background-color: hsla(  5,72%,53%,1); color: hsla(0,0%,100%,.87)  }
+    html[data-design="1"] #toggle--debug-dsn:after      { background-color: hsla( 52,95%,61%,1) }
+
+    /* DEBUG BACKGROUND/OVERLAYS */
+    html[data-debug*="1"]       { background: hsla(249,7%,72%,1)/* url(images/pixel-ruler.svg) 0 0/cover fixed */ }
+    html[data-debug*="1"]> *    { opacity: .5 }  
+
+    body[data-debug*="1"][debug-grid] {
+        background: #efefef top / 2em 
+                    url('data:image/svg+xml, \
+                    <svg xmlns="http://www.w3.org/2000/svg" width="2" height="2" fill-opacity=".03"> \
+                      <rect x="1" width="1" height="1" /> \
+                      <rect y="1" width="1" height="1" /> \
+                    </svg>') } 
+
+    /* NOTICE: space after '[data-debug*="1"]' */
+    body[data-debug*="1"] [debug-line-h]:not([debug-line-v]) {
+        background-image: url('data:image/svg+xml, \
+                          <svg xmlns="http://www.w3.org/2000/svg"> \
+                            <line x1="0" x2="100%" y1="50%" y2="50%" height="1" stroke="red" /> \
+                          </svg>') } 
+
+    body[data-debug*="1"] [debug-line-v]:not([debug-line-h]) {
+        background-image: url('data:image/svg+xml, \
+                          <svg xmlns="http://www.w3.org/2000/svg"> \
+                            <line x1="50%" x2="50%" y1="0" y2="100%" width="1" stroke="red" /> \
+                          </svg>') } 
+
+    body[data-debug*="1"] [debug-line-h][debug-line-v] {
+        background-image: url('data:image/svg+xml, \
+                          <svg xmlns="http://www.w3.org/2000/svg"> \
+                            <line x1="0" x2="100%" y1="50%" y2="50%" height="1" stroke="red" /> \
+                            <line x1="50%" x2="50%" y1="0" y2="100%" width="1" stroke="red" /> \
+                            <circle cx="50%" cy="50%" r="3" fill="red" stroke="black" /> \
+                          </svg>') } 
+} /* end of @media screen */

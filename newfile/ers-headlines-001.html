@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html data-response="0">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title title="({month} 2016) {document-title}">Tilted headlines 001</title>
+
+<!-- 
+    Inspirations: http://codepen.io/helmsmith/pen/QwoEOe
+-->
+
+<meta name="description" content="{document-description}">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT">
+
+<link rel='stylesheet' href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">
+
+<link rel='stylesheet' href="css/ers-base-init.css">
+<link rel='stylesheet' href="css/ers-base-utils.css">
+
+<style>
+
+/************************************************/
+/* DEMO RULES                                   */
+/************************************************/
+/* @mixin tilt($deg, $x, $y) { transform: rotate($deg) tranlate($x, $y) } */
+
+body            { color: #20201f; background: #fffbeb }
+
+
+
+h1, h2, h3, h4  { font-family: 'Oswald', sans-serif; text-transform: uppercase; line-height: 1.2em; margin: 0 }
+
+h1              { font-size: 8em;   font-weight: 700 }
+h2              { font-size: 4em;   font-weight: 400 }
+h3              { font-size: 2em;   font-weight: 400; letter-spacing: 2px }
+h4              { font-size: 1.4em; font-weight: 700; letter-spacing: 1px }
+
+.red            { color: #cf3b28 }
+
+.border-top     { border-top   : 1.25rem solid #cf3b28; padding-top   : 0.625rem }
+.border-left    { border-left  : 1.25rem solid #cf3b28; padding-left  : 1.250rem }
+.border-bottom  { border-bottom: 1.25rem solid #cf3b28; padding-bottom: 0.625rem }
+.border-right   { border-right : 1.25rem solid #cf3b28; padding-right : 1.250rem }
+
+.center         { top: 50%; left: 50%; position: fixed; transform: translate(-50%, -25%) }
+
+.center,
+[class^="group"] { flex-direction: column }
+
+.group1          { transform: rotate(-45deg) translate(   0, -50%) }
+.group2          { transform: rotate( 45deg) translate( 34%, -80%); align-items: flex-start }
+.group3          { transform: rotate(-45deg) translate(100%,-225%); align-items: flex-start }
+.group4          { transform: rotate( 45deg) translate(-60%, -45%) }
+
+</style>
+</head>
+
+<body data-debug="1">
+    <div class="center">
+        <div class="group1">
+            <h1 class="border-bottom border-top">Kandinsky</h1>
+        </div>
+        <div class="group2">
+            <h2 class="border-right">Anhaltischer</h2>
+            <h3>Kunstverein</h3>
+            <h3>Johannisstr</h3>
+        </div>
+        <div class="group3">
+            <h4 class="red">Gemalde Aquarelle</h4>
+            <h3>Ausstellung</h3>
+        </div>
+        <div class="group4 red">
+            <h1>60</h1>
+            <h4>Geburtstag</h4>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+@CHARSET "UTF-8";
+/************************************************/
+/* easy RESPONSIVE|RATIO|NESS      (STABLE WIP) */
+/************************************************/
+/*
+    TODO: make it work with 'easy RESPONSIVE|SCALE|NESS'
+*/
+/* Multiplication factor */
+[data-calcbase="10"] { font-size: calc( 1   * 0.06250 * 100vmin) } 
+[data-calcbase="15"] { font-size: calc( 1.5 * 0.06250 * 100vmin) } 
+[data-calcbase="20"] { font-size: calc( 2   * 0.06250 * 100vmin) } 
+[data-calcbase="25"] { font-size: calc( 2.5 * 0.06250 * 100vmin) } 
+[data-calcbase="30"] { font-size: calc( 3   * 0.06250 * 100vmin) } 
+[data-calcbase="35"] { font-size: calc( 3.5 * 0.06250 * 100vmin) } 
+[data-calcbase="40"] { font-size: calc( 4   * 0.06250 * 100vmin) } 
+[data-calcbase="45"] { font-size: calc( 4.5 * 0.06250 * 100vmin) } 
+[data-calcbase="50"] { font-size: calc( 5   * 0.06250 * 100vmin) } 
+[data-calcbase="60"] { font-size: calc( 6   * 0.06250 * 100vmin) } 
+[data-calcbase="70"] { font-size: calc( 7   * 0.06250 * 100vmin) } 
+[data-calcbase="80"] { font-size: calc( 8   * 0.06250 * 100vmin) } 
+[data-calcbase="90"] { font-size: calc( 9   * 0.06250 * 100vmin) } 
+[data-calcbase="A0"] { font-size: calc(10   * 0.06250 * 100vmin) } 
+
+/* set font-sizes of content (back) to default, otherwise content will inherit the multiplied font-size */
+[data-calcbase] > *  { font-size: 1rem; line-height: 1.5rem } /* Now take it from here */
+
+/* Ratio preference PORTRAIT => NOTICE the usage of EM instead of REM.
+   Sizing will be based on inherited font-sizes of CALCBASE above (or parent if CALCBASE is omitted, up to you) ! */
+[data-ratio^="16:10"] { width: 1em; height: 1.6em     } @media (orientation: landscape) { [data-ratio^="16:10"]:not([data-ratio$=".0"]) { width: 1.6em;     height: 1em } }
+[data-ratio^="16:9"]  { width: 1em; height: 1.77778em } @media (orientation: landscape) { [data-ratio^="16:9" ]:not([data-ratio$=".0"]) { width: 1.77778em; height: 1em } }
+[data-ratio^="1:1" ]  { width: 1em; height: 1.0em     } @media (orientation: landscape) { [data-ratio^= "1:1" ]:not([data-ratio$=".0"]) { width: 1.0em;     height: 1em } }
+[data-ratio^="3:2" ]  { width: 1em; height: 1.5em     } @media (orientation: landscape) { [data-ratio^= "3:2" ]:not([data-ratio$=".0"]) { width: 1.5em;     height: 1em } }
+[data-ratio^="4:3" ]  { width: 1em; height: 1.33333em } @media (orientation: landscape) { [data-ratio^= "4:3" ]:not([data-ratio$=".0"]) { width: 1.33333em; height: 1em } }
+[data-ratio^="5:3" ]  { width: 1em; height: 1.66667em } @media (orientation: landscape) { [data-ratio^= "5:3" ]:not([data-ratio$=".0"]) { width: 1.66667em; height: 1em } }
+
+/* Ratio preference LANDSCAPE */
+[data-ratio^="10:16"] { height: 1em; width: 1.6em     } @media (orientation: landscape) { [data-ratio^="10:16"]:not([data-ratio$=".0"]) { height: 1.6em;     width: 1em } }
+[data-ratio^="9:16"]  { height: 1em; width: 1.77778em } @media (orientation: landscape) { [data-ratio^= "9:16"]:not([data-ratio$=".0"]) { height: 1.77778em; width: 1em } }
+[data-ratio^="2:3" ]  { height: 1em; width: 1.5em     } @media (orientation: landscape) { [data-ratio^= "2:3" ]:not([data-ratio$=".0"]) { height: 1.5em;     width: 1em } }
+[data-ratio^="3:4" ]  { height: 1em; width: 1.33333em } @media (orientation: landscape) { [data-ratio^= "3:4" ]:not([data-ratio$=".0"]) { height: 1.33333em; width: 1em } }
+[data-ratio^="3:5" ]  { height: 1em; width: 1.66667em } @media (orientation: landscape) { [data-ratio^= "3:5" ]:not([data-ratio$=".0"]) { height: 1.66667em; width: 1em } }
+
+/* of course... */
+[data-ratio^="goldv"] { width: 1em; height: 1.6188em  } @media (orientation: landscape) { [data-ratio^="goldv"]:not([data-ratio$=".0"]) { width: 1.6188em;  height: 1em } }
+[data-ratio^="goldh"] { height: 1em; width: 1.6188em  } @media (orientation: landscape) { [data-ratio^="goldh"]:not([data-ratio$=".0"]) { height: 1.6188em;  width: 1em } }
+
+/* wtf? */
+[data-flip="R.Y180"] { transform: rotateY(180deg) }
+[data-flip="R.X180"] { transform: rotateX(180deg) }
+[data-flip="R.XY180"]{ transform: rotateX(180deg) rotateY(180deg) }
+

@@ -1,0 +1,69 @@
+@CHARSET "UTF-8";
+/************************************************/
+/* easy RESPONSIVE|UTILS|NESS                   */
+/************************************************/
+[data-gone="1"],
+[data-gone="1"] *,
+[data-display="0"]              { display: none; position: absolute; overflow: hidden; clip: rect(0 0 0 0);
+                                  z-index:-999999; top:-999999px;margin:-1px; padding:0; border:0;
+                                      height: 1px;     width: 1px;
+                                  min-height: 0;   min-width: 0;
+                                  max-height: 0;   max-width: 0 }
+
+/*OLD*/
+[data-display*=".0"]            { outline: 2px dotted tomato }
+[data-display*=".0"] > *        { filter: blur(3px) }
+
+[data-display="1"]              { display: flex }
+
+    /* Some suggested extra possibilities */
+[data-display="2"]              { display: block }
+[data-display="3"]              { display: inline-block }
+[data-display="4"]              { display: inline } 
+
+[data-display="99"],
+[data-display="99"] *           { outline: 2px dashed cornflowerblue } /* debug/design/emphasis/etc */
+
+/*NEW*/
+[data-display="B" ]             { display: block }
+[data-display="IB"]             { display: inline-block }
+[data-display="I" ]             { display: inline }
+[data-display="F" ]             { display: flex; flex: 1 }
+[data-display="IF"]             { display: inline-flex }
+[data-display="H" ]             { visibility: hidden }
+
+
+/* Q&D reset for design time */
+[block] >*,[block]              { display: block  }
+[iblock]>*,[iblock]             { display: inline-block }
+[inline]>*,[inline]             { display: inline }
+
+/************************************************/
+/* easy RESPONSIVE|READER|NESS                  */
+/************************************************/
+/* Adapted from FontAwesome (4.6.3) => Screen Reader support
+    
+    USAGE:
+    
+        <i class="your-icon-classes" aria-hidden="true" title="60 minutes remain in your exam"></i>
+        <span reader>60 minutes remain in your exam</span>
+    OR
+        <span class="sreader">60 minutes remain in your exam</span>
+   
+    SEE: http://fontawesome.io/accessibility/ for further info
+
+*/
+[reader],.sreader               { position: absolute; width: 1px; height: 1px;margin: -1px; padding: 0; overflow: hidden;
+                                  clip: rect(0, 0, 0, 0); border: 0 }
+[reader]:active,.sreader:active,
+[reader]:focus,.sreader:focus   { position: static; width: auto; height: auto; margin: 0; overflow: visible; clip: auto }
+
+/************************************************/
+/* DEBUG/DESIGN helpers               (EXCERPT) */
+/************************************************/
+[debug-lite*="1"]  *            { outline: 1px dashed tomato }
+[debug-lite*="1T"] *            { transition: all 0.5s ease-in-out }
+
+[data-debug*="1" ] *            { outline: 1px dashed black }
+[data-debug*="1T"] *            { transition: all 0.5s ease-in-out }
+

@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title title="(June 2016) ERS effects: Hover">ERS Effects: Font &amp; Hover</title>
+
+<meta name="description" content="ERS Effects: Font & Hover">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT">
+
+<style>
+@import url("http://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900");
+@import url("http://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900");
+
+ /* Define preferred default fonts */
+html,p                          { font-family: 'Work Sans', Arial, Helvetica, sans-serif }
+header,h1,h2,h3,h4,h5,h6,footer { font-family: 'Raleway'  , Arial, Helvetica, sans-serif }
+code,pre                        { font-family: Consolas, monospace }
+
+
+/************************************************/
+/* GENERIC RULE RESET                  (STABLE) */
+/************************************************/
+/* @import url('xxx/ers-globals.css'); */
+
+html,body               { box-sizing: border-box; height: 100%; width: 100% }
+
+ /* take over parent's sizing behaviour */
+*:before,*,*:after      { box-sizing: inherit }
+
+ /* Enable font specific settings and smooth text */
+html                    { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased;
+                          font-variant-ligatures: common-ligatures discretionary-ligatures historical-ligatures;
+                          font-family: Arial, Helvetica, sans-serif;
+                          min-height: 100% /*https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient => NOTES*/ }
+
+body                    { max-width: 100%; margin: 0 auto; overflow: auto; cursor: default }
+
+/************************************************/
+/* FLEXBOX (FBL)                   (STABLE WIP) */
+/************************************************/
+/* Most major content container elements are FBL */
+/* *** Love it, hate it, for now: just use it *** */
+
+ /* Initially assume FBL row behaviour */
+header,h1,h2,h3,h4,h5,h6,footer,
+nav, section,
+div,span,
+li                      { display: flex; flex-direction: row; position: relative }
+
+ /* Initially assume FBL column behaviour */
+body,main,svg,
+article,aside,
+item,
+code,pre,label,
+ol,ul                   { display: flex; flex-direction: column; position: relative }
+
+ /* grow to fill available space */
+main,article,
+header>*,footer>*       { flex: 1 } /* Initially space and divide evenly */
+
+section                 {}
+item                    { flex-basis: 12rem } /* 'item as child' behaviour: try to stay within 320px */
+aside                   { flex-basis: 20rem } /* Whatever meets your needs */
+
+ /* Initial alignments */
+article                 {}
+main,header,footer      {}
+main                    {}
+
+section                 { justify-content: center }
+item                    {}
+
+
+/************************************************/
+/* NON FBL defaults                (STABLE WIP) */
+/************************************************/
+
+header                  { min-height: 5.0rem /* 80px */}
+footer                  { min-height: 3.5rem /* 56px */}
+
+header,footer           { width: 100% }
+
+main                    { width: 100%; max-width: 100%; height: 100%; margin: 0 auto }
+article                 { overflow: auto }
+
+code,pre,kbd,samp       { position: relative; font-family: Consolas, monospace;
+                          font-size: 0.9em; line-height: normal; font-weight: normal }
+
+section                 { padding: 1rem }
+
+ /* get rid of extra spacing below images */
+img                     { display: block; width: 100%; height: auto; object-fit: scale-down }
+
+ /* no decoration */
+a                       { text-decoration: none; background: transparent; 
+                          color: inherit; font-size: inherit }
+
+ /* no predefined styling */
+ol,ul,li,pre            { margin: 0; padding: 0 }
+ol,ul,li                { list-style: none }
+
+ /* ok, maybe a few... */
+hr                      { margin: 1em 0; border-color: hsla(0,0%,0%,.05) }
+p                       { margin: 0; line-height: 1.35em; hyphens: auto; }
+pre                     { padding: .5em .25em; -moz-tab-size: 4; -o-tab-size: 4; tab-size: 4; overflow: auto }
+code                    { padding: .5em 1.5em; font-size: 1em; background: hsla(0,0%,0%,.05); text-shadow: none }
+
+dt, dd { display: inline; }
+dd {
+margin: 0;
+font-weight: bold;
+}
+dd + dt::before {
+content: '\A';
+white-space: pre;
+}
+dd + dd::before {
+content: ', ';
+font-weight: normal;
+}
+
+/* Make an element really, really invisible */
+[data-gone="1"]         { display: none; position:absolute; z-index:-999999; top:-999999px; overflow: hidden;
+                          clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0 }
+
+
+/************************************************/
+/* DEBUG/DESIGN helpers               (EXCERPT) */
+/************************************************/
+body[data-debug="1"] * { outline: 1px dashed black; transition: all .5s ease-in-out }
+
+
+/************************************************/
+/* easy RESPONSIVE|FONT|NESS           (STABLE) */
+/************************************************/
+ /* Responsive font: y = mx + b, shrink/grow to minus/plus 1px every 160 screen pixels, minimum 11px */
+html { font-size: calc(0.00625 * 100vmin + 11px) }
+body { font-size: 1rem; line-height: normal }
+
+.tf-headline    { font-size: 3.5rem    }
+.tf-header      { font-size: 3rem      }
+.tf-subheader   { font-size: 2.125rem  }
+.tf-title       { font-size: 1.5rem    }
+.tf-subtitle    { font-size: 1.25rem   }
+.tf-body-1      { font-size: 1rem      }
+.tf-body-2      { font-size: 0.9375rem }
+.tf-caption-1   { font-size: 0.875rem  }
+.tf-caption-2   { font-size: 0.75rem   }
+
+.tf-1 {font-size: calc(0.00391 * 100vmin + 14px)} /* 19px at 1280 => (19-14)/12.8 * 100vmin + 14 */
+.tf-2 {font-size: calc(0.01788 * 100vmin + 16px); color:hsla(10, 100%, 55%,1)} /* 38px => (38-16)/12.8 dito */
+.tf-3 {font-size: calc(0.03468 * 100vmin + 18px)} /* 57px dito */
+.tf-4 {font-size: calc(0.04375 * 100vmin + 20px)} /* 76px dito */
+
+[class^="tf-"]  { line-height: normal } 
+
+/************************************************/
+/* INFO BAR                                     */
+/************************************************/
+#infobar                { z-index: 50; position: fixed; top:0; left:0; 
+                          height: 100%; width: 25rem; max-width: calc(100% - 4rem) /* MDL(ish) */;
+                          background-color: hsl(210, 13%, 25%);
+                          /* border-right: 4px solid hsla(10, 100%, 55%,.75) */  }
+
+#infobar > footer       { /* background-color: hsla(10, 100%, 55%,.75) */ }
+
+#toggle--info           { z-index: 100; position: fixed; cursor: pointer; 
+                          justify-content: center; align-items: center;
+                          top: 0; left: 1rem; width: 4rem; height: 4rem; padding-bottom: .5rem;
+                          overflow-x: hidden; overflow-y: auto;
+                          background-color: hsl(210, 13%, 25%);
+                          font-size: 1.75rem; border-radius: 0 0 50% 50% }
+
+/* Plain hovering (sortof) */
+#toggle--info:hover::before { color: hsl(10, 100%, 55%); font-size: 1.95rem }
+#toggle--info:hover         { box-shadow: 0px 0px 4px 0px hsla(10, 100%, 55%,.8) }
+
+ /* Infobar hide/show, BOTH rules need a transition attribute (if any) */
+#infobar--toggler:not(:checked) ~ #infobar { left: -50rem; transition: all 300ms ease-out } /* move it offscreen */
+#infobar--toggler:checked       ~ #infobar { left: 0;      transition: all 300ms ease-in  } /* and back in view */
+
+ /* Swap infobar toggle-icon (from Unicode Groups 'Mathematical Operators' and/or 'Letterlike Symbols') */
+
+ /* when infobar is visible and button not hovered */
+#infobar--toggler:checked + #toggle--info::before           { content: '\226a' }
+#infobar--toggler:not(:hover):checked + #toggle--info       { box-shadow: 0px 0px 2px 1px hsla(210, 13%, 55%,.8) }
+
+ /* when infobar is hidden and button not hovered */
+#infobar--toggler:not(:checked) + #toggle--info::before     { content: '\2261' } /* 2261 or 2139 */
+#infobar--toggler:not(:hover):not(:checked) + #toggle--info { box-shadow: 0px 0px 2px 1px hsla(210, 13%, 75%,.8) }
+
+
+/************************************************/
+/* DEMO RULES                                   */
+/************************************************/
+body                    { height: 100vh;
+                          background-color: hsla(210, 13%, 60%,1);
+                                     color: hsla(210, 13%, 90%,1); }
+
+h3                      { color: black }
+
+.content                {}
+.main                   {}
+.info                   {}
+
+ul                      { min-width: 10rem }
+li                      { justify-content: center; padding: 0 1rem;
+                          height: 2rem; line-height: 2rem; font-size: 1.2rem }
+
+section + section       { margin-bottom: 3rem }
+
+.demo-01                {}
+
+.demo-02                { flex-direction: row  }
+.demo-02 item >div      { justify-content: center; align-items: center; color: black; 
+                          width: 3rem; height: 3rem; margin: .25rem; border-radius: 10px }
+
+.demo-02 .exam1>div     { border: 2px solid hsla(10, 100%, 55%, .6) }
+.demo-02 .exam2>div     { background-color: hsla(10, 100%, 55%, .6) }
+
+#pills                  { flex-direction: column }
+
+.btn                    { max-height: 2rem; line-height: 1.75rem; margin: 0 .625rem .625rem 0; padding: 0 1rem;
+                          white-space: nowrap; font-size: 0.875rem; font-weight: 600; color: white;
+                          border: 2px solid transparent; cursor: pointer;
+                          justify-content: center; align-items: center }
+
+.btn:hover,
+.btn:focus,
+.btn.focus              { color: white; text-decoration: none }
+
+.btn.pill               { border-radius: 24px }
+.btn.fill               { background: #34dd87; color: #474c6c }
+.btn.white              { color: white }
+.btn.stroke             { border: 2px solid #34dd87;  color: #34dd87 }
+.btn.stroke.white       { color: white; opacity: 0.8 }
+.btn.alt                { border-color: #575c81 }
+.btn.thin               { border-width: 1px }
+.btn.darkstroke         { border-color: #343850 }
+
+.btn:hover.fill         { background: none; border: 2px solid #34dd87; color: #34dd87 }
+.btn:hover.white        { color: white; border-color: white }
+.btn:hover.stroke       { background-color: rgba(52, 221, 135, 0.08); color: #60e4a1 }
+.btn:hover.stroke.white { border-color: transparent; opacity: 1 }
+.btn:hover.alt          { background: rgba(0, 0, 0, 0.15) }
+.btn:hover.thin         { border-color: transparent }
+
+.tickpill {
+  width: 200px;
+  height: 48px;
+  z-index: 9;
+  margin-bottom: -10px;
+  background-color: white;
+  border-radius: 24px;
+  border: 2px solid rgba(31, 41, 47, 0.55);
+  box-shadow: 1px 1px 3px rgba(31, 41, 47, 0.35);
+  line-height: 45px;
+  white-space: nowrap;
+  position: relative;
+}
+
+.pointer.pointer-outer {
+  border: solid transparent;
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  border-width: 7px;
+  margin-left: -7px;
+  border-top-color: rgba(139, 143, 145, 1);
+  left: 50%;
+  top: 100%;
+}
+
+.pointer.pointer-inner {
+  border: solid transparent;
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  z-index: 4;
+  border-width: 4px;
+  margin-left: -4px;
+  border-top-color: white;
+  left: 50%;
+  top: 100%;
+}
+
+.css-pill {
+
+  width:100%;
+  height:4rem;
+  margin: 2rem auto;
+  border-radius: 2.5rem;
+  box-shadow: 0 3px 2px rgba(0,0,0,0.2);
+  cursor:pointer;
+}
+
+.css-pill:before {
+  content:"";
+  position:absolute;
+  border-radius: 1.25rem;
+  width:80%;
+  height:30%;
+  background: linear-gradient(25deg, rgba(255,255,255,0.1), rgba(255,255,255,0.15));
+  left:50%;
+  margin-left:-40%;
+  top:18%;
+  z-index: 10;
+
+  filter: blur(1px);
+}
+
+.left {
+  height:100%;
+  width:50.7%;
+  background:linear-gradient(#F71B04, #C0180A);
+  border-radius:2.5rem 0 0 2.5rem;
+  border:1px solid rgba(0,0,0,0.4);
+  box-shadow:
+    inset 0 5px 0 #C11B15,
+    inset 0 -10px 15px #6D1011;
+}
+
+.right {
+  background:blue;
+  height:100%;
+  width:49.3%;
+  border-radius:0 2.5rem 2.5rem 0;
+  border:1px solid rgba(0,0,0,0.4);
+  border-left:1px solid rgba(0,0,0,0.6);
+  box-shadow:
+    inset 0 5px 0 #0080F2,
+    inset 0 -10px 15px #024399;
+  background:linear-gradient(#2EB0FE, #00609F);
+}
+
+.title{
+  font-family: 'Work Sans';
+  font-size: 4em;
+  position: absolute;
+  width: 150%;
+  top: -13px;
+  left: 33px;
+  color: #fff;
+  letter-spacing:13px;
+}
+.text-left{
+  text-shadow: 0 0 10px red;
+  
+}
+.text-right{
+  text-shadow: 0 0 10px #00609F;
+  
+}
+
+/************************************************/
+/* easy RESPONSIVE|EFFECT|NESS     (STABLE WIP) */
+/************************************************/
+/* Rules for all hover effects */
+[data-effect] :hover                { cursor: pointer }
+
+/*
+    - Minimal effect structure
+
+        .parent:hover > .children   { parent.hover: modify all child elements }
+        .parent > .children:hover   { child.hover : modify hovered child element effect }
+
+    - on child.hover the parent.hover effect will be on too.
+    - Preferably use (*)-selectors, so the effect can be used on most HTML <tags>. 
+
+*/
+
+ /* For a minimal effect you would need just 1 rule */
+[data-effect*="minimal"]>*:hover    { color: hsla(210, 13%,60%,1); background-color: hsla( 61,92%,63%,1) }
+
+ /* For a simple effect you would need 2 rules */
+[data-effect*="simple1"]:hover>*     { color: hsla( 61,92%,63%,1) }
+[data-effect*="simple2"]:hover>*     { filter: blur(1.5px) brightness(80%) saturate(80%); color: hsla( 61,92%,63%,1) }
+[data-effect*="simple"]>*:hover      { filter: none; color: hsla(210, 13%,60%,1); background-color: hsla( 61, 92%,63%,1) }
+
+
+ /* NOTE: Nesting and combining effects is possible. Maximum is one per [MAIN] */
+
+
+ /* [MAIN] Element 'border-radius' options [DEMO] */
+/* Border shape variations                positions:  T   R   B   L    */
+[data-effect*="B.1111"]>*:hover     { border-radius:  0   0   0   0  } /* square */
+[data-effect*="B.1110"]>*:hover     { border-radius:  0   0   0  50% }
+[data-effect*="B.1101"]>*:hover     { border-radius:  0   0  50%  0  }
+[data-effect*="B.1100"]>*:hover     { border-radius:  0   0  50% 50% }
+[data-effect*="B.1011"]>*:hover     { border-radius:  0  50%  0   0  }
+[data-effect*="B.1010"]>*:hover     { border-radius:  0  50%  0  50% }
+[data-effect*="B.1001"]>*:hover     { border-radius:  0  50% 50%  0  }
+[data-effect*="B.1000"]>*:hover     { border-radius:  0  50% 50% 50% }
+[data-effect*="B.0111"]>*:hover     { border-radius: 50%  0   0   0  }
+[data-effect*="B.0110"]>*:hover     { border-radius: 50%  0   0  50% }
+[data-effect*="B.0101"]>*:hover     { border-radius: 50%  0  50%  0  }
+[data-effect*="B.0100"]>*:hover     { border-radius: 50%  0  50% 50% }
+[data-effect*="B.0011"]>*:hover     { border-radius: 50% 50%  0   0  }
+[data-effect*="B.0010"]>*:hover     { border-radius: 50% 50%  0  50% }
+[data-effect*="B.0001"]>*:hover     { border-radius: 50% 50% 50%  0  }
+[data-effect*="B.0000"]>*:hover     { border-radius: 50% 50% 50% 50% } /* circle */
+
+ /* [MAIN] HTML 'background-color' options [WIP] */
+[data-effect*="BG."]>*:hover        {}
+
+ /* [MAIN] HTML foreground-'color' options [WIP] */
+[data-effect*="FG."]>*:hover        {}
+
+ /* [MAIN] tint/tone/shade color options [WIP] */
+[data-effect*="C.tint" ]>*:hover    {} /* color + white */
+[data-effect*="C.tone" ]>*:hover    {} /* color + grey  */
+[data-effect*="C.shade"]>*:hover    {} /* color + black */
+
+
+ /* [MAIN] HTML 'filter' options [DEMO] */
+[data-effect*="F.00"]:hover>*       { filter: blur(2px)        }
+[data-effect*="F.01"]:hover>*       { filter: brightness(100%) }
+[data-effect*="F.02"]:hover>*       { filter: contrast(100%)   }
+[data-effect*="F.03"]:hover>*       { filter: brightness(40%)  }
+[data-effect*="F.04"]:hover>*       { filter: saturate(0%)     }
+[data-effect*="F.05"]:hover>*       { filter: hue-rotate(0deg) }
+[data-effect*="F.06"]:hover>*       { filter: invert(100%)     }
+[data-effect*="F.07"]:hover>*       { filter: brightness(120%) }
+[data-effect*="F.08"]:hover>*       { filter: opacity(50%)     }
+[data-effect*="F.09"]:hover>*       { filter: saturate(100%)   }
+[data-effect*="F.0A"]:hover>*       { filter: sepia(80%)       }
+[data-effect*="F.0B"]:hover>*       { filter: drop-shadow(0 0 0 rgba(0,0,0,0)) } /* as in 'none' */
+[data-effect*="F.0C"]:hover>*       { filter: url('WIP')       }
+
+[data-effect*="F."  ]>*:hover       { filter: none }
+
+[data-effect*="F.0B.1"]>*:hover       { filter: drop-shadow(2px 2px 5px rgba(0,0,0,.1)) } 
+[data-effect*="F.0B.2"]>*:hover       { filter: drop-shadow(2px 2px 5px rgba(0,0,0,.2)) } 
+[data-effect*="F.0B.3"]>*:hover       { filter: drop-shadow(2px 2px 5px rgba(0,0,0,.3)) } 
+
+ /* [MAIN] HTML 'mix-blend-mode' options [DEMO] */
+[data-effect*="M.00"]:hover>*       { mix-blend-mode: normal      }
+[data-effect*="M.01"]:hover>*       { mix-blend-mode: multiply    }
+[data-effect*="M.02"]:hover>*       { mix-blend-mode: screen      }
+[data-effect*="M.03"]:hover>*       { mix-blend-mode: overlay     }
+[data-effect*="M.04"]:hover>*       { mix-blend-mode: darken      }
+[data-effect*="M.05"]:hover>*       { mix-blend-mode: lighten     }
+[data-effect*="M.06"]:hover>*       { mix-blend-mode: color-dodge }
+[data-effect*="M.07"]:hover>*       { mix-blend-mode: color-burn  }
+[data-effect*="M.08"]:hover>*       { mix-blend-mode: hard-light  }
+[data-effect*="M.09"]:hover>*       { mix-blend-mode: soft-light  }
+[data-effect*="M.0A"]:hover>*       { mix-blend-mode: difference  }
+[data-effect*="M.0B"]:hover>*       { mix-blend-mode: exclusion   }
+[data-effect*="M.0C"]:hover>*       { mix-blend-mode: hue         }
+[data-effect*="M.0D"]:hover>*       { mix-blend-mode: saturation  }
+[data-effect*="M.0E"]:hover>*       { mix-blend-mode: color       }
+[data-effect*="M.0F"]:hover>*       { mix-blend-mode: luminosity  }
+
+[data-effect*="M."  ]>*:hover       { mix-blend-mode: unset       }
+
+ /* [MAIN] element 'isolation' [DEMO WIP!!] */
+[data-effect*="I.00"]:hover>*       { isolation: isolate }
+[data-effect*="I."]>*:hover         { isolation: auto    }
+
+ /* [MAIN] element 'opacity' [DEMO] */
+[data-effect*="O.T"]:hover>*        { opacity: 0   } /* 'T'ranparent */
+[data-effect*="O.O"]:hover>*        { opacity: 1   } /* 'O'paque     */
+[data-effect*="O.1"]:hover>*        { opacity: 0.1 }
+[data-effect*="O.2"]:hover>*        { opacity: 0.2 }
+[data-effect*="O.3"]:hover>*        { opacity: 0.3 }
+[data-effect*="O.4"]:hover>*        { opacity: 0.4 }
+[data-effect*="O.5"]:hover>*        { opacity: 0.5 }
+[data-effect*="O.6"]:hover>*        { opacity: 0.6 }
+[data-effect*="O.7"]:hover>*        { opacity: 0.7 }
+[data-effect*="O.8"]:hover>*        { opacity: 0.8 }
+[data-effect*="O.9"]:hover>*        { opacity: 0.9 }
+
+[data-effect*="O." ]>*:hover        { opacity: 1  }
+
+ /* [MAIN] element 'scale' [DEMO] */
+[data-effect*="SC." ]:hover>*       { transform: scale(1)    }
+
+[data-effect*="SC.00"]>*:hover      { transform: scale(1)    }
+[data-effect*="SC.01"]>*:hover      { transform: scale(1.01) }
+[data-effect*="SC.02"]>*:hover      { transform: scale(1.02) }
+[data-effect*="SC.03"]>*:hover      { transform: scale(1.03) }
+[data-effect*="SC.04"]>*:hover      { transform: scale(1.04) }
+[data-effect*="SC.05"]>*:hover      { transform: scale(1.05) }
+
+ /* [MAIN] (last setting => $ 'ends width') Child element 'transition' effects [DEMO] */
+[data-effect$=".TO"]:hover>*        { transition: all   0ms ease-in-out } /* Off    */
+[data-effect$=".TF"]:hover>*        { transition: all  50ms ease-in-out } /* Fast   */
+[data-effect$=".TN"]:hover>*        { transition: all 150ms ease-in-out } /* Normal */
+[data-effect$=".TS"]:hover>*        { transition: all 250ms ease-in-out } /* Slow   */
+
+
+/*          background: 
+                      linear-gradient( 90deg, hsl(  0,100%, 50%)   8.33333%, transparent   8.33333%),
+                      linear-gradient(120deg, hsl( 30,100%, 50%)  16.66667%, transparent  16.66667%),
+                      linear-gradient(150deg, hsl( 60,100%, 50%)  25.00000%, transparent  25.00000%),
+                      linear-gradient(180deg, hsl( 90,100%, 50%)  33.33333%, transparent  33.33333%),
+                      linear-gradient(210deg, hsl(120,100%, 50%)  41.66667%, transparent  41.66667%),
+                      linear-gradient(240deg, hsl(150,100%, 50%)  50.00000%, transparent  50.00000%),
+
+                      linear-gradient(270deg, hsl(180,100%, 50%)  58.33333%, transparent  58.33333%),
+                      linear-gradient(300deg, hsl(210,100%, 50%)  66.66667%, transparent  66.66667%),
+                      linear-gradient(330deg, hsl(240,100%, 50%)  75.00000%, transparent  75.00000%),
+                      linear-gradient(  0deg, hsl(270,100%, 50%)  83.33333%, transparent  83.33333%),
+                      linear-gradient( 30deg, hsl(300,100%, 50%)  91.66667%, transparent  91.66667%),
+                      linear-gradient( 60deg, hsl(330,100%, 50%) 100.00000%, transparent 100.00000%);
+*/
+
+.colorWheel-12 {
+  background:
+              linear-gradient( 30deg, hsl(270,100%,50%)  36.5%, transparent  36.5%),
+              linear-gradient( 60deg, hsl(300,100%,50%)  63.5%, transparent  63.5%),
+              linear-gradient( 90deg, hsl(330,100%,50%) 100.0%, transparent 100.0%),
+
+              linear-gradient(-30deg, hsl( 60,100%,50%)  36.5%, transparent  36.5%) 100% 0%,
+              linear-gradient(-60deg, hsl( 30,100%,50%)  63.5%, transparent  63.5%) 100% 0%,
+              linear-gradient(-90deg, hsl(  0,100%,50%) 100.0%, transparent 100.0%) 100% 0%,
+
+              linear-gradient( 30deg, transparent 63.5%, hsl( 90,100%,50%) 63.5%) 100% 100%,
+              linear-gradient( 60deg, transparent 36.5%, hsl(120,100%,50%) 36.5%) 100% 100%,
+              linear-gradient( 90deg, transparent  0.0%, hsl(150,100%,50%)  0.0%) 100% 100%,
+
+              linear-gradient(-30deg, transparent 63.5%, hsl(240,100%,50%) 63.5%) 0% 100%,
+              linear-gradient(-60deg, transparent 36.5%, hsl(210,100%,50%) 36.5%) 0% 100%,
+              linear-gradient(-90deg, transparent  0.0%, hsl(180,100%,50%)  0.0%) 0% 100%,
+
+              hsl(0,100%,50%) linear-gradient(hsl(180,100%,50%), hsl(180,100%,50%)) 50% 100%;
+}
+
+
+.colorWheel-8 {
+  background: 
+              linear-gradient( 36deg, #272b66 42.34%, transparent 42.34%),
+              linear-gradient( 72deg, #2d559f 75.48%, transparent 75.48%),
+              linear-gradient(-36deg, #9ac147 42.34%, transparent 42.34%) 100% 0,
+              linear-gradient(-72deg, #639b47 75.48%, transparent 75.48%) 100% 0, 
+
+              linear-gradient( 36deg, transparent 57.66%, #e1e23b 57.66%) 100% 100%,
+              linear-gradient( 72deg, transparent 24.52%, #f7941e 24.52%) 100% 100%,
+              linear-gradient(-36deg, transparent 57.66%, #662a6c 57.66%) 0 100%,
+              linear-gradient(-72deg, transparent 24.52%, #9a1d34 24.52%) 0 100%, 
+
+              #43a1cd linear-gradient(#ba3e2e, #ba3e2e) 50% 100%;
+}
+
+[class^="colorWheel"]   { margin: 2rem; width: 20rem; height: 20rem;
+                          border-radius: 50%;
+                          background-repeat: no-repeat; background-size: 50% 50%;
+                          filter: blur(1px) }
+
+
+[fg="black"],[fg="00"]              { color: hsla(0,0%,  0%,.9) }
+[fg="white"],[fg="01"]              { color: hsla(0,0%,100%,.9) }
+[fg="grey" ],[fg="gray"],[fg="02"]  { color: hsla(0,0%, 50%,.9) } 
+
+[bg="black"],[bg="00"]              { background-color: hsla(0,0%,  0%,.9) }
+[bg="white"],[bg="01"]              { background-color: hsla(0,0%,100%,.9) }
+[bg="grey" ],[bg="gray"],[bg="02"]  { background-color: hsla(0,0%, 50%,.9) }
+
+
+</style>
+
+
+<style>
+
+.patch          { width: 20rem; height: 20rem }
+
+.slice          { position: absolute; content: '';
+                  top: 0; left: calc(50% - 2.5rem);
+                  height: 10rem; width: 5rem;
+
+                  filter: blur(0px); /* To hide border spacing rounding errors*/
+
+                  border-top-width  : 9.4rem;
+                  border-left-width : 2.475rem;
+                  border-right-width: 2.475rem;
+
+                  border-style: solid;
+                  border-color: transparent;
+                  transform-origin: bottom center }
+
+.estrellas {
+  position: relative;
+  width: 520px;
+  height:300px;
+  margin: 0 auto;
+  font-size: 70px;
+}
+.estrellas span {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 70px;
+  height: 300px;
+  margin-left: -35px;
+  line-height: 530px; /* height*2 - font-size */
+  text-align: center;
+  transform-origin: top center;
+}
+
+    /*
+    
+        circumfence: C=2πr or C=πd (r=radius/d=diameter)
+
+        arc length:  l = C x (v / 360) (v=degree measure of the arc)
+                     l = C / number of equal arcs
+
+
+    */
+
+
+
+.slice:nth-of-type( 1)  { transform: rotate(   0deg); border-top-color: hsl(  0,100%,50%) }
+.slice:nth-of-type( 2)  { transform: rotate(  30deg); border-top-color: hsl( 30,100%,50%) }
+.slice:nth-of-type( 3)  { transform: rotate(  60deg); border-top-color: hsl( 60,100%,50%) }
+.slice:nth-of-type( 4)  { transform: rotate(  90deg); border-top-color: hsl( 90,100%,50%) }
+.slice:nth-of-type( 5)  { transform: rotate( 120deg); border-top-color: hsl(120,100%,50%) }
+.slice:nth-of-type( 6)  { transform: rotate( 150deg); border-top-color: hsl(150,100%,50%) }
+.slice:nth-of-type( 7)  { transform: rotate( 180deg); border-top-color: hsl(180,100%,50%) }
+.slice:nth-of-type( 8)  { transform: rotate(-150deg); border-top-color: hsl(210,100%,50%) }
+.slice:nth-of-type( 9)  { transform: rotate(-120deg); border-top-color: hsl(240,100%,50%) }
+.slice:nth-of-type(10)  { transform: rotate( -90deg); border-top-color: hsl(270,100%,50%) }
+.slice:nth-of-type(11)  { transform: rotate( -60deg); border-top-color: hsl(300,100%,50%) }
+.slice:nth-of-type(12)  { transform: rotate( -30deg); border-top-color: hsl(330,100%,50%) }
+
+.slice:hover            { z-index: 30; filter: blur(0.5px) drop-shadow(3px 3px 3px hsla(0,0%,0%,.4)) }
+
+.hard-grad {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(-45deg, rgba(255, 136, 152, 0.5) 0%, rgba(255, 136, 152, 0.5) 50%, rgba(255, 199, 153, 0.5) 50%, rgba(255, 199, 153, 0.5) 100%);
+}
+
+.hard-grad-2 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(100, 199, 204, 0.5) 0%, rgba(100, 199, 204, 0.5) 50%, rgba(18, 136, 152, 0.5) 50%, rgba(18, 136, 152, 0.5) 100%);
+}
+
+.mypie {
+  position: relative;
+  width: 100px; height: 100px;
+  line-height: 100px;
+  border-radius: 50%;
+  background: yellowgreen;
+  background-image:
+    linear-gradient(to right, transparent 50%, #655 0);
+  color: transparent;
+  text-align: center;
+}
+
+@keyframes spin {
+  to { transform: rotate(.5turn); }
+}
+@keyframes bg {
+  50% { background: #655; }
+}
+
+.pie::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  width: 50%; height: 100%;
+  border-radius: 0 100% 100% 0 / 50%;
+  background-color: inherit;
+  transform-origin: left;
+  animation: spin 50s linear infinite,
+             bg 100s step-end infinite;
+  animation-play-state: paused;
+  animation-delay: inherit;
+}
+
+</style>
+
+</head>
+
+<body data-debug="0">
+    <!-- order of placement: input > label > aside -->
+    <input type="checkbox"   id ="infobar--toggler" data-gone="1">
+    <label id="toggle--info" for="infobar--toggler"></label>
+
+    <aside id="infobar">
+        <header></header>
+
+        <div class="content">
+
+            <section class="demo-01">
+                <div class="tf-2">minimal &amp; simple</div>
+                <item>
+                <p><i>&lt;parent:hover&gt;</i> all kids turn yellow.</p>
+                <p><i>&lt;child:hover&gt;</i> the kid inverts its color.</p>
+                </item>
+            </section>
+
+        </div>
+
+        <footer></footer>
+    </aside>
+
+    <header></header>
+
+    <main data-effect="F.03.O.2">
+        <section>
+            <div class="colorWheel-8"></div>
+            <div class="colorWheel-12"></div>
+            <div class="mypie"></div>
+
+            <div>
+                <dl>
+                    <dt>name:</dt>
+                    <dd>rene van der lende</dd>
+                    <dt>email:</dt>
+                    <dd>rene.van.der.lende@gmail.com</dd>
+                    <dd>+31-6-23101373</dd>
+                    <dt>Location:</dt>
+                    <dd>Earth</dd>
+                </dl>
+            </div>
+        </section>
+
+        <section class="demo-01">
+            <item>
+                <h3>minimal</h3>
+                <ul data-effect="minimal">
+                    <li>hover this block</li>
+                    <li>to see minimal</li>
+                    <li>hover effect</li>
+                </ul>
+            </item>
+            <item>
+                <h3>simple 1</h3>
+                <ul data-effect="simple1">
+                    <li>hover this block</li>
+                    <li>to see a simple</li>
+                    <li>hover effect</li>
+                </ul>
+            </item>
+            <item>
+                <h3>simple 2</h3>
+                <ul data-effect="simple2">
+                    <li>hover this block</li>
+                    <li>to see a combo</li>
+                    <li>hover effect</li>
+                </ul>
+            </item>
+        </section>
+
+        <section class="demo-02">
+            <item class="exam1" data-effect="B.0000.TS">
+                <h3>same settings</h3>
+                <div>A</div>
+                <div>B</div>
+                <div>C</div>
+            </item>
+
+            <item class="exam2" data-effect="B.0000.TF">
+                <h3>different effect</h3>
+                <div>D</div>
+                <div>E</div>
+                <div>F</div>
+            </item>
+        </section>
+
+
+        <section>
+             <div id="pills">
+                <div class="btn fill">Button Style 1</div>
+                <div class="btn pill fill">Button Style 2</div>
+                <div class="btn pill fill white">Button Style 3</div>
+                <div class="btn pill stroke">Button Style 4</div>
+                <div class="btn pill stroke white">Button Style 5</div>
+                <div class="btn pill stroke alt">Button Style 6</div>
+                <div class="btn pill stroke alt thin">Button Style 7</div>
+                <div class="btn pill stroke alt thin darkstroke">Button Style 8</div>
+
+                <div class="tickpill">
+                    <div class="pointer pointer-inner"></div>
+                    <!-- put stuff in here! -->
+                    <div class="pointer pointer-outer"></div>
+                </div>                  
+    
+                <div class="css-pill">
+                    <div class="left"></div>
+                    <div class="right"></div>
+                </div>
+            </div>       
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla elementum congue ipsum a tempus. Aliquam fringilla lacus a condimentum auctor. Aenean porttitor metus ut efficitur condimentum. Fusce ac justo justo. Donec consequat, augue id placerat malesuada,
+                justo nisi ornare quam, rutrum varius orci leo sed ipsum. Maecenas quam dolor, pulvinar in porta sit amet, sodales ut odio. Mauris erat arcu, tincidunt a risus ut, elementum elementum erat. Phasellus interdum tortor dolor, vitae accumsan elit
+                maximus nec. Mauris dignissim, leo at dapibus vulputate, orci tellus lobortis nisi, vitae maximus lacus turpis a ipsum. Pellentesque sit amet finibus arcu, id eleifend enim. Duis sit amet erat non purus fringilla hendrerit sed quis sem. Aliquam
+                erat volutpat. Fusce cursus luctus leo, sit amet posuere enim cursus eget. In a enim a neque pretium maximus. Morbi facilisis maximus neque ut placerat.
+            </p>
+        </section>
+
+        <section>
+            <div class="patch" data-effect="F.0B.3.O.5">
+                <div class="slice"></div>
+                <div class="slice"></div>
+                <div class="slice"></div>
+                <div class="slice"></div>
+                <div class="slice"></div>
+                <div class="slice"></div>
+                <div class="slice"></div>
+                <div class="slice"></div>
+                <div class="slice"></div>
+                <div class="slice"></div>
+                <div class="slice"></div>
+                <div class="slice"></div>
+            </div>
+
+            <!-- div>
+  0&deg;
+ 30&deg;
+ 60&deg;
+ 90&deg;
+120&deg;
+150&deg;
+180&deg;
+210&deg;
+240&deg;
+270&deg;
+300&deg;
+330&deg;
+                <div style="background-color:hsl(  0,100%, 50%);" fg="01">  0&deg;</div>
+                <div style="background-color:hsl( 15,100%, 50%);" fg="01"> 15&deg;</div>
+                <div style="background-color:hsl( 30,100%, 50%);" fg="00"> 30&deg;</div>
+                <div style="background-color:hsl( 45,100%, 50%);" fg="00"> 45&deg;</div>
+                <div style="background-color:hsl( 60,100%, 50%);" fg="00"> 60&deg;</div>
+                <div style="background-color:hsl( 75,100%, 50%);" fg="00"> 75&deg;</div>
+                <div style="background-color:hsl( 90,100%, 50%);" fg="00"> 90&deg;</div>
+                <div style="background-color:hsl(105,100%, 50%);" fg="00">105&deg;</div>
+                <div style="background-color:hsl(120,100%, 50%);" fg="00">120&deg;</div>
+                <div style="background-color:hsl(135,100%, 50%);" fg="00">135&deg;</div>
+                <div style="background-color:hsl(150,100%, 50%);" fg="00">150&deg;</div>
+                <div style="background-color:hsl(165,100%, 50%);" fg="00">165&deg;</div>
+                <div style="background-color:hsl(180,100%, 50%);" fg="00">180&deg;</div>
+                <div style="background-color:hsl(195,100%, 50%);" fg="00">195&deg;</div>
+                <div style="background-color:hsl(210,100%, 50%);" fg="01">210&deg;</div>
+                <div style="background-color:hsl(225,100%, 50%);" fg="01">225&deg;</div>
+                <div style="background-color:hsl(240,100%, 50%);" fg="01">240&deg;</div>
+                <div style="background-color:hsl(255,100%, 50%);" fg="01">255&deg;</div>
+                <div style="background-color:hsl(270,100%, 50%);" fg="01">270&deg;</div>
+                <div style="background-color:hsl(285,100%, 50%);" fg="01">285&deg;</div>
+                <div style="background-color:hsl(300,100%, 50%);" fg="00">300&deg;</div>
+                <div style="background-color:hsl(315,100%, 50%);" fg="01">315&deg;</div>
+                <div style="background-color:hsl(330,100%, 50%);" fg="01">330&deg;</div>
+            </div -->
+        </section>
+        <section style="width: 20rem;flex-direction: column;">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             xmlns:xlink="http://www.w3.org/1999/xlink"
+             style="background: white"
+             preserveAspectRatio="xMidYMid none"
+             viewBox="0 0 202 202">
+        
+            <symbol id="slice">
+                <circle cx="101" cy="101"  r="100"  style="stroke:red; fill:#00cc00"/>
+                <polygon points="1 1,201 1,101 201" style="stroke:red; fill: none" stroke-linecap="butt" stroke-linejoin="round"/>
+            </symbol>
+            <use xlink:href="#slice"/>
+        
+        </svg>
+
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             xmlns:xlink="http://www.w3.org/1999/xlink"
+             width="180" height="200">
+
+            <!-- This is the element before translation and rotation are applied -->
+            <rect x="50" y="50" height="100" width="100" style="stroke:#000; fill: #0086B2" fill-opacity=0.2 stroke-opacity=0.2></rect>
+
+            <!-- Now we add a text element and apply rotate and translate to both -->
+            <rect x="50" y="50" height="100" width="100" style="stroke:#000; fill: #0086B2" transform="translate(30) rotate(45 50 50)" ></rect>
+            <text x="60" y="105" transform="translate(30) rotate(45 50 50)" > Hello Moz! </text>
+
+        </svg>
+
+
+        <svg version="1.1" id="Layer_1" 
+             xmlns="http://www.w3.org/2000/svg"
+             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+             width="200px" height="200px" 
+             viewBox="0 0 200 200" 
+             style="enable-background:new 0 0 200 200;"
+             xml:space="preserve">
+
+            <rect x="1" y="1" style="fill:none;stroke:#3FA9F5;" width="198" height="198"/>
+        </svg>
+
+
+
+        </section>
+    </main>
+
+    <footer></footer>
+</body>
+
+</html>

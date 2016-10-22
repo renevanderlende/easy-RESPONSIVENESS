@@ -1,0 +1,52 @@
+@CHARSET "UTF-8";
+
+/************************************************/
+/* MASTERSLIDE                                  */
+/************************************************/
+#layer--masterslides        { z-index: 950 }
+
+#block--masterslide-left    { position: fixed; top:0; right:0; 
+                              height: 100%; width: 100%; max-width: 100%;
+                              background-color: hsl(210, 13%, 25%);
+                              border-top: 5rem solid transparent; }
+
+#toggle--masterslide        { z-index: 1; position: fixed; justify-content: center; align-items: center;
+                              cursor: pointer; overflow-x: hidden; overflow-y: auto;
+                              top: 0;right: 5rem; width: 4rem; height: 3.75rem; padding-bottom: .5rem;
+                              background-color: hsl(210, 13%, 25%); 
+                              color: hsl(0, 0%, 96%); font-size: 2rem;
+                              border-radius: 0 0 50% 50% }
+
+#toggle--masterslide:hover::before { color: hsl(10, 100%, 55%) }
+#toggle--masterslide:hover         { box-shadow: 0 0 0 2px hsla(10, 100%, 55%,.8) }
+
+ /* Infobar hide/show, BOTH rules need a transition attribute (if any) */
+#masterslide--toggler:not(:checked) ~ #block--masterslide-left { left: -110%; transition: all 200ms ease-out } /* move it offscreen */
+#masterslide--toggler:checked       ~ #block--masterslide-left { left: 0;     transition: all 200ms ease-in  } /* and back in view */
+
+ /* Swap infobar toggle-icon (from Unicode Groups 'Mathematical Operators' and/or 'Letterlike Symbols') */
+
+ /* when infobar is visible and button not hovered */
+#masterslide--toggler:checked + #toggle--masterslide::before           { content: '\226a'  }
+#masterslide--toggler:not(:hover):checked + #toggle--masterslide       { box-shadow: 0 0 0 2px hsla(50, 100%, 50%,.8) }
+
+ /* when infobar is hidden and button not hovered */
+#masterslide--toggler:not(:checked) + #toggle--masterslide::before     { content: '\2261' } /* 2261 or 2139 */
+#masterslide--toggler:not(:hover):not(:checked) + #toggle--masterslide { box-shadow: 0 0 0 2px hsla(50, 100%, 50%,.8) }
+
+/*
+    USAGE: place it after #overlay--'s
+
+<div id="layer--masterslides">
+    <input type="checkbox" id ="masterslide--toggler" data-gone="1">
+    <label id="toggle--masterslide" for="masterslide--toggler"></label>
+
+    <aside id="block--masterslide-left">
+        <div></div>
+        <div>MASTER SLIDE</div>
+        <div></div>
+    </aside>
+</div>
+
+
+*/

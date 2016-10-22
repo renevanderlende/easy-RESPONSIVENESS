@@ -1,0 +1,159 @@
+@CHARSET "UTF-8";
+/*
+@import url("css/ers-base-app-def.css");
+*/
+/************************************************/
+/* DEFAULT APPLICATION STRUCTURE          (WIP) */
+/************************************************/
+/* ---------------------------- */
+/* --- Flexbox Layout (FBL) --- */
+/* ---------------------------- */
+/* All main layers are flexbox layout containers */
+[id^="layer--"]                     { display: flex; position: relative }
+[id^="block--"]                     { display: flex; position: relative }
+
+/* All elements designated as "app--" made FBL by default */
+[id^="app-"]                        { display: flex; flex-wrap: wrap; position: relative }
+
+/* Generic content child elements */
+[data-header ]>*                    { min-height: 2.0rem }
+[data-content]>*                    { flex: 1 }             /* header fixed -- fluid content -- footer fixed */
+[data-footer ]>*                    { min-height: 1.5rem }
+[data-left   ]>*,[data-right]>*     { min-width : 2.5rem }
+
+
+/* ----------------------- */
+/* --- Main App Layers --- */
+/* ----------------------- */
+    /* Z-INDEXes serve as both 'stacking context' and demo hierachy visualisation (modify as required) */
+#layer--hero                        { z-index: 900 }    /* C [OPTIONAL] topmost container holding heroic stuff */
+#layer--main-app-base               { z-index:   0 }    /* C [MANDATORY] Main wrapper, bottom layer  */
+  #overlay--modals                  { z-index: 800 }    /* R [OPTIONAL] container holding modal content */
+  #overlay--toggles                 { z-index: 700 }    /* R [OPTIONAL][fixed] used for on/off, show/hide toggles */
+  #overlay--buttons                 { z-index: 600 }    /* R [OPTIONAL] used for app buttons, fab's */
+  #layer--main-application          { z-index: 100 }    /* C [MANDATORY] */
+    #block--app-sidebars            { z-index: 400 }    /* R [OPTIONAL][fixed] anything will do: menu, lists */
+    #block--app-drawer-top          { z-index: 300 }    /* R [OPTIONAL][fixed] for logo, header */
+    #block--app-content             { z-index: 200 }    /* R [MANDATORY] Main application content container */
+      #block--app-drawer-bottom     { z-index: 100 }    /* R [OPTIONAL][fixed] for messages, snacks etc */
+  #layer--information               { z-index:   1 }    /* R [OPTIONAL][fixed] Info, contact, credits, map, etc */
+#layer--specials                    { z-index:  -1 }    /* R [OPTIONAL][fixed] Backgrounds, playground */
+
+#layer--information                 { flex-flow: column wrap }
+#layer--specials                    { flex-flow: row wrap }
+
+#layer--hero, #layer--main-app-base, #layer--main-application, #app-content,
+[id^="app-sidebar"]                 { flex-direction: column }
+
+/* ----------------------------- */
+/* --- Sizes and positioning --- */
+/* ----------------------------- */
+/* All overlays are merely content containers serving as stacking context */
+[id^="overlay--"]                   { width: 0px; height: 0px } /* and no FBL */
+[id^="overlay--"]> *                { position: relative }      /* used for absolute ::before and ::after */
+
+/* LAYER--HERO */
+#layer-hero, #layer-hero>*          { width: 100% }
+
+ /* Essentially anything goes, serves just as an example */
+#layer--hero                        { justify-content: space-between;
+                                      height: 105vh; min-height: 105vh }
+
+#block--hero-top                    { height: 15% }
+#block--hero-content                { flex: 1 } /* fill the rest up to 105vh */
+#block--hero-bottom                 { height: 15% }
+
+
+/* LAYER--MAIN-APP-BASE: Main wrapper, meant to act as 'body' for the application */
+#layer--main-app-base               { width: 100%; max-width: 100%;
+                                      background-color: hsl(0,0%,96%); color: hsl(0,0%,56%); }
+/* For scroll over/under purposes margin-bottom should be at #layer--information.height */
+
+/* 
+    LAYER--MAIN-APPLICATION
+
+    Main container holding all app and content related layers
+    Each action on the webpage takes place inside this layer.
+
+*/
+#layer--main-application            { min-height: 105vh }
+
+/* BLOCK--APP-DRAWERs (+ provisions) (horizontal toolbars) */
+#layer--information, #app-sidebar-left, 
+#app-sidebar-right                  { border-top: 5rem solid transparent }
+
+[id^="block--app-drawer"]           { position: fixed; left: 0; right: 0 }
+#block--app-drawer-top              { top:    0; height: 5rem }
+#block--app-drawer-bottom           { bottom: 0; height: 4rem }
+[id^="app-drawer"]                  { flex: 1 }
+
+/* BLOCK--APP-SIDEBARS (vertical toolbars) */                                                  /* 4rem + scrollbar */
+#block--app-sidebars> *             { position: fixed; top: 0; bottom: 0; max-width: calc(100vw - 5.0625rem) }
+#app-sidebar-left                   { left:  0; width: 20rem }
+#app-sidebar-right                  { right: 0; width:  4rem }
+
+/* BLOCK--APP-CONTENT */
+#block--app-content, #app-content   { flex: 1; width: 100%; max-width: 100%; margin: 0 auto }
+#block--app-content                 { justify-content: space-between }
+
+/* BLOCK--APP-CONTENT EXTRAS */
+[id^="app-"][data-panel="top"   ]   { min-height: 5.0rem }
+[id^="app-"][data-panel="middle"]   { flex: 1 }
+[id^="app-"][data-panel="bottom"]   { min-height: 4rem }
+
+
+/* LAYER--INFORMATION / LAYER-SPECIALS (+ provisions) */
+#layer--information,
+#layer--specials                    { flex: 1; height: 100%; width: 100% }
+
+#layer--information                 { min-height: 105vh }
+
+body                                { margin-bottom: 100vh }
+#layer--specials                    { position: fixed; top: 0; left: 0 }
+
+/************************************************/
+/* NINE-PATCH                             (WIP) */
+/************************************************/
+[data-nine-patch], [data-nine-patch]>*  { display: flex; flex-flow: row wrap }
+[data-nine-patch]                       { flex: 1 1 calc(100% / 3); height: calc(100% / 3) }
+[data-nine-patch]>*                     { width: 100%; height: 100% }
+
+/************************************************/
+/* EXTRAS                                (DEMO) */
+/************************************************/
+body[demo="1"] #layer--hero                 { background-color: hsl(48,100%,60%) /* egg yolk */ }
+body[demo="1"] #layer--hero>*               { flex: 1 1 calc(100% / 3); height: calc(100% / 3) }
+body[demo="1"] #layer--hero>*>*             { flex: 1 1 calc(100% / 3);
+                                              justify-content: center; align-content: center; align-items: center; }
+
+body[demo="1"] #layer--main-application     { background-color: hsl(0,0%,96%) }
+
+body[demo="1"] #block--app-sidebars> *      { background-color: white }
+body[demo="1"] [id^="block--app-drawer"]    { background-color: silver; }
+
+
+body[demo="1"] #layer--information          { background-color: gray; color: white; font-size: 4rem;
+                                              justify-content: center; align-content: center; align-items: center; }
+
+body[demo="1"] #layer--specials             { background-color: cornflowerblue;
+                                              background-attachment: fixed; 
+                                              background-repeat: no-repeat;
+                                              background-size: cover }
+
+body[demo="1"] [data-nine-patch]>*          { justify-content: center; align-content: center; align-items: center;
+                                              font-size: 4rem; color: hsla(0,0%,100%,.9);
+                                              color: hsla(0,0%,100%,.9);
+                                              text-shadow: 2px   2px  1px hsla(0,0%,0%,.4),
+                                                           2px   2px  6px hsla(0,0%,0%,.4) }
+
+
+
+/*                                    filter: drop-shadow(2px 2px 5px hsla(0,0%,0%,.3))
+                                      background-color: hsl(340, 100%, 63%);
+                                      background: linear-gradient(to bottom, hsl(340, 100%, 63%) 0%,
+                                                                             hsl(280, 100%, 50%) 100%,
+                                                                             hsl(206, 70%, 70%) 100%);
+*/
+
+
+

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title>Block Elements</title>
+
+<meta name="description" content="Block Elements">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT">
+
+<link rel='stylesheet' href="../newfile/css/ers-base-utils.css">
+<style>
+/* HTML5 default header styling
+h1                  { font-size: 2.00em; font-weight: bold; margin: 0.67em 0 }
+h2                  { font-size: 1.50em; font-weight: bold; margin: 0.83em 0 }
+h3                  { font-size: 1.17em; font-weight: bold; margin: 1.00em 0 }
+h4                  { font-size: 1.00em; font-weight: bold; margin: 1.33em 0 }
+h5                  { font-size: 0.83em; font-weight: bold; margin: 1.67em 0 }
+h6                  { font-size: 0.67em; font-weight: bold; margin: 2.33em 0 }
+p                   { font-size: 1.00em; margin: 1em 0 }
+
+.html               { font-size: calc(0.00625 * 100vmin + 0.625rem) }
+
+.base               { font-size: calc(0.00625   * 100vmin + 0.625rem) }
+.h0                 { font-size: calc(0.015     * 100vmin + 1.5em    ); font-weight: bold; margin: 0.33em 0 }
+.h1                 { font-size: calc(0.0125    * 100vmin + 1.25em   ); font-weight: bold; margin: 0.67em 0 }
+.h2                 { font-size: calc(0.009375  * 100vmin + 0.9375em ); font-weight: bold; margin: 0.83em 0 }
+.h3                 { font-size: calc(0.0073125 * 100vmin + 0.73125em); font-weight: bold; margin: 1.00em 0 }
+.h4                 { font-size: calc(0.00625   * 100vmin + 0.625em  ); font-weight: bold; margin: 1.33em 0 }
+.h5                 { font-size: calc(0.0051875 * 100vmin + 0.81875em); font-weight: bold; margin: 1.67em 0 }
+.h6                 { font-size: calc(0.0041875 * 100vmin + 0.41875em); font-weight: bold; margin: 2.33em 0 }
+
+ */
+section { padding-left: 1rem }
+
+</style>
+
+<style>
+.body-3d,
+.body-3d *,
+.body-3d *::after,
+.body-3d *::before {
+  box-sizing: border-box;
+  transform-style: preserve-3d;
+}
+.body-3d {
+  perspective: 2000px;
+  height: 50vh;
+  width: 40vw;
+  margin: 0;
+  background: linear-gradient(
+    to top,#D7D8E0,#B0B0B7);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  font-family: 'Roboto';
+  font-weight: 300
+}
+#glass-container{
+  width:290px;
+  height:460px;
+  background:linear-gradient(225deg,#397394,#4A5294);
+  border:4px solid #fff;
+  border-right:0;
+  border-top:0;
+  border-left-color:#e0e0e0;
+  border-bottom-color:#c0c0c0;
+  transform-origin: 50%;
+  transform: rotateZ(-26deg) rotateY(31deg) rotateX(31deg) translateZ(0px);
+  box-shadow: -1px 1px 2px rgba(0,0,0,0.15);
+  z-index: 3;
+  opacity:1;
+  animation: l 2s infinite alternate ease-in-out;
+}
+@keyframes l{
+  0%{transform: rotateZ(-26deg) rotateY(31deg) rotateX(31deg) translateZ(0px);}
+  100%{transform: rotateZ(-26deg) rotateY(31deg) rotateX(31deg) translateZ(20px);}
+}
+#glass{
+  width:100%;
+  height:100%;
+  background-image:
+    linear-gradient( to bottom, rgba(255,255,255,0.2), rgba(255,255,255,0) ),
+    linear-gradient( 117deg, rgba(255,255,255,0.1) 38%, rgba(255,255,255,0) 38% );
+  transform:translateZ(40px) translateY(-10px);
+  border-left:4px solid rgba(255,255,255,0.2);
+  border-bottom:4px solid rgba(255,255,255,0.1);
+  box-shadow:inset -2px 2px 0px rgba(255,255,255,0.2);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(255,255,255,1), rgba(0,0,0,1));
+  animation: g 2s infinite alternate ease-in-out;
+}
+@keyframes g{
+  0%{transform:translateZ(40px) translateY(-10px);}
+  100%{transform:translateZ(20px) translateY(-10px);}
+}
+#glass-container::after{
+  position:absolute;
+  content:'';
+  z-index:2;
+  background:#606060;
+  width:90%;
+  height:90%;
+  bottom:10px;
+  left:10px;
+  transform-origin: 0% 100%;
+  transform: rotateX(20deg) rotateY(10deg) rotateZ(0deg) translateZ(-20px);
+  //-webkit-filter:blur(30px);
+  box-shadow: 0 0 35px 20px #606060;
+  animation: s 2s infinite alternate ease-in-out;
+}
+@keyframes s{
+  0%{transform: rotateX(20deg) rotateY(10deg) rotateZ(0deg) translateZ(-20px) scale(1);box-shadow: 0 0 20px 20px #606060;opacity:1}
+  100%{transform: rotateX(20deg) rotateY(10deg) rotateZ(0deg) translateZ(-34px) scale(0.95);box-shadow: 0 0 35px 20px #606060;opacity:0.95}
+}
+</style>
+
+<style>
+
+/* ================================================================ 
+This copyright notice must be kept untouched in the stylesheet at 
+all times.
+
+The original version of this stylesheet and the associated (x)html
+is available at http://www.cssplay.co.uk/menu/cssplay-animated-cube-gallery.html
+Copyright (c) Stu Nicholls. All rights reserved.
+This stylesheet and the associated (x)html may be modified in any 
+way to fit your requirements.
+=================================================================== */
+.gallery {width:490px; height:140px; padding-top:350px; position:relative; margin:50px auto;}
+.gallery form {padding:0; margin:0;}
+.gallery input {position:absolute; left:-9999px;}
+.gallery label {display:block; width:88px; height:66px; float:left; margin:5px; opacity:0.7;
+-webkit-transition:0.25s;
+-o-transition:0.25s;
+transition:0.25s;
+}
+.gallery label:hover {opacity:1;}
+
+.gallery input + img {position:absolute; left:50%; top:0; z-index:50; margin-left:-200px;
+-webkit-transform-style:preserve-3d;
+-webkit-backface-visibility:hidden;
+-o-backface-visibility:hidden;
+backface-visibility:hidden;
+-webkit-transform-origin:50% 50% -200px;
+-o-transform-origin:50% 50% -200px;
+transform-origin:50% 50% -200px;
+}
+.gallery label img {width:88px; margin:0;}
+
+.gallery input:checked + img
+{
+opacity:1;
+-webkit-animation:spin1 1s forwards linear; z-index:100;
+-o-animation:spin1 1s forwards linear; z-index:100;
+animation:spin1 1s forwards linear; z-index:100;
+}
+
+.gallery input:not(:checked) + img
+{
+-webkit-animation:spin2 1s forwards linear;
+-o-animation:spin2 1s forwards linear;
+animation:spin2 1s forwards linear;
+}
+
+@-webkit-keyframes spin1 {
+0% {-webkit-transform: perspective(1200px) rotateY(-90deg);}
+100% {-webkit-transform: perspective(1200px) rotateY(0deg);}
+}
+@-webkit-keyframes spin2 {
+0% {-webkit-transform: perspective(1200px) rotateY(0deg);}
+100% {-webkit-transform: perspective(1200px) rotateY(90deg);}
+}
+@-o-keyframes spin1 {
+0% {-o-transform: perspective(1200px) rotateY(-90deg);}
+100% {-o-transform: perspective(1200px) rotateY(0deg);}
+}
+@-o-keyframes spin2 {
+0% {-o-transform: perspective(1200px) rotateY(0deg);}
+100% {-o-transform: perspective(1200px) rotateY(90deg);}
+}
+@keyframes spin1 {
+0% {transform: perspective(1200px) rotateY(-90deg);}
+100% {transform: perspective(1200px) rotateY(0deg);}
+}
+@keyframes spin2 {
+0% {transform: perspective(1200px) rotateY(0deg);}
+100% {transform: perspective(1200px) rotateY(90deg);}
+}
+
+</style>
+
+</head>
+
+<body data-debug="0">
+
+    <div class="body-3d">
+        <div id="glass-container">
+          <div id="glass"></div>
+        </div>
+    </div>
+
+    <div class="gallery">
+        <form action="">
+        <input type="radio" name="book" id="p1" checked="checked" /><img src="http://placehold.it/400x300" alt="" />
+            <input type="radio" name="book" id="p2" /><img src="http://placehold.it/400x300" alt="" />
+            <input type="radio" name="book" id="p3" /><img src="http://placehold.it/400x300" alt="" />
+            <input type="radio" name="book" id="p4" /><img src="http://placehold.it/400x300" alt="" />
+            <input type="radio" name="book" id="p5" /><img src="http://placehold.it/400x300" alt="" />
+            <input type="radio" name="book" id="p6" /><img src="http://placehold.it/400x300" alt="" />
+            <input type="radio" name="book" id="p7" /><img src="http://placehold.it/400x300" alt="" />
+        <input type="radio" name="book" id="p8" /><img src="http://placehold.it/400x300" alt="" />
+            <input type="radio" name="book" id="p9" /><img src="http://placehold.it/400x300" alt="" />
+            <input type="radio" name="book" id="p10" /><img src="http://placehold.it/400x300" alt="" />
+        <label for="p1"><img src="http://placehold.it/100x100" alt="" /></label>
+            <label for="p2"><img src="http://placehold.it/100x100" alt="" /></label>
+            <label for="p3"><img src="http://placehold.it/100x100" alt="" /></label>
+            <label for="p4"><img src="http://placehold.it/100x100" alt="" /></label>
+            <label for="p5"><img src="http://placehold.it/100x100" alt="" /></label>
+            <label for="p6"><img src="http://placehold.it/100x100" alt="" /></label>
+            <label for="p7"><img src="http://placehold.it/100x100" alt="" /></label>
+            <label for="p8"><img src="http://placehold.it/100x100" alt="" /></label>
+            <label for="p9"><img src="http://placehold.it/100x100" alt="" /></label>
+            <label for="p10"><img src="http://placehold.it/100x100" alt="" /></label>
+        </form>
+    </div>
+
+    <h1>h1.body</h1>
+    <article>
+        <h1>h1.article</h1>
+        <section>
+            <h1>h1.s1</h1>
+            <section>
+                <h1>h1.s2</h1>
+                <section>
+                    <h1>h1.s3</h1>
+                    <section>
+                        <h1>h1.s4</h1>
+                        <section>
+                            <h1>h1.s5</h1>
+                            <section>
+                                <h1>h1.s6</h1>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </article>
+
+
+    <div id="code-1">
+        <pre><code>
+        html    { font-size: calc(0.00625 * 100vmin + 0.625rem) }
+        h1      { font-size: 2.00em; font-weight: bold; margin: 0.67em 0 }
+        h2      { font-size: 1.50em; font-weight: bold; margin: 0.83em 0 }
+        h3      { font-size: 1.17em; font-weight: bold; margin: 1.00em 0 }
+        h4      { font-size: 1.00em; font-weight: bold; margin: 1.33em 0 }
+        h5      { font-size: 0.83em; font-weight: bold; margin: 1.67em 0 }
+        h6      { font-size: 0.67em; font-weight: bold; margin: 2.33em 0 }
+        </code></pre>
+    </div>
+    <div id="code-2">
+        <pre><code>
+        .base   { font-size: calc(0.00625   * 100vmin + 0.625rem) }
+        .h0     { font-size: calc(0.015     * 100vmin + 1.5em    ); font-weight: bold; margin: 0.33em 0 }
+        .h1     { font-size: calc(0.0125    * 100vmin + 1.25em   ); font-weight: bold; margin: 0.67em 0 }
+        .h2     { font-size: calc(0.009375  * 100vmin + 0.9375em ); font-weight: bold; margin: 0.83em 0 }
+        .h3     { font-size: calc(0.0073125 * 100vmin + 0.73125em); font-weight: bold; margin: 1.00em 0 }
+        .h4     { font-size: calc(0.00625   * 100vmin + 0.625em  ); font-weight: bold; margin: 1.33em 0 }
+        .h5     { font-size: calc(0.0051875 * 100vmin + 0.81875em); font-weight: bold; margin: 1.67em 0 }
+        .h6     { font-size: calc(0.0041875 * 100vmin + 0.41875em); font-weight: bold; margin: 2.33em 0 }
+        </code></pre>
+    </div>
+
+
+    <div class="base">
+        <div class="h0">h0. dit is buiten het artikel</div>
+        <div class="h1">h1. dit is buiten het artikel</div>
+        <div class="h2">h2. dit is buiten het artikel</div>
+        <div class="h3">h3. dit is buiten het artikel</div>
+        <div class="h4">h4. dit is buiten het artikel</div>
+        <div class="h5">h5. dit is buiten het artikel</div>
+        <div class="h6">h6. dit is buiten het artikel</div>
+    </div>
+    <br>
+
+    <div class="h0">h0. dit is buiten het artikel</div>
+    <div class="h1">h1. dit is buiten het artikel</div>
+    <div class="h2">h2. dit is buiten het artikel</div>
+    <div class="h3">h3. dit is buiten het artikel</div>
+    <div class="h4">h4. dit is buiten het artikel</div>
+    <div class="h5">h5. dit is buiten het artikel</div>
+    <div class="h6">h6. dit is buiten het artikel</div>
+
+    <h1>h1. dit is buiten het artikel</h1>
+    <h2>h2. dit is buiten het artikel</h2>
+    <h3>h3. dit is buiten het artikel</h3>
+    <h4>h4. dit is buiten het artikel</h4>
+    <h5>h5. dit is buiten het artikel</h5>
+    <h6>h6. dit is buiten het artikel</h6>
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ille enim occurrentia nescio quae comminiscebatur; Varietates autem iniurasque fortunae facile veteres philosophorum praeceptis instituta vita superabat. Plane idem, inquit, et maxima quidem, qua fieri nulla maior potest. Cur igitur, cum de re conveniat, non malumus usitate loqui? Positum est a nostris in iis esse rebus, quae secundum naturam essent, non dolere; </p>
+    <p>Te enim iudicem aequum puto, modo quae dicat ille bene noris. Tu quidem reddes; Quae quidem sapientes sequuntur duce natura tamquam videntes; Illud dico, ea, quae dicat, praeclare inter se cohaerere. Gerendus est mos, modo recte sentiat. </p>
+    <p>Stulti autem malorum memoria torquentur, sapientes bona praeterita grata recordatione renovata delectant. Duo Reges: constructio interrete. Totum autem id externum est, et quod externum, id in casu est. Neque enim civitas in seditione beata esse potest nec in discordia dominorum domus; Quamvis enim depravatae non sint, pravae tamen esse possunt. Quasi ego id curem, quid ille aiat aut neget. Est enim effectrix multarum et magnarum voluptatum. Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus. </p>
+    <p>Sed quae tandem ista ratio est? Quid de Pythagora? Licet hic rursus ea commemores, quae optimis verbis ab Epicuro de laude amicitiae dicta sunt. Tu quidem reddes; Sin laboramus, quis est, qui alienae modum statuat industriae? Hoc enim identidem dicitis, non intellegere nos quam dicatis voluptatem. Itaque hic ipse iam pridem est reiectus; Itaque mihi non satis videmini considerare quod iter sit naturae quaeque progressio. Qui autem esse poteris, nisi te amor ipse ceperit? Nam, ut paulo ante docui, augendae voluptatis finis est doloris omnis amotio. </p>
+    <p>Non modo carum sibi quemque, verum etiam vehementer carum esse? Quia dolori non voluptas contraria est, sed doloris privatio. Quae cum essent dicta, discessimus. Dici enim nihil potest verius. Addidisti ad extremum etiam indoctum fuisse. Maximas vero virtutes iacere omnis necesse est voluptate dominante. Si qua in iis corrigere voluit, deteriora fecit. </p>
+    <br>
+
+    <article>
+        <div class="h1">h1. in het artikel</div>
+        <h1>h1. in het artikel</h1>
+        <h2>h2. in het artikel</h2>
+        <h3>h3. in het artikel</h3>
+        <h4>h4. in het artikel</h4>
+        <h5>h5. in het artikel</h5>
+        <h6>h6. in het artikel</h6>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ille enim occurrentia nescio quae comminiscebatur; Varietates autem iniurasque fortunae facile veteres philosophorum praeceptis instituta vita superabat. Plane idem, inquit, et maxima quidem, qua fieri nulla maior potest. Cur igitur, cum de re conveniat, non malumus usitate loqui? Positum est a nostris in iis esse rebus, quae secundum naturam essent, non dolere; </p>
+        <p>Te enim iudicem aequum puto, modo quae dicat ille bene noris. Tu quidem reddes; Quae quidem sapientes sequuntur duce natura tamquam videntes; Illud dico, ea, quae dicat, praeclare inter se cohaerere. Gerendus est mos, modo recte sentiat. </p>
+        <p>Stulti autem malorum memoria torquentur, sapientes bona praeterita grata recordatione renovata delectant. Duo Reges: constructio interrete. Totum autem id externum est, et quod externum, id in casu est. Neque enim civitas in seditione beata esse potest nec in discordia dominorum domus; Quamvis enim depravatae non sint, pravae tamen esse possunt. Quasi ego id curem, quid ille aiat aut neget. Est enim effectrix multarum et magnarum voluptatum. Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus. </p>
+        <p>Sed quae tandem ista ratio est? Quid de Pythagora? Licet hic rursus ea commemores, quae optimis verbis ab Epicuro de laude amicitiae dicta sunt. Tu quidem reddes; Sin laboramus, quis est, qui alienae modum statuat industriae? Hoc enim identidem dicitis, non intellegere nos quam dicatis voluptatem. Itaque hic ipse iam pridem est reiectus; Itaque mihi non satis videmini considerare quod iter sit naturae quaeque progressio. Qui autem esse poteris, nisi te amor ipse ceperit? Nam, ut paulo ante docui, augendae voluptatis finis est doloris omnis amotio. </p>
+        <p>Non modo carum sibi quemque, verum etiam vehementer carum esse? Quia dolori non voluptas contraria est, sed doloris privatio. Quae cum essent dicta, discessimus. Dici enim nihil potest verius. Addidisti ad extremum etiam indoctum fuisse. Maximas vero virtutes iacere omnis necesse est voluptate dominante. Si qua in iis corrigere voluit, deteriora fecit. </p>
+    </article>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html data-response="1">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=1">
+
+<title title="({month} 2016) {document-title}">MD News 001</title>
+
+<!-- 
+    Inspirations: http://codepen.io/flavioschneider/pen/ByVGGx
+-->
+
+<meta name="description" content="{document-description}">
+<meta name="author"      content="rene van der lende">
+<meta name="copyright"   content="(c) 2016 - rene van der lende">
+<meta name="license"     content="MIT">
+
+<link rel='stylesheet' href="css/normalize-4.2.0.css">
+<link rel='stylesheet' href="css/ers-base-init.css">
+<link rel='stylesheet' href="css/ers-base-view.css">
+<link rel='stylesheet' href="css/ers-base-grid.css">
+<link rel='stylesheet' href="css/ers-scroll-nobar.css">
+<link rel='stylesheet' href="css/ers-base-scaling.css">
+<!--link rel='stylesheet' href="css/ers-base-theming.css"-->
+<link rel='stylesheet' href="css/ers-base-utils.css">
+
+<link rel='stylesheet' href="assets/fonts/redacted/stylesheet.css">
+
+<style>
+@import url(http://fonts.googleapis.com/css?family=Roboto:300,400);
+
+/************************************************/
+/* DEMO RULES                                   */
+/************************************************/
+body            { font-family: Roboto; font-weight: 300; background-color: #eee }
+
+
+.h1.blended { /*http://codepen.io/rauldronca/pen/kkYdmO*/
+  position: absolute;
+  top: 50%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  font-family: 'Raleway', sans-serif;
+  font-size: 7vw;
+  font-weight: 800;
+  letter-spacing: 8px;
+  line-height: 60px;
+  text-align: center;
+  padding: 35px;
+  margin: 0;
+  background: #333;
+  color: white;
+  mix-blend-mode: multiply;
+}
+
+
+#news           { margin: 0 auto; max-width: 40em; border-radius: 2px;
+                  background-color: #fff; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3) }
+
+#news .header   { height: 5em; background-color: #3498db }
+#news .h1       { flex: 1; color: #fff; border-bottom: 1px solid #f1c40f }
+
+
+#news .circle   { z-index: 10; width: 2.5em; height: 2.5em; border-radius: 50%;
+                  background-color: #f1c40f; box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3) }
+
+#news .line     { position: absolute; top: 2.5em; left: 4.5em; height: 100%; 
+                  border-right: 1px solid #f1c40f }
+
+#news .content  { padding-top: 1rem }
+
+#news .date::before     { justify-content: center; width: 1.75em; min-width: 1.75em; height: 1.75em; 
+                  line-height: 1.75em;
+                  background-color: #f1c40f; color: #fff; border-radius: 0.5em }
+
+#news .dsate::after      { position: relative; top: .625em; left: 1.625em;
+                          width: .5em; min-width: .5em; height: .5em;
+                          border-radius: 50%; background-color: #3498db; content: '' }
+
+#news .context  { color: #666 }
+</style>
+
+
+</head>
+
+<body data-debug="0">
+
+    <input id="card-000" class="scale-switch-100" type="checkbox" data-gone="1"/>
+
+    <section id="news" class="view scale-100 nobar" data-view="MX">
+        <label for="card-000" class="header view-header">
+            <span class="circle"></span>
+            <span class="h1">News</span>
+        </label>
+
+        <div class="line"></div>
+
+        <div class="view-list content nobar-scroller">
+                <div class="view-row">
+                    <div class="date">27</div>
+                    <p class="context">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                     Commodi doloribus ad neque laudantium sequi atque officiis quaerat iusto impedit
+                     saepe tempora inventore, unde dolore sit aut velit quia adipisci nam.</p>
+                </div>
+                <div class="view-row">
+                    <div class="date">25</div>
+                    <div class="context">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi doloribus ad neque laudantium sequi atque officiis quaerat iusto.</div>
+                </div>
+                <div class="view-row">
+                    <div class="date">24</div>
+                    <div class="context">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
+                </div>
+                <div class="view-row">
+                    <div class="date">21</div>
+                    <div class="context">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi doloribus ad neque laudantium sequi atque officiis quaerat iusto impedit saepe tempora inventore, unde dolore sit aut velit quia adipisci nam.</div>
+                </div>
+                <div class="view-row">
+                    <div class="date">20</div>
+                    <div class="context">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi doloribus ad neque laudantium sequi atque officiis quaerat iusto impedit saepe tempora inventore, unde dolore sit aut velit quia adipisci nam.</div>
+                </div>
+                <div class="view-row">
+                    <div class="date">19</div>
+                    <div class="context">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi doloribus ad neque laudantium sequi atque officiis quaerat iusto impedit saepe tempora inventore, unde dolore sit aut velit quia adipisci nam.</div>
+                </div>
+                <div class="view-row">
+                    <div class="date">18</div>
+                    <div class="context">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi doloribus ad neque laudantium sequi atque officiis</div>
+                </div>
+                <div class="view-row">
+                    <div class="date">18</div>
+                    <div class="context">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi doloribus ad neque laudantium sequi atque officiis</div>
+                </div>
+                <div class="view-row">
+                    <div class="date">17</div>
+                    <div class="context">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi doloribus ad neque laudantium sequi atque officiis</div>
+                </div>
+                <div class="view-row">
+                    <div class="date">16</div>
+                    <div class="context">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi doloribus ad neque laudantium sequi atque officiis</div>
+                </div>
+                <div class="view-row">
+                    <div class="date">15</div>
+                    <div class="context">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi doloribus ad neque laudantium sequi atque officiis</div>
+                </div>
+            </div>
+    </section>
+</body>
+</html>

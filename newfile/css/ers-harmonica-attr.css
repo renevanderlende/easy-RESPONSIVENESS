@@ -1,17 +1,15 @@
 @CHARSET "UTF-8";
 
 /************************************************/
-/* easy RESPONSIVE|HARMONICA|NESS CLASS   (WIP) */
+/* easy RESPONSIVE|HARMONICA|NESS CUST.ATTRIBUTE */
 /************************************************/
 /*
-    .harmonicaH/V or
     [data-harmonica]: use to define a flexbox (FBL) parent container holding the harmonica "folding" elements.
 
-    .harmonicaH/V or
     data-harmonica > * - harmonica "folding" elements (flexed child elements)
 
-    data-harmonica: H - Horizontal  a row of several folds next to eachother     (.harmonicaH)
-                    V - Vertical    a column of several folds below to eachother (.harmonicaV)
+    data-harmonica: H - Horizontal  a row of several folds next to eachother
+                    V - Vertical    a column of several folds below to eachother
 
     Explanation:
 
@@ -25,22 +23,6 @@
     but the latter are easier to manipulate/toggle in Javascript.
 */
 /* [MANDATORY] */
-[class^="harmonica"]            { display: flex; height: 100%; width: 100% }
-
-.harmonicaH                     { flex-flow: row nowrap }
-.harmonicaV                     { flex-flow: column nowrap }
-
-[class^="harmonica"]>*          { flex: 1; overflow: hidden }
-[class^="harmonica"]>*:hover    { flex-basis: 80% }
-
-/* [OPTIONAL] */
-.harmonicaH>*                   { height: 100%; max-height: 100%; min-width : 1.5em } /* at least # of fold elements + 1 */
-.harmonicaV>*                   { width : 100%; max-width : 100%; min-height: 1.5em } /* otherwise there's little movement */
-
-/*************************************************/
-/* easy RESPONSIVE|HARMONICA|NESS CUST.ATTRIBUTE */
-/*************************************************/
-/* [MANDATORY] */
 [data-harmonica]                { display: flex; height: 100%; width: 100% }
 
 [data-harmonica^="H"]           { flex-flow: row nowrap }
@@ -53,5 +35,8 @@
 [data-harmonica^="H"]>*         { height: 100%; max-height: 100%; min-width : 1.5em }
 [data-harmonica^="V"]>*         { width : 100%; max-width : 100%; min-height: 1.5em }
 
+[data-harmonica]>input[name^="harm"] { display:none; position:absolute; overflow:hidden; clip:rect(0 0 0 0);
+                                       z-index:-999999; top:-999999px; margin:-1px; padding:0; border:0;
+                                       height:1px; width:1px; min-height:0; min-width:0; max-height:0; max-width:0 }
 
 

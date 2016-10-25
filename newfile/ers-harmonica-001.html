@@ -178,7 +178,7 @@ html    { font-size: calc(0.00625 * 100vmin + 0.625rem); font-weight: normal; li
 <style>
 main                            { display: flex; flex-flow: row wrap; max-width: 50% }
 section                         { flex: 1; padding-top: 3rem }
-item                            { padding-bottom: 3rem }
+item                            { max-height: 25%; padding-bottom: 3rem }
 /* Toying with FBL harmonica */
 item[data-harmonica]>*          { border: .5px solid hsla(0,0%,0%,.1)  }
 item[data-harmonica]>*:hover    { font-weight: bold }
@@ -193,6 +193,11 @@ item[data-harmonica]>*:hover    { font-weight: bold }
 <body data-debug="1">
 <main>
     <section>
+        <item class="harmonicaH" data-behaviour>
+            <div>H1</div>
+            <div>H2</div>
+            <div>H3</div>
+        </item>
         <item class="harmonicaV" data-behaviour>
             <div>V1</div>
             <div>V2</div>

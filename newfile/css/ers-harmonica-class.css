@@ -23,17 +23,19 @@
     but the latter are easier to manipulate/toggle in Javascript.
 */
 /* [MANDATORY] */
-[class^="harmonica"]            { display: flex; height: 100%; width: 100% }
+[class^="harmonica"]            { display: flex; flex-wrap: nowrap; height: 100%; width: 100% }
 
-.harmonicaH                     { flex-flow: row nowrap }
-.harmonicaV                     { flex-flow: column nowrap }
+.harmonicaH                     { flex-direction: row }
+.harmonicaV                     { flex-direction: column }
+.harmonicaHR                    { flex-direction: row-reverse }
+.harmonicaVR                    { flex-direction: column-reverse }
 
-[class^="harmonica"]>*          { flex: 1; overflow: hidden }
-[class^="harmonica"]>*:hover    { flex-basis: 80% }
+[class^="harmonica"]>*          { flex: 1 1 0; overflow: hidden; transition: all 150ms ease-in-out }
+[class^="harmonica"]>*:hover    { flex: 1 1 80% }
 
 /* [OPTIONAL] */
-.harmonicaH>*                   { height: 100%; max-height: 100% }
-.harmonicaV>*                   { width : 100%; max-width : 100% }
+.harmonicaH>*,.harmonicaHR>*    { height: 100%; max-height: 100% }
+.harmonicaV>*,.harmonicaVR>*    { width : 100%; max-width : 100% }
 
 [class^="harmonica"]>input[name^="harm"] { display:none; position:absolute; overflow:hidden; clip:rect(0 0 0 0);
                                            z-index:-999999; top:-999999px; margin:-1px; padding:0; border:0;

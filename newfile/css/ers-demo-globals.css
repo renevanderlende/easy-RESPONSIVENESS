@@ -17,6 +17,7 @@ html                    { text-rendering: optimizeLegibility; -webkit-font-smoot
                           font-variant-ligatures: common-ligatures discretionary-ligatures historical-ligatures }
 /* Disallow users to select any page content (for copy/paste) by default */
 body                    { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none }
+img                     { display: block } /* removes bottom whitespace (default is 'inline-block') */
 /************************************************/
 /* UTILS                               (STABLE) */
 /************************************************/

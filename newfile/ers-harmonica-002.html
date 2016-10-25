@@ -14,6 +14,9 @@
 <!-- link rel="stylesheet" href="css/ers-harmonica-attr-cus.css" -->
 
 <style>
+/************************************************/
+/* easy RESPONSIVE|PATCH|NESS             (WIP) */
+/************************************************/
 /* base flexbox patch grid structure */
 [data-patch]    { display: flex; flex-wrap: wrap; align-content: flex-start; width: 100%; height: 100% }
 [data-patch]>*  { overflow: hidden }
@@ -31,82 +34,60 @@
 
 [data-patch][fill=""]>*:last-child,[data-patch][fill*="H"]>*:last-child { max-width : 100% } /* when less elements than required by ratios */
 [data-patch][fill=""]>*:last-child,[data-patch][fill*="V"]>*:last-child { max-height: 100% }
+</style>
 
-
+<style>
 /************************************************/
 /* DEMO                                         */
 /************************************************/
-body                            { padding-bottom: 3rem }
-main                            { max-width: 90%; justify-content: center; margin: 0 auto; padding-top: 3rem }
+body                { padding-top: 3rem; background: linear-gradient(to right, #171717 50%, #F3B833 0) }
 
-[empty]                         { display: flex; justify-content: center; align-content: center; align-items: center;
-                                  font-size: 1.25rem; color: hsla(0,0%,0%,.2) }
+main                { max-width: 90%; justify-content: center; margin: 0 auto; padding-bottom: 3rem }
+item                { background: white }
 
-[data-harmonica]>input[name="harm-demo1"]:checked + figure {  }
+[empty]             { display: flex; justify-content: center; align-content: center; align-items: center;
+                      font-size: 1.25rem; color: hsla(0,0%,0%,.2) }
 
 
-/*
-item>*                          {  position: relative; /*border: .5px solid hsla(0,0%,0%,.1)*/  }
-/*
-[data-harmonica]               { justify-content: flex-start; align-content: flex-start; align-items: flex-start; }
-[data-harmonica]>*:hover                {}
-[data-harmonica]:hover>*:not(:hover)    { filter: blur(2px); opacity: .6 }
-*/
-
-img { display: block }
-
-#demo1 {
-    width: 695px;
-    height: auto;
-    margin: 0 auto;
-    box-shadow: 1px 1px 4px rgba(0,0,0,0.08);
-    border: 7px solid rgba(255,255,255,0.6) }
-
-[data-harmonica="H"] figure { flex: 1 1 99px }
-
-figure {position: relative;
-    padding: 0; margin: 0;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.6);/* functions as border */
-}
-figcaption span {
-    position: absolute;
-    bottom: 1px;
-    right: 1px;
-    left: 1px;
-    text-align: center;
-    background: rgba(87, 73, 81, 0.2);
-    line-height: 1.25rem;
-    font-size: 1.25rem;
-    opacity: 0;
-    text-transform: uppercase;
-    letter-spacing: .25rem;
-    font-weight: bold;
-    padding: 20px;
-    color: #fff;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
-} 
-figure:hover span {
-    opacity: 1;
-    transition: opacity 150ms ease-in-out;
-}
 </style>
 
+<style>
+/************************************************/
+/* DEMO 9                                       */
+/************************************************/
+#demo9              { width: 42rem; max-width: 42rem; margin: 1.25rem auto; height: auto; border: 2px solid hsla(0,0%,100%,.9) }
+
+figure              { position: relative; padding: 0; margin: 0; box-shadow: 0 0 0 2px rgba(255,255,255,0.6); font-size: .625rem }
+figure img          { height: 100% }
+
+figure label        { opacity: 0; position: absolute; bottom: 0; left: 0; width: 100%; padding: 1em;
+                      letter-spacing: .25em; text-transform: uppercase; text-align: center;
+                      text-shadow: 1px 1px 2px rgba(0,0,0,0.6) } 
+
+[data-harmonica]> figure { flex: 1 1 5.75rem }
+
+input[name="harm-demo9"]:not(:checked) + figure:hover label { opacity: 1; cursor: pointer;
+                                                              background: hsla(224,40%,57%,.3);
+                                                              transition: opacity 250ms ease-in-out }
+
+input[name="harm-demo9"]:checked + figure                   { flex: 1 1 80%  }
+input[name="harm-demo9"]:checked + figure label             { opacity: 1 }
+</style>
+
+<style>
+.square             { display: flex; margin: auto; height: 30vw; width: 30vw; border: 5px solid #f3b833;
+                      color: #f3b833; text-align: center; text-transform: uppercase; font-size: 10vw;
+                      padding: 1.2vw; line-height: .75; word-break: break-word;
+                      mix-blend-mode: difference }
+
+.square > *         { margin: auto }
+
+</style>
 
 </head>
 
 <body data-debug="0">
-<item id="demo1" data-harmonica="H">
-    <input type="radio" name="harm-demo1" /><figure><img src="assets/demos/1.jpg"><figcaption><span>True Colors</span></figcaption></figure>
-    <input type="radio" name="harm-demo1" /><figure><img src="assets/demos/2.jpg"><figcaption><span>Honest Light        </span></figcaption></figure>
-    <input type="radio" name="harm-demo1" /><figure><img src="assets/demos/3.jpg"><figcaption><span>Silent Serenity     </span></figcaption></figure>
-    <input type="radio" name="harm-demo1" /><figure><img src="assets/demos/4.jpg"><figcaption><span>Warm Welcome        </span></figcaption></figure>
-    <input type="radio" name="harm-demo1" /><figure><img src="assets/demos/5.jpg"><figcaption><span>Sensible Magic      </span></figcaption></figure>
-    <input type="radio" name="harm-demo1" /><figure><img src="assets/demos/6.jpg"><figcaption><span>Lovely Midnight     </span></figcaption></figure>
-    <input type="radio" name="harm-demo1" /><figure><img src="assets/demos/7.jpg"><figcaption><span>Illuminated Darkness</span></figcaption></figure>
-    <input type="radio" name="harm-demo1" /><figure><img src="assets/demos/8.jpg"><figcaption><span>Happy Child         </span></figcaption></figure>
-</item>
-
-<main data-patch="3x3">
+<main data-patch="3x3" fill>
     <item empty><div>&lt;empty&gt;</div></item>
     <item empty><div>&lt;empty&gt;</div></item>
     <item empty><div>&lt;empty&gt;</div></item>
@@ -128,16 +109,27 @@ figure:hover span {
         <div data-harmonica="V"><img src="assets/unsplashit/354_010.jpg"><img src="assets/unsplashit/354_012.jpg"><img src="assets/unsplashit/354_014.jpg"><img src="assets/unsplashit/354_016.jpg"></div>
         <div data-harmonica="V"><img src="assets/unsplashit/354_070.jpg"><img src="assets/unsplashit/354_072.jpg"><img src="assets/unsplashit/354_074.jpg"><img src="assets/unsplashit/354_076.jpg"></div>
     </item>
-    <item data-harmonica="HM" data-effect="blur" data-behaviour>
+    <item data-harmonica="H" data-effect="blur" data-behaviour>
         <input id="C1" type="checkbox" data-function="S" name="harm-C" /><label for="C1" data-function="T"><span>H1</span></label>
         <input id="C2" type="checkbox" data-function="S" name="harm-C" /><label for="C2" data-function="T"><span>H2</span></label>
         <input id="C3" type="checkbox" data-function="S" name="harm-C" /><label for="C3" data-function="T"><span>H3</span></label>
     </item>
-    <item data-harmonica="VM" data-effect="blur" data-behaviour>
-        <input id="R1" type="radio"    data-function="S" name="harm-R" /><label for="R1" data-function="T"><span>H1</span></label>
-        <input id="R2" type="radio"    data-function="S" name="harm-R" /><label for="R2" data-function="T"><span>H2</span></label>
-        <input id="R3" type="radio"    data-function="S" name="harm-R" /><label for="R3" data-function="T"><span>H3</span></label>
+    <item data-harmonica="V" data-effect="blur" data-behaviour>
+        <input id="R1" type="radio"    data-function="S" name="harm-R" /><label for="R1" data-function="T"><span>V1</span></label>
+        <input id="R2" type="radio"    data-function="S" name="harm-R" /><label for="R2" data-function="T"><span>V2</span></label>
+        <input id="R3" type="radio"    data-function="S" name="harm-R" /><label for="R3" data-function="T"><span>V3</span></label>
     </item>
 </main>
+    <item id="demo9" data-harmonica="H">
+        <input id="d1-1" type="radio" name="harm-demo9" checked />
+                                                          <figure><img src="assets/demos/1.jpg"><label for="d1-1">True Colors         </label></figure>
+        <input id="d1-2" type="radio" name="harm-demo9" /><figure><img src="assets/demos/2.jpg"><label for="d1-2">Honest Light        </label></figure>
+        <input id="d1-3" type="radio" name="harm-demo9" /><figure><img src="assets/demos/3.jpg"><label for="d1-3">Silent Serenity     </label></figure>
+        <input id="d1-4" type="radio" name="harm-demo9" /><figure><img src="assets/demos/4.jpg"><label for="d1-4">Warm Welcome        </label></figure>
+        <input id="d1-5" type="radio" name="harm-demo9" /><figure><img src="assets/demos/5.jpg"><label for="d1-5">Sensible Magic      </label></figure>
+        <input id="d1-6" type="radio" name="harm-demo9" /><figure><img src="assets/demos/6.jpg"><label for="d1-6">Lovely Midnight     </label></figure>
+        <input id="d1-7" type="radio" name="harm-demo9" /><figure><img src="assets/demos/7.jpg"><label for="d1-7">Illuminated Darkness</label></figure>
+        <input id="d1-8" type="radio" name="harm-demo9" /><figure><img src="assets/demos/8.jpg"><label for="d1-8">Happy Child         </label></figure>
+    </item>
 </body>
 </html>

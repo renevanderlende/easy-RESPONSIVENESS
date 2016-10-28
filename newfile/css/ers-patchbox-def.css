@@ -1,0 +1,24 @@
+@CHARSET "UTF-8";
+
+/************************************************/
+/* easy RESPONSIVE|PATCH|NESS             (WIP) */
+/************************************************/
+/* base flexbox patch grid structure */
+[data-patch]    { display: flex; flex-wrap: wrap; align-content: flex-start; width: 100%; height: 100% } /* fill parent */
+[data-patch]>*  { }
+
+[data-patch^= "1x"]>* { flex:1 1 100%      ; max-width:100%       } [data-patch$= "x1"]>* { height:100%      ; max-height:100%       }
+[data-patch^= "2x"]>* { flex:1 1  50%      ; max-width: 50%       } [data-patch$= "x2"]>* { height: 50%      ; max-height: 50%       }
+[data-patch^= "3x"]>* { flex:1 1  33.33333%; max-width: 33.33333% } [data-patch$= "x3"]>* { height: 33.33333%; max-height: 33.33333% }
+[data-patch^= "4x"]>* { flex:1 1  25%      ; max-width: 25%       } [data-patch$= "x4"]>* { height: 25%      ; max-height: 25%       }
+[data-patch^= "5x"]>* { flex:1 1  20%      ; max-width: 20%       } [data-patch$= "x5"]>* { height: 20%      ; max-height: 20%       }
+[data-patch^= "6x"]>* { flex:1 1  16.66667%; max-width: 16.66667% } [data-patch$= "x6"]>* { height: 16.66667%; max-height: 16.66667% }
+[data-patch^= "7x"]>* { flex:1 1  14.28571%; max-width: 14.28571% } [data-patch$= "x7"]>* { height: 14.28571%; max-height: 14.28571% }
+[data-patch^= "8x"]>* { flex:1 1  12.5%    ; max-width: 12.5%     } [data-patch$= "x8"]>* { height: 12.5%    ; max-height: 12.5%     }
+[data-patch^= "9x"]>* { flex:1 1  11.11111%; max-width: 11.11111% } [data-patch$= "x9"]>* { height: 11.11111%; max-height: 11.11111% }
+[data-patch^="10x"]>* { flex:1 1  10%      ; max-width: 10%       } [data-patch$="x10"]>* { height: 10%      ; max-height: 10%       }
+/* Periodic Table: 18x8 */
+[data-patch^="18x"]>* { flex:1 1   5.55556%; max-width:  5.55556% } [data-patch$="x18"]>* { height:  5.55556%; max-height:  5.55556% }
+
+[data-patch][fill=""]>*:last-child,[data-patch][fill*="H"]>*:last-child { max-width : 100% } /* when less elements than required by ratios */
+[data-patch][fill=""]>*:last-child,[data-patch][fill*="V"]>*:last-child { max-height: 100% }

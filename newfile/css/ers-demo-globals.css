@@ -8,7 +8,7 @@ html,body,main          { box-sizing: border-box; width: 100%; margin: 0 }
 
  /* Check height info: https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient => NOTES */
 html                    { height: 100%; min-height: 100vh; font-family: Arial, Helvetica, sans-serif }
-body,main               { max-width: 100%; height: 100%; overflow: auto }
+body,main               { max-width: 100%; height: 100% }
 /************************************************/
 /* PREFERED THIS AND THATS             (STABLE) */
 /************************************************/
@@ -17,7 +17,9 @@ html                    { text-rendering: optimizeLegibility; -webkit-font-smoot
                           font-variant-ligatures: common-ligatures discretionary-ligatures historical-ligatures }
 /* Disallow users to select any page content (for copy/paste) by default */
 body                    { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none }
-img                     { display: block } /* removes bottom whitespace (default is 'inline-block') */
+img                     { display: block } /* removes bottom whitespace (HTML default is 'inline-block') */
+p                       { margin: 0 } /* I always forget this one */
+ul,ol,dl                { margin: 0; padding: 0 } /* these too */
 /************************************************/
 /* UTILS                               (STABLE) */
 /************************************************/

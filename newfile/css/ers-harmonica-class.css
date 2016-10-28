@@ -23,7 +23,7 @@
     but the latter are easier to manipulate/toggle in Javascript.
 */
 /* [MANDATORY] */
-[class^="harmonica"]            { display: flex; flex-wrap: nowrap; height: 100%; width: 100% }
+[class^="harmonica"]            { display: flex; flex-wrap: nowrap; height: 100%; width: 100% } /* fill parent */
 
 .harmonicaH                     { flex-direction: row }
 .harmonicaV                     { flex-direction: column }
@@ -34,12 +34,12 @@
 [class^="harmonica"]>*:hover    { flex: 1 1 80% }
 
 /* [OPTIONAL] */
-.harmonicaH>*,.harmonicaHR>*    { height: 100%; max-height: 100% }
-.harmonicaV>*,.harmonicaVR>*    { width : 100%; max-width : 100% }
+.harmonicaH>*,.harmonicaHR>*    { max-height: 100% }
+.harmonicaV>*,.harmonicaVR>*    { max-width : 100% }
 
-[class^="harmonica"]>input[name^="harm"] { display:none; position:absolute; overflow:hidden; clip:rect(0 0 0 0);
-                                           z-index:-999999; top:-999999px; margin:-1px; padding:0; border:0;
-                                           height:1px; width:1px; min-height:0; min-width:0; max-height:0; max-width:0 }
+[class^="harmonica"]>input[name^="hrm"] { display:none; position:absolute; overflow:hidden; clip:rect(0 0 0 0);
+                                          z-index:-999999; top:-999999px; margin:-1px; padding:0; border:0;
+                                          height:1px; width:1px; min-height:0; min-width:0; max-height:0; max-width:0 }
 
 
 

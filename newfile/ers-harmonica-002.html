@@ -10,126 +10,199 @@
 
 <link rel="stylesheet" href="css/ers-demo-globals.css">
 <link rel="stylesheet" href="css/ers-harmonica-attr.css">
+<link rel="stylesheet" href="css/ers-patchbox-def.css">
+<link rel="stylesheet" href="css/ers-ratiobox-def.css">
 
+<!-- Customizations -->
 <!-- link rel="stylesheet" href="css/ers-harmonica-attr-cus.css" -->
+<!-- link rel="stylesheet" href="css/ers-patchbox-cus.css" -->
+<!-- link rel="stylesheet" href="css/ers-ratiobox-cus.css" -->
+
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Proza+Libre:400,500,600,700,800">
+
+<!--
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Work+Sans:100,300,400,700|Source+Sans+Pro:300,400,700,900|Roboto:100,300,400,700">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Biryani:300,400,700,900">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Alegreya+Sans:300,400,700,900|Alegreya+Sans+SC:300,400,700,900">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Rubik:300,400,700,900|Rubik+Mono+One:400|Rubik+One:400">
+-->
 
 <style>
 /************************************************/
-/* easy RESPONSIVE|PATCH|NESS             (WIP) */
+/* DEMO GLOBALS                                 */
 /************************************************/
-/* base flexbox patch grid structure */
-[data-patch]    { display: flex; flex-wrap: wrap; align-content: flex-start; width: 100%; height: 100% }
-[data-patch]>*  { overflow: hidden }
+body                { font-family: "Open Sans", sans-serif }
+h1,h2,h3,h4,h5,h6   { font-weight: 300; letter-spacing: -0.035em; text-align: center }
+body                { padding-top: 3rem; background-color: hsla(0,0%,0%,.1) }
 
-[data-patch^= "1x"]>* { flex:1 1 100%      ; max-width:100%       } [data-patch$= "x1"]>* { height:100%      ; max-height:100%       }
-[data-patch^= "2x"]>* { flex:1 1  50%      ; max-width: 50%       } [data-patch$= "x2"]>* { height: 50%      ; max-height: 50%       }
-[data-patch^= "3x"]>* { flex:1 1  33.33333%; max-width: 33.33333% } [data-patch$= "x3"]>* { height: 33.33333%; max-height: 33.33333% }
-[data-patch^= "4x"]>* { flex:1 1  25%      ; max-width: 25%       } [data-patch$= "x4"]>* { height: 25%      ; max-height: 25%       }
-[data-patch^= "5x"]>* { flex:1 1  20%      ; max-width: 20%       } [data-patch$= "x5"]>* { height: 20%      ; max-height: 20%       }
-[data-patch^= "6x"]>* { flex:1 1  16.66667%; max-width: 16.66667% } [data-patch$= "x6"]>* { height: 16.66667%; max-height: 16.66667% }
-[data-patch^= "7x"]>* { flex:1 1  14.28571%; max-width: 14.28571% } [data-patch$= "x7"]>* { height: 14.28571%; max-height: 14.28571% }
-[data-patch^= "8x"]>* { flex:1 1  12.5%    ; max-width: 12.5%     } [data-patch$= "x8"]>* { height: 12.5%    ; max-height: 12.5%     }
-[data-patch^= "9x"]>* { flex:1 1  11.11111%; max-width: 11.11111% } [data-patch$= "x9"]>* { height: 11.11111%; max-height: 11.11111% }
-[data-patch^="10x"]>* { flex:1 1  10%      ; max-width: 10%       } [data-patch$="x10"]>* { height: 10%      ; max-height: 10%       }
-
-[data-patch][fill=""]>*:last-child,[data-patch][fill*="H"]>*:last-child { max-width : 100% } /* when less elements than required by ratios */
-[data-patch][fill=""]>*:last-child,[data-patch][fill*="V"]>*:last-child { max-height: 100% }
-</style>
-
-<style>
-/************************************************/
-/* DEMO                                         */
-/************************************************/
-body                { padding-top: 3rem; background: linear-gradient(to right, #171717 50%, #F3B833 0) }
-
-main                { max-width: 90%; justify-content: center; margin: 0 auto; padding-bottom: 3rem }
-item                { background: white }
+main                { max-width: 100%; justify-content: center; margin: 0 auto }
+section             { padding: 2rem 10rem }
 
 [empty]             { display: flex; justify-content: center; align-content: center; align-items: center;
-                      font-size: 1.25rem; color: hsla(0,0%,0%,.2) }
-
-
+                      font-size: 1.25rem; color: hsla(0,0%,0%,.56) }
 </style>
+
+
+
+<style>
+/************************************************/
+/* DEMO 1                                       */
+/************************************************/
+item[data-harmonica]>*  { bbbbborder: 1px solid hsla(0,0%,0%,.1)  }
+</style>
+
+
 
 <style>
 /************************************************/
 /* DEMO 9                                       */
 /************************************************/
-#demo9              { width: 42rem; max-width: 42rem; margin: 1.25rem auto; height: auto; border: 2px solid hsla(0,0%,100%,.9) }
+#demo9              { width: 42rem; max-width: 42rem; margin: 1.25rem auto; height: auto;
+                      background-color: white; border: 4px solid hsla(0,0%,100%,.9) }
 
-figure              { position: relative; padding: 0; margin: 0; box-shadow: 0 0 0 2px rgba(255,255,255,0.6); font-size: .625rem }
-figure img          { height: 100% }
+#demo9 figure       { position: relative; padding: 0; margin: 0; box-shadow: 0 0 0 2px hsla(0,0%,100%,1); font-size: .625rem }
+#demo9 figure img   { height: 100% }
 
-figure label        { opacity: 0; position: absolute; bottom: 0; left: 0; width: 100%; padding: 1em;
-                      letter-spacing: .25em; text-transform: uppercase; text-align: center;
-                      text-shadow: 1px 1px 2px rgba(0,0,0,0.6) } 
+figure>label        { opacity: 0; display: flex; justify-content: center; align-items: flex-end;
+                      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+                      padding: 1em; letter-spacing: .25em; text-transform: uppercase; text-align: center; 
+                      color: hsla(0,0%,0%,.7); text-shadow: .2px .2px .3px hsla(0,0%,25%,.2), -.1px -.1px .1px hsla(0,0%,25%,.1) } 
 
-[data-harmonica]> figure { flex: 1 1 5.75rem }
+[data-harmonica]>figure         { filter: saturate(0)  blur(2px) brightness(.9); opacity: .5; flex: 1 1 5.75rem }
+[data-harmonica]>figure:hover   { filter: saturate(.6) blur(0) }
 
-input[name="harm-demo9"]:not(:checked) + figure:hover label { opacity: 1; cursor: pointer;
-                                                              background: hsla(224,40%,57%,.3);
-                                                              transition: opacity 250ms ease-in-out }
+input[name="hrm-demo9"]:not(:checked) + figure:hover>label { opacity: 1; cursor: pointer; transition: opacity 250ms ease-in-out }
 
-input[name="harm-demo9"]:checked + figure                   { flex: 1 1 80%  }
-input[name="harm-demo9"]:checked + figure label             { opacity: 1 }
+input[name="hrm-demo9"]:checked + figure                   { flex: 1 1 80%; opacity: 1; filter: saturate(1) }
+input[name="hrm-demo9"]:checked + figure>label             { opacity: 1 }
+</style>
+
+
+
+<style>
+/************************************************/
+/* DEMO 10                                      */
+/************************************************/
+#demo10,#demo10>*   { display: flex; flex-wrap: wrap; max-width: 100% }
+
+#demo10             { flex-direction: column; max-width: 100% }
+#demo10>item        { justify-content: center }
+#demo10>item>div    { overflow: hidden; margin: 1rem auto; box-shadow: 0 1px 10px 3px hsla(0,0%,0%,.4) }
+#demo10>item>div>*  { margin: 0; width: 100%; height: 100%; background-image: url("assets/unsplashit/354_712.jpg");
+                      background-color: hsl(50,100%,50%); background-size: cover; background-position: 100% 100%;
+                      transition: all 250ms }
+
+#demo10>*>*:hover>* { transform: scale(1.2) }
 </style>
 
 <style>
-.square             { display: flex; margin: auto; height: 30vw; width: 30vw; border: 5px solid #f3b833;
-                      color: #f3b833; text-align: center; text-transform: uppercase; font-size: 10vw;
-                      padding: 1.2vw; line-height: .75; word-break: break-word;
-                      mix-blend-mode: difference }
-
-.square > *         { margin: auto }
+/************************************************/
+/* DEMO 11                                      */
+/************************************************/
+#demo11             {} /* 1.293785 */
 
 </style>
+
+<style>
+/************************************************/
+/* DEMO 12                                      */
+/************************************************/
+#demo12             { background: linear-gradient(to right, #171717 50%, #f3b833 0); width: 100%; margin: 0 auto }
+
+.square             { display: flex; height: 20rem; width: 20rem; border: 10px solid #f3b833; margin: auto;
+                      color: #f3b833; font-size: 7rem; mix-blend-mode: difference }
+
+.square > *         { margin: auto }
+</style>
+
+
+
 
 </head>
 
 <body data-debug="0">
-<main data-patch="3x3" fill>
-    <item empty><div>&lt;empty&gt;</div></item>
-    <item empty><div>&lt;empty&gt;</div></item>
-    <item empty><div>&lt;empty&gt;</div></item>
-
-    <item data-harmonica="H" data-behaviour>
-        <img src="assets/unsplashit/354_002.jpg">
-        <img src="assets/unsplashit/354_004.jpg">
-        <img src="assets/unsplashit/354_006.jpg">
-        <img src="assets/unsplashit/354_008.jpg">
-    </item>
-    <item data-harmonica="V" data-behaviour>
-        <img src="assets/unsplashit/354_002.jpg">
-        <img src="assets/unsplashit/354_004.jpg">
-        <img src="assets/unsplashit/354_006.jpg">
-        <img src="assets/unsplashit/354_008.jpg">
-    </item>
-    <item data-harmonica="H" data-behaviour>
-        <div data-harmonica="V"><img src="assets/unsplashit/354_002.jpg"><img src="assets/unsplashit/354_004.jpg"><img src="assets/unsplashit/354_006.jpg"><img src="assets/unsplashit/354_008.jpg"></div>
-        <div data-harmonica="V"><img src="assets/unsplashit/354_010.jpg"><img src="assets/unsplashit/354_012.jpg"><img src="assets/unsplashit/354_014.jpg"><img src="assets/unsplashit/354_016.jpg"></div>
-        <div data-harmonica="V"><img src="assets/unsplashit/354_070.jpg"><img src="assets/unsplashit/354_072.jpg"><img src="assets/unsplashit/354_074.jpg"><img src="assets/unsplashit/354_076.jpg"></div>
-    </item>
-    <item data-harmonica="H" data-effect="blur" data-behaviour>
-        <input id="C1" type="checkbox" data-function="S" name="harm-C" /><label for="C1" data-function="T"><span>H1</span></label>
-        <input id="C2" type="checkbox" data-function="S" name="harm-C" /><label for="C2" data-function="T"><span>H2</span></label>
-        <input id="C3" type="checkbox" data-function="S" name="harm-C" /><label for="C3" data-function="T"><span>H3</span></label>
-    </item>
-    <item data-harmonica="V" data-effect="blur" data-behaviour>
-        <input id="R1" type="radio"    data-function="S" name="harm-R" /><label for="R1" data-function="T"><span>V1</span></label>
-        <input id="R2" type="radio"    data-function="S" name="harm-R" /><label for="R2" data-function="T"><span>V2</span></label>
-        <input id="R3" type="radio"    data-function="S" name="harm-R" /><label for="R3" data-function="T"><span>V3</span></label>
-    </item>
+<main>
+    <h1>regular harmonicas in a 3x3 patch grid</h1>
+    <section data-patch="3x3" fill>
+        <item empty><div>&lt;empty&gt;</div></item>
+        <item empty><div>&lt;empty&gt;</div></item>
+        <item empty><div>&lt;empty&gt;</div></item>
+        <item data-harmonica="H" data-behaviour>
+            <img src="assets/unsplashit/354_002.jpg">
+            <img src="assets/unsplashit/354_004.jpg">
+            <img src="assets/unsplashit/354_006.jpg">
+            <img src="assets/unsplashit/354_008.jpg">
+        </item>
+        <item data-harmonica="V" data-behaviour>
+            <img src="assets/unsplashit/354_002.jpg">
+            <img src="assets/unsplashit/354_004.jpg">
+            <img src="assets/unsplashit/354_006.jpg">
+            <img src="assets/unsplashit/354_008.jpg">
+        </item>
+        <item data-harmonica="H" data-behaviour>
+            <div data-harmonica="V"><img src="assets/unsplashit/354_002.jpg"><img src="assets/unsplashit/354_004.jpg"><img src="assets/unsplashit/354_006.jpg"><img src="assets/unsplashit/354_008.jpg"></div>
+            <div data-harmonica="V"><img src="assets/unsplashit/354_010.jpg"><img src="assets/unsplashit/354_012.jpg"><img src="assets/unsplashit/354_014.jpg"><img src="assets/unsplashit/354_016.jpg"></div>
+            <div data-harmonica="V"><img src="assets/unsplashit/354_070.jpg"><img src="assets/unsplashit/354_072.jpg"><img src="assets/unsplashit/354_074.jpg"><img src="assets/unsplashit/354_076.jpg"></div>
+        </item>
+        <item data-harmonica="H" data-effect="blur" data-behaviour>
+            <input id="C1" type="checkbox" data-function="S" name="hrm-C" /><label for="C1" data-function="T"><span>H1</span></label>
+            <input id="C2" type="checkbox" data-function="S" name="hrm-C" /><label for="C2" data-function="T"><span>H2</span></label>
+            <input id="C3" type="checkbox" data-function="S" name="hrm-C" /><label for="C3" data-function="T"><span>H3</span></label>
+        </item>
+        <item data-harmonica="V" data-effect="blur" data-behaviour>
+            <input id="R1" type="radio"    data-function="S" name="hrm-R" /><label for="R1" data-function="T"><span>V1</span></label>
+            <input id="R2" type="radio"    data-function="S" name="hrm-R" /><label for="R2" data-function="T"><span>V2</span></label>
+            <input id="R3" type="radio"    data-function="S" name="hrm-R" /><label for="R3" data-function="T"><span>V3</span></label>
+        </item>
+    </section>
+    <section>
+        <item id="demo9" data-harmonica="H">
+            <input id="d1-1" type="radio" name="hrm-demo9" checked />
+                                                             <figure><img src="assets/demos/1.jpg"><label for="d1-1">True Colors         </label></figure>
+            <input id="d1-2" type="radio" name="hrm-demo9" /><figure><img src="assets/demos/2.jpg"><label for="d1-2">Honest Light        </label></figure>
+            <input id="d1-3" type="radio" name="hrm-demo9" /><figure><img src="assets/demos/3.jpg"><label for="d1-3">Silent Serenity     </label></figure>
+            <input id="d1-4" type="radio" name="hrm-demo9" /><figure><img src="assets/demos/4.jpg"><label for="d1-4">Warm Welcome        </label></figure>
+            <input id="d1-5" type="radio" name="hrm-demo9" /><figure><img src="assets/demos/5.jpg"><label for="d1-5">Sensible Magic      </label></figure>
+            <input id="d1-6" type="radio" name="hrm-demo9" /><figure><img src="assets/demos/6.jpg"><label for="d1-6">Lovely Midnight     </label></figure>
+            <input id="d1-7" type="radio" name="hrm-demo9" /><figure><img src="assets/demos/7.jpg"><label for="d1-7">Illuminated Darkness</label></figure>
+            <input id="d1-8" type="radio" name="hrm-demo9" /><figure><img src="assets/demos/8.jpg"><label for="d1-8">Happy Child         </label></figure>
+        </item>
+    </section>
+    <section id="demo10">
+        <item>
+            <div data-calcbase="20" data-ratio="16:10"><p></p></div>
+            <div data-calcbase="20" data-ratio="16:9" ><p></p></div>
+            <div data-calcbase="20" data-ratio= "1:1" ><p></p></div>
+            <div data-calcbase="20" data-ratio= "3:2" ><p></p></div>
+            <div data-calcbase="20" data-ratio= "4:3" ><p></p></div>
+            <div data-calcbase="20" data-ratio= "5:3" ><p></p></div>
+        </item>
+        <item>
+            <div data-calcbase="20" data-ratio="10:16"><p></p></div>
+            <div data-calcbase="20" data-ratio= "9:16"><p></p></div>
+            <div data-calcbase="20" data-ratio= "1:1" ><p></p></div>
+            <div data-calcbase="20" data-ratio= "2:3" ><p></p></div>
+            <div data-calcbase="20" data-ratio= "3:4" ><p></p></div>
+            <div data-calcbase="20" data-ratio= "3:5" ><p></p></div>
+        </item>
+        <item>
+            <div data-calcbase="30" data-ratio="16:9"><p></p></div>
+            <div data-calcbase="35" data-ratio="16:9"><p></p></div>
+            <div data-calcbase="40" data-ratio="16:9"><p></p></div>
+            <div data-calcbase="20" data-ratio="16:9" data-flip="R.Y180" ><p></p></div>
+            <div data-calcbase="20" data-ratio="16:9" data-flip="R.X180" ><p></p></div>
+            <div data-calcbase="20" data-ratio="16:9" data-flip="R.XY180"><p></p></div>
+        </item>
+        <item>
+            <div data-calcbase="125" data-ratio="16:9"><p></p></div>
+        </item>
+    </section>
+    <section id="demo11"></section>
+    <section id="demo12">
+        <item class="square">
+            <div>ERS</div>
+        </item>
+    </section>
 </main>
-    <item id="demo9" data-harmonica="H">
-        <input id="d1-1" type="radio" name="harm-demo9" checked />
-                                                          <figure><img src="assets/demos/1.jpg"><label for="d1-1">True Colors         </label></figure>
-        <input id="d1-2" type="radio" name="harm-demo9" /><figure><img src="assets/demos/2.jpg"><label for="d1-2">Honest Light        </label></figure>
-        <input id="d1-3" type="radio" name="harm-demo9" /><figure><img src="assets/demos/3.jpg"><label for="d1-3">Silent Serenity     </label></figure>
-        <input id="d1-4" type="radio" name="harm-demo9" /><figure><img src="assets/demos/4.jpg"><label for="d1-4">Warm Welcome        </label></figure>
-        <input id="d1-5" type="radio" name="harm-demo9" /><figure><img src="assets/demos/5.jpg"><label for="d1-5">Sensible Magic      </label></figure>
-        <input id="d1-6" type="radio" name="harm-demo9" /><figure><img src="assets/demos/6.jpg"><label for="d1-6">Lovely Midnight     </label></figure>
-        <input id="d1-7" type="radio" name="harm-demo9" /><figure><img src="assets/demos/7.jpg"><label for="d1-7">Illuminated Darkness</label></figure>
-        <input id="d1-8" type="radio" name="harm-demo9" /><figure><img src="assets/demos/8.jpg"><label for="d1-8">Happy Child         </label></figure>
-    </item>
 </body>
 </html>

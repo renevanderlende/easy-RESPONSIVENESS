@@ -1,0 +1,42 @@
+@CHARSET "UTF-8";
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosanslinearb.css);
+/* font-family: 'Noto Sans Linear B', sans-serif; */
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosansgothic.css);
+/* font-family: 'Noto Sans Gothic', sans-serif; */
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosansolditalic.css);
+/* font-family: 'Noto Sans Old Italic', sans-serif; */
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosansrunic.css);
+/* font-family: 'Noto Sans Runic', sans-serif; */
+
+@import url(http://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css);
+/* font-family: 'Droid Arabic Naskh', serif; */
+
+@import url(http://fonts.googleapis.com/earlyaccess/notonaskharabicui.css);
+/* font-family: 'Noto Naskh Arabic UI', serif; */
+
+@import url(http://fonts.googleapis.com/earlyaccess/droidarabickufi.css);
+/* font-family: 'Droid Arabic Kufi', sans-serif; */
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosansegyptianhieroglyphs.css);
+/* font-family: 'Noto Sans Egyptian Hieroglyphs', sans-serif; */
+
+@import url(http://fonts.googleapis.com/earlyaccess/opensanshebrew.css);
+/* font-family: 'Open Sans Hebrew', sans-serif; */
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosanshebrew.css);
+/* font-family: 'Noto Sans Hebrew', sans-serif; */
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosansoldpersian.css);
+/* font-family: 'Noto Sans Old Persian', sans-serif; */
+
+@import url('https://fonts.googleapis.com/css?family=Alef:400,700&subset=hebrew');
+/* font-family: 'Alef', sans-serif; */
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosanscoptic.css);
+/* font-family: 'Noto Sans Coptic', sans-serif; */
+
+/* Hind Guntur, Mallanna, NTR/Varela Round, Mandali/Nunito */

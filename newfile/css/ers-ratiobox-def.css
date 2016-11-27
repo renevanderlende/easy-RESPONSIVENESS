@@ -1,5 +1,11 @@
 @CHARSET "UTF-8";
 
+/* Google Material Design:
+
+    dp = (width in pixels * 160) / screen density
+
+*/
+
 /************************************************/
 /* easy RESPONSIVE|RATIOBOX|NESS          (WIP) */
 /************************************************/

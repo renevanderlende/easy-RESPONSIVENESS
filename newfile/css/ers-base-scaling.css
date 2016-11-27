@@ -30,9 +30,8 @@
     margin: 0; /* Resets negative margins below */
 }
 
-[class*="scale-switch"]:checked + *[data-view*="MX"] {
-    max-width: 100%; max-height: 100%; 
-}
+[class*="scale-switch"]:checked + *.fill-parent,
+[class*="scale-switch"]:checked + *[data-view*="FP"] { max-width: 100%; max-height: 100% }
 
 [class^="scale-switch"]:checked + *:hover,
 [class^="scale-switch"]:checked + * { border-radius: 0; filter: none; box-shadow: none }

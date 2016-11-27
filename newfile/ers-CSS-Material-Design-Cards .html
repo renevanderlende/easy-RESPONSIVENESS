@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CSS Material Design Cards</title>
+
+<!-- http://codepen.io/melnik909/pen/JRgJXo -->
+
+<link rel="stylesheet" src="https://fonts.googleapis.com/css?family=Roboto:300,400">
+
+<style>
+
+@media screen and (min-width: 981px)                        { html { font-size: 10px } }
+@media screen and (min-width: 641px) and (max-width: 980px) { html { font-size:  8px } }
+@media screen and (max-width: 640px)                        { html { font-size:  7px } }
+
+body                { background-color: #eee; font-family: "Roboto", sans-serif }
+.container          {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.title {
+  font-size: 3.5rem;
+  font-weight: 400;
+  text-align: center;
+}
+p {
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+p:last-child {
+  margin-bottom: 0;
+}
+/*
+ * Core for cards
+ */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  font-family: "Roboto", sans-serif;
+}
+.card {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+.card_main {
+  width: 100%;
+}
+@media screen and (min-width: 801px) {
+  .card_main .card__title {
+    font-size: 180%;
+  }
+  .card_main .card__main-action {
+    width: 5em;
+    height: 5em;
+  }
+}
+.card_size-2xl {
+  width: 66%;
+}
+@media screen and (min-width: 801px) {
+  .card_size-2xl .card__title {
+    font-size: 170%;
+  }
+}
+.card_size-xl {
+  width: 49%;
+}
+@media screen and (min-width: 801px) {
+  .card_size-xl .card__title {
+    font-size: 160%;
+  }
+}
+.card_size-m {
+  width: 32%;
+}
+@media screen and (min-width: 481px) and (max-width: 800px) {
+  .card_size-m,
+  .card_size-2xl {
+    width: 49%;
+  }
+}
+@media screen and (max-width: 480px) {
+  .card_size-m,
+  .card_size-xl,
+  .card_size-2xl {
+    width: 100%;
+  }
+}
+.card__header {
+  position: relative;
+  line-height: 0;
+}
+*::-ms-backdrop,
+.card__header {
+  display: -ms-flexbox;
+  display: flex;
+}
+.card__preview {
+  max-width: 100%;
+  height: auto;
+}
+*::-ms-backdrop,
+.card__preview {
+  -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+}
+.card__main-action {
+  font-size: 100%;
+  text-decoration: none;
+  text-indent: -9999px;
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  right: 5%;
+  bottom: 0;
+  -webkit-transform: translateY(50%);
+          transform: translateY(50%);
+  width: 4em;
+  height: 4em;
+}
+.card__main-action:before {
+  content: "";
+  display: block;
+  width: 60%;
+  height: 60%;
+  box-sizing: border-box;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+.card__main-action:focus {
+  outline: none;
+}
+.card__body {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+  -webkit-box-flex: 2;
+  -webkit-flex-grow: 2;
+      -ms-flex-positive: 2;
+          flex-grow: 2;
+}
+.card__title {
+  font-size: 150%;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-top: 0;
+  margin-bottom: .8em;
+}
+.card__showmore {
+  text-decoration: none;
+}
+.card__content {
+  padding: 2.5em 4% 1.5em;
+  -webkit-box-flex: 2;
+  -webkit-flex-grow: 2;
+      -ms-flex-positive: 2;
+          flex-grow: 2;
+}
+.card__footer {
+  padding: 1.5em 4%;
+  border-top-width: 1px;
+  border-top-style: solid;
+  font-size: 80%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.card__meta-item {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: .8em;
+}
+.card__meta-icon {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: right;
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: .2em;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+/*
+ * Skin for cards
+ */
+.card {
+  background-color: #fff;
+  color: #212121;
+  font-size: 1.4rem;
+}
+@media screen and (min-width: 801px) {
+  .card_main,
+  .card_size-2xl,
+  .card_size-xl {
+    font-size: 1.6rem;
+  }
+}
+.card__main-action {
+  background-color: #3f51b5;
+}
+.card__main-action:before {
+  background-image: url("https://stas-melnikov.ru/cssgrid/bookmark.svg");
+}
+.card__main-action:hover,
+.card__main-action:focus {
+  background-color: #303f9f;
+}
+.card__footer {
+  border-top-color: #bdbdbd;
+}
+.card__showmore {
+  color: #303f9f;
+  -webkit-transition: color 0.3s ease-out;
+  transition: color 0.3s ease-out;
+}
+.card__showmore:hover,
+.card__showmore:focus {
+  color: #3f51b5;
+}
+.card__meta-comments {
+  background-image: url("https://stas-melnikov.ru/cssgrid/comment.svg");
+}
+.card__meta-likes {
+  background-image: url("https://stas-melnikov.ru/cssgrid/favorite.svg");
+}
+
+
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">CSS Material Design Cards</h1>
+        <div class="cards">
+            <article class="card card_main">
+                <header class="card__header">
+                    <img class="card__preview" src="https://stas-melnikov.ru/cliparts/tablet4_1200x470.jpg" alt="Preview img">
+                    <button class="card__main-action" type="button">In bookmarks</button>
+                </header>
+                <div class="card__body">
+                    <div class="card__content">
+                        <h3 class="card__title"><a href="#0" class="card__showmore">Web-application for designers</a></h3>
+                        <div class="card__description">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, quisquam, cum, praesentium error cumque voluptas ea architecto necessitatibus impedit quae autem minima consequuntur sed dolor quas labore aut asperiores maxime saepe expedita iusto libero at officia rem sunt. Accusamus, quis?</p>
+                        </div>
+                    </div>
+                    <footer class="card__footer">
+                        <span class="card__author">by Stas Melnikov</span>
+                        <div class="card__meta">
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-comments"></i>
+                                <span class="card__label">47 comments</span>
+                            </div>
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-likes"></i>
+                                <span class="card__label">99</span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </article>
+            <article class="card card_size-m">
+                <header class="card__header">
+                    <img class="card__preview" src="https://stas-melnikov.ru/cliparts/phone2_480x320.jpg" alt="Preview img">
+                    <button class="card__main-action" type="button">In bookmarks</button>
+                </header>
+                <div class="card__body">
+                    <div class="card__content">
+                        <h3 class="card__title"><a href="#0" class="card__showmore">A Simple Software Update Lets Any Smartphone Detect Squeezes and Forceful Touches</a></h3>
+                        <div class="card__description">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, quisquam, cum, praesentium error cumque voluptas ea architecto necessitatibus impedit quae autem minima consequuntur sed dolor quas labore aut asperiores maxime saepe expedita iusto libero at officia rem sunt. Accusamus, quis?</p>
+                        </div>
+                    </div>
+                    <footer class="card__footer">
+                        <span class="card__author">by Stas Melnikov</span>
+                        <div class="card__meta">
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-comments"></i>
+                                <span class="card__label">7 comments</span>
+                            </div>
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-likes"></i>
+                                <span class="card__label">19</span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </article>      
+            <article class="card card_size-2xl">
+                <header class="card__header">
+                    <img class="card__preview" src="https://stas-melnikov.ru/cliparts/snowboarding2_1200x675.jpg" alt="Preview img">
+                    <button class="card__main-action" type="button">In bookmarks</button>
+                </header>
+                <div class="card__body">
+                    <div class="card__content">
+                        <h3 class="card__title"><a href="#0" class="card__showmore">Winter Weather : NOAA Forecasts Pacific Northwest to Get Blasted with Storms</a></h3>
+                        <div class="card__description">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, quisquam, cum, praesentium error cumque voluptas ea architecto necessitatibus impedit quae autem minima consequuntur sed dolor quas labore aut asperiores maxime saepe expedita iusto libero at officia rem sunt. Accusamus, quis?</p>
+                        </div>
+                    </div>
+                    <footer class="card__footer">
+                        <span class="card__author">by Stas Melnikov</span>
+                        <div class="card__meta">
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-comments"></i>
+                                <span class="card__label">417 comments</span>
+                            </div>
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-likes"></i>
+                                <span class="card__label">2499</span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </article>  
+            <article class="card card_size-xl">
+                <header class="card__header">
+                    <img class="card__preview" src="https://stas-melnikov.ru/cliparts/skills_1000x667.jpg" alt="Preview img">
+                    <button class="card__main-action" type="button">In bookmarks</button>
+                </header>
+                <div class="card__body">
+                    <div class="card__content">
+                        <h3 class="card__title"><a href="#0" class="card__showmore">Free Course in HTML 5 Training Launched by Alison</a></h3>
+                        <div class="card__description">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, quisquam, cum, praesentium error cumque voluptas ea architecto necessitatibus impedit quae autem minima consequuntur sed dolor quas labore aut asperiores maxime saepe expedita iusto libero at officia rem sunt. Accusamus, quis?</p>
+                        </div>
+                    </div>
+                    <footer class="card__footer">
+                        <span class="card__author">by Stas Melnikov</span>
+                        <div class="card__meta">
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-comments"></i>
+                                <span class="card__label">237 comments</span>
+                            </div>
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-likes"></i>
+                                <span class="card__label">949</span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </article>  
+            <article class="card card_size-xl">
+                <header class="card__header">
+                    <img class="card__preview" src="https://stas-melnikov.ru/cliparts/work_1200x700.jpg" alt="Preview img">
+                    <button class="card__main-action" type="button">In bookmarks</button>
+                </header>
+                <div class="card__body">
+                    <div class="card__content">
+                        <h3 class="card__title"><a href="#0" class="card__showmore">Development for Designers: Thinking Atomic Design</a></h3>
+                        <div class="card__description">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, quisquam, cum, praesentium error cumque voluptas ea architecto necessitatibus impedit quae autem minima consequuntur sed dolor quas labore aut asperiores maxime saepe expedita iusto libero at officia rem sunt. Accusamus, quis?</p>
+                        </div>
+                    </div>
+                    <footer class="card__footer">
+                        <span class="card__author">by Stas Melnikov</span>
+                        <div class="card__meta">
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-comments"></i>
+                                <span class="card__label">147 comments</span>
+                            </div>
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-likes"></i>
+                                <span class="card__label">799</span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </article>
+            <article class="card card_size-m">
+                <header class="card__header">
+                    <img class="card__preview" src="https://stas-melnikov.ru/cliparts/phone_480x320.jpg" alt="Preview img">
+                    <button class="card__main-action" type="button">In bookmarks</button>
+                </header>
+                <div class="card__body">
+                    <div class="card__content">
+                        <h3 class="card__title"><a href="#0" class="card__showmore">Google Maps Driving Mode Is Your Essential In-Car AI</a></h3>
+                        <div class="card__description">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, quisquam, cum, praesentium error cumque voluptas ea architecto necessitatibus impedit quae autem minima consequuntur sed dolor quas labore aut asperiores maxime saepe expedita iusto libero at officia rem sunt. Accusamus, quis?</p>
+                        </div>
+                    </div>
+                    <footer class="card__footer">
+                        <span class="card__author">by Stas Melnikov</span>
+                        <div class="card__meta">
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-comments"></i>
+                                <span class="card__label">7 comments</span>
+                            </div>
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-likes"></i>
+                                <span class="card__label">19</span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </article>  
+            <article class="card card_size-m">
+                <header class="card__header">
+                    <img class="card__preview" src="https://stas-melnikov.ru/cliparts/phone3_480x320.jpg" alt="Preview img">
+                    <button class="card__main-action" type="button">In bookmarks</button>
+                </header>
+                <div class="card__body">
+                    <div class="card__content">
+                        <h3 class="card__title"><a href="#0" class="card__showmore">iPhone 8 release date rumours UK | iPhone 8 specs & new features</a></h3>
+                        <div class="card__description">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, quisquam, cum, praesentium error cumque voluptas ea architecto necessitatibus impedit quae autem minima consequuntur sed dolor quas labore aut asperiores maxime saepe expedita iusto libero at officia rem sunt. Accusamus, quis?</p>
+                        </div>
+                    </div>
+                    <footer class="card__footer">
+                        <span class="card__author">by Stas Melnikov</span>
+                        <div class="card__meta">
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-comments"></i>
+                                <span class="card__label">27 comments</span>
+                            </div>
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-likes"></i>
+                                <span class="card__label">169</span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </article>
+            <article class="card card_size-m">
+                <header class="card__header">
+                    <img class="card__preview" src="https://stas-melnikov.ru/cliparts/clipart_car_480x300.jpg" alt="Preview img">
+                    <button class="card__main-action" type="button">In bookmarks</button>
+                </header>
+                <div class="card__body">
+                    <div class="card__content">
+                        <h3 class="card__title"><a href="#0" class="card__showmore">Ford reaches tentative contract agreement with Canada's Unifor</a></h3>
+                        <div class="card__description">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, quisquam, cum, praesentium error cumque voluptas ea architecto necessitatibus impedit quae autem minima consequuntur sed dolor quas labore aut asperiores maxime saepe expedita iusto libero at officia rem sunt. Accusamus, quis?</p>
+                        </div>
+                    </div>
+                    <footer class="card__footer">
+                        <span class="card__author">by Stas Melnikov</span>
+                        <div class="card__meta">
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-comments"></i>
+                                <span class="card__label">97 comments</span>
+                            </div>
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-likes"></i>
+                                <span class="card__label">1119</span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </article>  
+            <article class="card card_size-2xl">
+                <header class="card__header">
+                    <img class="card__preview" src="https://stas-melnikov.ru/cliparts/clipart_car2_900x563.jpg" alt="Preview img">
+                    <button class="card__main-action" type="button">In bookmarks</button>
+                </header>
+                <div class="card__body">
+                    <div class="card__content">
+                        <h3 class="card__title"><a href="#0" class="card__showmore">Why electric cars excite the world’s biggest mining company</a></h3>
+                        <div class="card__description">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, quisquam, cum, praesentium error cumque voluptas ea architecto necessitatibus impedit quae autem minima consequuntur sed dolor quas labore aut asperiores maxime saepe expedita iusto libero at officia rem sunt. Accusamus, quis?</p>
+                        </div>
+                    </div>
+                    <footer class="card__footer">
+                        <span class="card__author">by Stas Melnikov</span>
+                        <div class="card__meta">
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-comments"></i>
+                                <span class="card__label">417 comments</span>
+                            </div>
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-likes"></i>
+                                <span class="card__label">2499</span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </article>  
+            <article class="card card_size-m">
+                <header class="card__header">
+                    <img class="card__preview" src="https://stas-melnikov.ru/cliparts/phone7_480x320.jpg" alt="Preview img">
+                    <button class="card__main-action" type="button">In bookmarks</button>
+                </header>
+                <div class="card__body">
+                    <div class="card__content">
+                        <h3 class="card__title"><a href="#0" class="card__showmore">How to sell an iPhone: How to get the best price when selling an old iPhone</a></h3>
+                        <div class="card__description">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, quisquam, cum, praesentium error cumque voluptas ea architecto necessitatibus impedit quae autem minima consequuntur sed dolor quas labore aut asperiores maxime saepe expedita iusto libero at officia rem sunt. Accusamus, quis?</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, quisquam, cum, praesentium error cumque voluptas ea architecto necessitatibus impedit quae autem minima consequuntur sed dolor quas labore aut asperiores maxime saepe expedita iusto libero at officia rem sunt. Accusamus, quis?</p>
+                        </div>
+                    </div>
+                    <footer class="card__footer">
+                        <span class="card__author">by Stas Melnikov</span>
+                        <div class="card__meta">
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-comments"></i>
+                                <span class="card__label">97 comments</span>
+                            </div>
+                            <div class="card__meta-item">
+                                <i class="card__meta-icon card__meta-likes"></i>
+                                <span class="card__label">1119</span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </article>              
+        </div>
+    </div>
+</body>
+</html>

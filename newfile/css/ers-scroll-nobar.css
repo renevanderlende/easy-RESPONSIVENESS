@@ -7,7 +7,7 @@
     overflow: hidden   !important; /* Hides scrollbar for overflowing '.nobar-scroller' */
     }
 /* Needed to hide browser scrollbar, based on widest scrollbar of CH, IE and FF */
-.nobar-scroller { /* [OPTIONAL] scroll container. When omitted, scrollbars will be hidden but no scrolling */
+.nobar--scroller { /* Scroll container. When omitted, scrollbars will be hidden but no scrolling */
     position  : relative !important;
     height    : auto     !important;/* HTML default, to make sure of that! */ 
     max-height: 100%     !important;/* NO(!) other height value => to get scroll effect */

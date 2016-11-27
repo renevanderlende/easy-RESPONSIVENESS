@@ -24,18 +24,24 @@
 */
 /* [MANDATORY] */
 [data-harmonica]                { display: flex; flex-wrap: nowrap; height: 100%; width: 100% } /* fill parent */
-
 [data-harmonica="H"]            { flex-direction: row }
 [data-harmonica="V"]            { flex-direction: column }
-[data-harmonica="HR"]           { flex-direction: row-reverse }
-[data-harmonica="VR"]           { flex-direction: column-reverse }
 
 [data-harmonica]>*              { flex: 1 1 0; overflow: hidden; transition: all 150ms ease-in-out }
-[data-harmonica]>*:hover        { flex: 1 1 80% }
+[data-harmonica]>*:hover        { flex: 1 1 75% }
 
 /* [OPTIONAL] */
-[data-harmonica*="H"]>*         { max-height: 100% }
-[data-harmonica*="V"]>*         { max-width : 100% }
+[data-harmonica="H"]>*          { max-height: 100% }
+[data-harmonica="V"]>*          { max-width : 100% }
+
+@media all and (orientation: landscape) {
+    [data-harmonica="H"][auto-flip]     { flex-direction: column }
+    [data-harmonica="V"][auto-flip]     { flex-direction: row }
+
+    /* [OPTIONAL] */
+    [data-harmonica="H"][auto-flip]>*   { max-width : 100% }
+    [data-harmonica="V"][auto-flip]>*   { max-height: 100% }
+}
 
 [data-harmonica] input[name^="hrm"] { display:none; position:absolute; overflow:hidden; clip:rect(0 0 0 0);
                                       z-index:-999999; top:-999999px; margin:-1px; padding:0; border:0;

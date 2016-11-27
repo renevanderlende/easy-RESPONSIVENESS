@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<style>
+@import url(http://fonts.googleapis.com/css?family=Quattrocento%20Sans);
+
+/* 1 */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: white;
+  font-size: 16px;
+  font-family: "Quattrocento Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: #333;
+}
+
+#contenedor {
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin: 50px auto;
+  width: 640px;
+}
+
+.rowDiv {
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+}
+
+#control label {
+  display: inline-block;
+  width: 25%;
+  height: 2em;
+}
+
+#control [type=range]:disabled {
+  opacity: .4;
+}
+
+.radioDiv {
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin-top: 2em;
+  width: 100%;
+}
+
+input[type=radio] {
+  margin: .25em 1em .25em 0;
+}
+
+#control {
+  width: 640px;
+  padding-top: 2em;
+}
+
+#contenedor h1 {
+  font-size: 180%;
+  width: 100%;
+  text-align: center;
+  margin: 1em 0;
+}
+
+.inputDiv {
+  width: 640px;
+  height: 480px;
+  position: relative;
+  overflow: hidden;
+}
+
+.inputDiv div {
+  position: absolute;
+  overflow: hidden
+}
+
+.inputDiv #typeRange {
+  position: absolute;
+  bottom: 0px;
+}
+
+#filterImg img {
+  -webkit-filter: sepia(1);
+  filter: sepia(1);
+}
+
+#filterImg {
+  width: calc(640px * .65);
+  border-right: 10px solid rgba(0, 0, 0, .3)
+}
+
+#typeRange {
+  display: block;
+  width: 640px;
+  height: 480px;
+  background-color: transparent
+}
+
+#typeRange:focus {
+  outline: none;
+}
+
+
+/* 2 */
+
+#typeRange,
+#typeRange::-webkit-slider-runnable-track,
+#typeRange::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+#typeRange,
+#typeRange::-moz-range-thumb,
+#typeRange::-moz-range-thumb {
+  -moz-appearance: none;
+  position: relative;
+}
+
+
+/* 2.1 THUMB */
+
+#typeRange::-webkit-slider-thumb {
+  height: 480px;
+  width: 15px;
+  background-color: transparent;
+  cursor: col-resize;
+}
+
+#typeRange::-moz-range-thumb {
+  height: 480px;
+  width: 15px;
+  background-color: transparent;
+  cursor: col-resize;
+  border: none;
+}
+
+#typeRange::-ms-thumb {
+  height: 480px;
+  width: 15px;
+  background-color: transparent;
+  cursor: col-resize;
+}
+
+
+/* 2.2 TRACK */
+
+#typeRange::-webkit-slider-runnable-track {
+  height: 480px;
+  background: transparent;
+}
+
+#typeRange:focus::-webkit-slider-runnable-track {
+  outline: none;
+}
+
+#typeRange::-moz-range-track {
+  outline: none;
+  background: none;
+}
+
+#typeRange::-ms-track {}
+
+#typeRange::-ms-fill-lower {}
+
+#typeRange::-ms-fill-upper {}
+
+
+/*****************************/
+
+input[type=range].plain {
+  position: relative;
+  top: 1px;
+  width: 60%;
+  margin: 0 1em;
+  -webkit-align-self: flex-start;
+  -ms-flex-align: start;
+  align-self: flex-start;
+}
+
+p {
+  line-height: 200%;
+  color: #ddd;
+  margin: 1em 0;
+}
+</style>
+</head>
+
+<body>
+<div id="contenedor">
+  <h1>CSS3 filters</h1>
+  <div class="rowDiv">
+
+    <div class="inputDiv">
+      <div id="originalImg"><img src="http://c3.staticflickr.com/3/2679/4372903892_4c651809a3_z.jpg" alt="ametller"></div>
+      <div id="filterImg"><img src="http://c3.staticflickr.com/3/2679/4372903892_4c651809a3_z.jpg" alt="ametller"></div>
+
+
+      <input type="range" id="typeRange" value='65' min="0" max="100" autocomplete="off">
+    </div>
+
+  </div>
+
+  <div class="radioDiv" id="control">
+
+    <div class="rowDiv" id="Blur">
+      <label><input type="radio" name="CSSfilter" value="Blur">blur</label>
+      <input type="range" id="rangeBlur" class="plain" value='50' min="0" max="100" autocomplete="off">
+      <span id="BlurValue">5px</span>
+    </div>
+
+    <div class="rowDiv" id="Brightness">
+      <label><input type="radio" name="CSSfilter" value="Brightness">brightness</label>
+      <input type="range" id="rangeBrightness" class="plain" value='15' min="0" max="100" autocomplete="off">
+      <span id="BrightnessValue">1.5</span>
+    </div>
+
+    <div class="rowDiv" id="Contrast">
+      <label><input type="radio" name="CSSfilter" value="Contrast">contrast</label>
+      <input type="range" id="rangeContrast" class="plain" value='25' min="0" max="100" autocomplete="off">
+      <span id="ContrastValue">2.5</span>
+    </div>
+
+
+    <div class="rowDiv" id="Grayscale">
+      <label><input type="radio" name="CSSfilter" value="Grayscale" >grayscale</label>
+      <input type="range" id="rangeGrayscale" class="plain" value='100' min="0" max="100" autocomplete="off">
+      <span id="GrayscaleValue">1</span>
+    </div>
+
+    <div class="rowDiv" id="HueRotate">
+      <label><input type="radio" name="CSSfilter" value="HueRotate" checked>hue-rotate</label>
+      <input type="range" id="rangeHueRotate" class="plain" value='230' min="0" max="360" autocomplete="off">
+      <span id="GrayscaleValue">180deg</span>
+    </div>
+
+    <div class="rowDiv" id="Invert">
+      <label><input type="radio" name="CSSfilter" value="Invert">invert</label>
+      <input type="range" id="rangeInvert" class="plain" value='100' min="0" max="100" autocomplete="off">
+      <span id="InvertValue">1</span></div>
+
+
+    <div class="rowDiv" id="Saturate">
+      <label><input type="radio" name="CSSfilter" value="Saturate">saturate</label>
+      <input type="range" id="rangeSaturate" class="plain" value='30' min="0" max="100" autocomplete="off">
+      <span id="SaturateValue">3</span>
+    </div>
+
+    <div class="rowDiv" id="Sepia">
+      <label><input type="radio" name="CSSfilter" value="Sepia" >sepia</label>
+      <input type="range" id="rangeSepia" class="plain" value='100' min="0" max="100" autocomplete="off">
+      <span id="SepiaValue">1</span>
+    </div>
+
+  </div>
+  <p>Comparison between an image with CSS filter and the original image. Drag the boundary between the two images to see the difference.</p>
+</div>
+
+<script>
+window.onload = function() {
+
+	var elInput = document.querySelector("#typeRange");
+	var filterImg = document.querySelector("#filterImg"); 
+	var Img = document.querySelector("#filterImg img");
+	var ImgW = parseInt(window.getComputedStyle(Img,null).getPropertyValue("width"));
+
+
+	var RB = document.querySelectorAll(".radioDiv [type=radio]");
+
+	var oFilter ={
+	    Blur:{       minim:0, maxim:100,  val:50,   div:10,    u:'px', filter:"blur"},
+	    Brightness:{ minim:0, maxim:100, val:15,    div:10,   u:'',   filter:"brightness"},
+	    Contrast:{   minim:0, maxim:100, val:25,    div:10,   u:'',   filter:"contrast"},
+	    //DropShadow:{},
+	    Grayscale:{  minim:0, maxim:100, val:100,   div:100, u:'',   filter:"grayscale"},
+	    HueRotate:{  minim:0, maxim:360, val:230,   div:1,   u:'deg',filter:"hue-rotate"},
+	    Invert:{     minim:0, maxim:100, val:100,    div:100, u:'',   filter:"invert"},
+	    //Opacity:{    minim:0, maxim:100, val:100, div:100, u:'',   filter:"opacity"},
+	    Saturate:{   minim:0, maxim:100,  val:30,   div:10,   u:'',   filter:"saturate"},
+	    Sepia:{      minim:0, maxim:100, val:100,   div:100, u:'',   filter:"sepia"}
+
+	}
+
+	  var oFilterKeys = Object.keys(oFilter);
+
+	  var controlTypeRange = document.querySelectorAll("#control [type=range]");
+
+	  // initial setting CSS FILTER
+	  var radioChecked = document.querySelector("[type=radio]:checked");
+	  var initialFilter = oFilter[radioChecked.value].filter;
+	  var initialValue = oFilter[radioChecked.value].val;
+	  var initialDiv = oFilter[radioChecked.value].div;
+	  var initialU = oFilter[radioChecked.value].u;
+
+	  Img.style.webkitFilter = initialFilter + "(" + initialValue / initialDiv + initialU + ")";
+	  Img.style.filter = initialFilter + "(" + initialValue / initialDiv + initialU + ")";
+	  console.log(initialFilter + "(" + initialValue + initialU + ")")
+
+	  // IMAGE width 
+	  elInput.addEventListener('input', function() {
+	    var w = this.value;
+	    filterImg.style.width = ((ImgW * w) / 100) + "px";
+	  }, false);
+
+	  for (var i = 0; i < oFilterKeys.length; i++) {
+	    var filter = oFilter[oFilterKeys[i]].filter;
+
+	    var radio = document.querySelector("#" + oFilterKeys[i] + " [type=radio]");
+	    var range = document.querySelector("#" + oFilterKeys[i] + " [type=range]");
+
+	    if (radio.checked == true) {
+	      range.disabled = false
+	    } else {
+	      range.disabled = true
+	    };
+
+	    var display = document.querySelector("#" + oFilterKeys[i] + "span");
+
+	    // RADIO
+	    radio.addEventListener('change', function() {
+	      var elId = this.parentNode.parentNode.id;
+	      var range = document.querySelector("#" + elId + " [type=range]");
+
+	      var divisor = oFilter[elId].div;
+	      var rangeValue = (range.value) / divisor;
+	      var thisFilter = oFilter[elId].filter;
+	      var u = oFilter[elId].u;
+
+	      Img.style.webkitFilter = thisFilter + "(" + rangeValue + u + ")";
+	      Img.style.filter = thisFilter + "(" + rangeValue + u + ")";
+
+	      for (var r = 0; r < controlTypeRange.length; r++) {
+	        if (controlTypeRange[r].disabled == false) {
+	          controlTypeRange[r].disabled = true;
+	        }
+	        range.disabled = false;
+	      }
+
+	    }, false);
+
+	    // RANGE    
+	    range.addEventListener('input', function() {
+
+	      var divisor = oFilter[this.parentNode.id].div;
+	      var rangeValue = this.value / divisor;
+	      var thisFilter = oFilter[this.parentNode.id].filter;
+	      var u = oFilter[this.parentNode.id].u;
+
+	      var display = document.querySelector("#" + this.parentNode.id + " span");
+
+	      Img.style.webkitFilter = thisFilter + "(" + rangeValue + u + ")";
+	      Img.style.filter = thisFilter + "(" + rangeValue + u + ")";
+
+	      display.innerHTML = this.value / divisor + u;
+
+	    }, false)
+	  }
+	}
+</script>
+</body>
+</html>

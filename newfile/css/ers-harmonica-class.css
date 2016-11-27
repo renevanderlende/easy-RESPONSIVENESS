@@ -27,15 +27,22 @@
 
 .harmonicaH                     { flex-direction: row }
 .harmonicaV                     { flex-direction: column }
-.harmonicaHR                    { flex-direction: row-reverse }
-.harmonicaVR                    { flex-direction: column-reverse }
 
 [class^="harmonica"]>*          { flex: 1 1 0; overflow: hidden; transition: all 150ms ease-in-out }
-[class^="harmonica"]>*:hover    { flex: 1 1 80% }
+[class^="harmonica"]>*:hover    { flex: 1 1 75% }
 
 /* [OPTIONAL] */
-.harmonicaH>*,.harmonicaHR>*    { max-height: 100% }
-.harmonicaV>*,.harmonicaVR>*    { max-width : 100% }
+.harmonicaH>*                   { max-height: 100% }
+.harmonicaV>*                   { max-width : 100% }
+
+@media all and (orientation: landscape) {
+    .harmonicaH[auto-flip]     { flex-direction: column }
+    .harmonicaV[auto-flip]     { flex-direction: row }
+
+    /* [OPTIONAL] */
+    .harmonicaH[auto-flip]>*   { max-width : 100% }
+    .harmonicaV[auto-flip]>*   { max-height: 100% }
+}
 
 [class^="harmonica"]>input[name^="hrm"] { display:none; position:absolute; overflow:hidden; clip:rect(0 0 0 0);
                                           z-index:-999999; top:-999999px; margin:-1px; padding:0; border:0;

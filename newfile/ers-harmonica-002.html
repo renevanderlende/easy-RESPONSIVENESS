@@ -13,6 +13,8 @@
 <link rel="stylesheet" href="css/ers-patchbox-def.css">
 <link rel="stylesheet" href="css/ers-ratiobox-def.css">
 
+<link rel='stylesheet' href="css/ers-scroll-nobar.css">
+
 <!-- Customizations -->
 <!-- link rel="stylesheet" href="css/ers-harmonica-attr-cus.css" -->
 <!-- link rel="stylesheet" href="css/ers-patchbox-cus.css" -->
@@ -33,13 +35,39 @@
 /************************************************/
 body                { font-family: "Open Sans", sans-serif }
 h1,h2,h3,h4,h5,h6   { font-weight: 300; letter-spacing: -0.035em; text-align: center }
-body                { padding-top: 3rem; background-color: hsla(0,0%,0%,.1) }
+body                { background-color: hsl(0, 0%, 98%); color: hsl(0, 0%, 46%) }
 
-main                { max-width: 100%; justify-content: center; margin: 0 auto }
-section             { padding: 2rem 10rem }
+main                { max-width: 75%; justify-content: center; margin: 0 auto }
+section             { padding: 1rem }
 
-[empty]             { display: flex; justify-content: center; align-content: center; align-items: center;
-                      font-size: 1.25rem; color: hsla(0,0%,0%,.56) }
+[empty]             { font-size: 1.25rem; color: hsla(0,0%,0%,.56) }
+[empty]>*           { display: flex; justify-content: center; align-content: center; align-items: center;
+                      width: 100%; height: 100%; border: 1px solid hsla(0,0%,0%,.1) }
+[empty]>*::after    {  content: '<empty>' }
+
+
+.size1a   { font-size: calc(0.00625 * 100vmin + 0.625em) }
+.size1b   { font-size: 1em }
+.size2a   { font-size: calc(2 * (0.00625 * 100vmin + 0.625em)) }
+.size2b   { font-size: calc(2 * 0.00625 * 100vmin + 0.625em) }
+.size3a   { font-size: calc(3 * (0.00625 * 100vmin + 0.625em)) }
+.size3b   { font-size: calc(3 * 0.00625 * 100vmin + 0.625em) }
+
+
+[data-color="bg.p"]    { background-color: hsl(334, 79%, 37%); color: white } /* primary */
+[data-color="bg.pl"]   { background-color: hsl(340, 82%, 52%); color: white } /* primary light */
+[data-color="ac.p"]    { background-color: hsl(55, 100%, 50%); color: hsla(0,0%,0%,.54) } /* accent */
+
+</style>
+
+
+<style>
+
+[data-grid^=".mn"]      { padding: .5px }
+[data-grid^=".mn"]>*    { margin : .5px }
+[data-grid^=".mw"]      { padding:  2px }
+[data-grid^=".mw"]>*    { margin :  2px }
+
 </style>
 
 
@@ -48,7 +76,15 @@ section             { padding: 2rem 10rem }
 /************************************************/
 /* DEMO 1                                       */
 /************************************************/
-item[data-harmonica]>*  { bbbbborder: 1px solid hsla(0,0%,0%,.1)  }
+item[data-harmonica]>*  { border: 1px solid hsla(0,0%,0%,.1)  }
+
+#demo1 input+div        { overflow: auto }
+
+[for="C1"]              { background-color: #244F75 }
+[for="C2"]              { background-color: #60BFBF }
+[for="C3"]              { background-color: #8C4B7E }
+[for="C4"]              { background-color: #F8BB44 }
+[for="C5"]              { background-color: #F24B4B }
 </style>
 
 
@@ -57,7 +93,7 @@ item[data-harmonica]>*  { bbbbborder: 1px solid hsla(0,0%,0%,.1)  }
 /************************************************/
 /* DEMO 9                                       */
 /************************************************/
-#demo9              { width: 42rem; max-width: 42rem; margin: 1.25rem auto; height: auto;
+#demo9>item         { width: 42rem; max-width: 42rem; margin: 1.25rem auto; height: auto;
                       background-color: white; border: 4px solid hsla(0,0%,100%,.9) }
 
 #demo9 figure       { position: relative; padding: 0; margin: 0; box-shadow: 0 0 0 2px hsla(0,0%,100%,1); font-size: .625rem }
@@ -68,6 +104,7 @@ figure>label        { opacity: 0; display: flex; justify-content: center; align-
                       padding: 1em; letter-spacing: .25em; text-transform: uppercase; text-align: center; 
                       color: hsla(0,0%,0%,.7); text-shadow: .2px .2px .3px hsla(0,0%,25%,.2), -.1px -.1px .1px hsla(0,0%,25%,.1) } 
 
+/*
 [data-harmonica]>figure         { filter: saturate(0)  blur(2px) brightness(.9); opacity: .5; flex: 1 1 5.75rem }
 [data-harmonica]>figure:hover   { filter: saturate(.6) blur(0) }
 
@@ -75,6 +112,11 @@ input[name="hrm-demo9"]:not(:checked) + figure:hover>label { opacity: 1; cursor:
 
 input[name="hrm-demo9"]:checked + figure                   { flex: 1 1 80%; opacity: 1; filter: saturate(1) }
 input[name="hrm-demo9"]:checked + figure>label             { opacity: 1 }
+*/
+
+[data-harmonica]>figure                                     { opacity: .5; flex: 1 1 5.75rem }
+input[name="hrm-demo9"]:checked + figure                    { flex: 1 1 80%; opacity: 1 }
+input[name="hrm-demo9"]:checked + figure>label              { opacity: 1 }
 </style>
 
 
@@ -88,8 +130,8 @@ input[name="hrm-demo9"]:checked + figure>label             { opacity: 1 }
 #demo10             { flex-direction: column; max-width: 100% }
 #demo10>item        { justify-content: center }
 #demo10>item>div    { overflow: hidden; margin: 1rem auto; box-shadow: 0 1px 10px 3px hsla(0,0%,0%,.4) }
-#demo10>item>div>*  { margin: 0; width: 100%; height: 100%; background-image: url("assets/unsplashit/354_712.jpg");
-                      background-color: hsl(50,100%,50%); background-size: cover; background-position: 100% 100%;
+#demo10>item>div>*  { margin: 0; width: 100%; height: 100%; background-image: url("assets/unsplashit/354_219.jpg");
+                      background-color: hsl(50,100%,50%); background-size: cover; background-position: center;
                       transition: all 250ms }
 
 #demo10>*>*:hover>* { transform: scale(1.2) }
@@ -101,7 +143,12 @@ input[name="hrm-demo9"]:checked + figure>label             { opacity: 1 }
 /************************************************/
 #demo11             {} /* 1.293785 */
 
+
+#temp               { background-image: url("https://unsplash.it/1920/1200?image=855")}
+
 </style>
+
+
 
 <style>
 /************************************************/
@@ -113,58 +160,285 @@ input[name="hrm-demo9"]:checked + figure>label             { opacity: 1 }
                       color: #f3b833; font-size: 7rem; mix-blend-mode: difference }
 
 .square > *         { margin: auto }
+
+
+#mybox              { /*position: fixed; z-index: 1; top: 0; left: 0;*/
+                      background-image: url("assets/unsplashit/1920x1200-855.jpg") /*354_563/712/829*/;
+                      background-position: 100% 100%; background-size: cover;
+                      margin: 0 auto;   /* center horizontally inside parent */
+
+                      min-width : 20rem;
+                      max-width : 100%;
+                      min-height: 11.25rem;
+                      max-height: 18.75rem;
+
+                      width : 100%;     /* forces stretch-to-maximum */
+                      height: calc(11.25rem + (18.75 - 11.25) * ((100vmin - 20rem)/(90 - 20))); /* calculate height depending on width */
+                      filter: blur(1px)
+                    }
+</style>
+
+<style>
+/************************************************/
+/* DEMO 13/14 buttons                           */
+/************************************************/
+
+#demo13,#demo14             { position: fixed; z-index: 100; background-color: hsla(300,100%,45%,1); font-size: 1.25rem; color: white }
+
+#demo13                     { top: 1rem; left : 1rem }
+#demo14                     { top: 1rem; right: 1rem }
+
+[data-button]               { display: flex; align-items: center; justify-content: center; align-content: center; cursor: pointer }
+[data-button="btn"]         { min-width: 5.0rem; height: 2.0rem; border-radius: .13rem; padding: 0 .5rem; margin: .25rem }                      
+[data-button="fab"]         {     width: 3.5rem; height: 3.5rem; min-width: 2.5rem; min-height: 2.5rem; border-radius: 50% }                      
+
+[data-button]::before       { content: attr(before) } /* icon or text (or both) */
+[data-button]::after        { content: attr(after)  }
+
+[data-button]:hover         { text-transform: uppercase; text-shadow: 2px 2px 2px hsla(300,100%,25%,1) }
+[data-button]:hover::after  { transform: scale(1.1) }
+
+[utf]                       { font: bold 1.5rem "Times New Roman",serif }
+[utf="raquo"]:before        { content: '\000BB' }
+[utf="laquo"]:before        { content: '\000AB' }
+
+[utf="lang"]:before         { content: '\027E8' }
+[utf="rang"]:before         { content: '\027E9' }
+[utf="Lang"]:before         { content: '\027EA' }
+[utf="Rang"]:before         { content: '\027EB' }
 </style>
 
 
 
+<style>
+.page {
+  min-width: 320px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.rwd-img-wrapper {
+  min-height: 180px;
+  height: calc(180px + (300 - 180) * ((100vw - 320px)/(1200 - 320)));
+  max-height: 300px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.rwd-img-wrapper img {
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 100%;
+  z-index: 2;
+}
+
+#size {
+  background-color: red;
+  color: white;
+  display: inline-block;
+  padding: .25em 1em;
+}
+
+.text-wrapper {
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 1em 2em 3em;
+}
+
+/*
+$min-width: 320;
+$min-aspect: 16 9;
+$min-height: $min-width * (nth($min-aspect, 2) / nth($min-aspect, 1));
+$max-width: 1200;
+$max-aspect: 4 1;
+$max-height: $max-width * (nth($max-aspect, 2) / nth($max-aspect, 1));
+
+.page {
+  min-width: ($min-width * 1px);
+  max-width: ($max-width * 1px);
+  margin: 0 auto;
+}
+
+.rwd-img-wrapper {
+  min-height: ($min-height * 1px);
+  height: calc(#{($min-height * 1px)} + (#{$max-height} - #{$min-height}) * ((100vw - #{($min-width) * 1px})/(#{$max-width} - #{$min-width})));
+  max-height: ($max-height * 1px);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.rwd-img-wrapper img {
+  height: auto;
+  position: absolute;
+    top: 50%; left: 0;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 100%;
+  z-index: 2;
+}
+#size {
+  background-color: red;
+  color: white;
+  display: inline-block;
+  padding: .25em 1em;
+}
+
+.text-wrapper {
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 1em 2em 3em;
+}
+*/
+</style>
+
+
+<style>
+@import url(http://fonts.googleapis.com/css?family=Annie+Use+Your+Telescope);
+
+/* link: http://codepen.io/dragoon/pen/CFwum */
+
+#handwritten {
+  font-family: "Annie Use Your Telescope"; font-size: 1.25rem; line-height: 1; font-weight: normal;
+  
+  margin-top : 2.5rem;
+  margin-left: 5.625rem;
+  width      : 17rem;
+  padding    : 1.25rem .625rem 1.25rem 4rem;
+
+  background-size : 100% 1em;
+  background-color: #fff;
+  background-image: linear-gradient(90deg, transparent 3.1rem, #abced4 3.1rem, #abced4 3.2rem, transparent 3.2rem),
+                    linear-gradient(#e1e1e1 1px, transparent 1px);
+
+  transform: rotate(15deg);
+  box-shadow: #ccc 3px 3px 6px;
+
+}
+
+#handwritten em { background-color: rgba(255, 247, 128, 0.7); font-style: normal; font-size: .9em; color: black }
+</style>
 
 </head>
 
 <body data-debug="0">
+        <div id="mybox"></div>
 <main>
-    <h1>regular harmonicas in a 3x3 patch grid</h1>
-    <section data-patch="3x3" fill>
-        <item empty><div>&lt;empty&gt;</div></item>
-        <item empty><div>&lt;empty&gt;</div></item>
-        <item empty><div>&lt;empty&gt;</div></item>
-        <item data-harmonica="H" data-behaviour>
-            <img src="assets/unsplashit/354_002.jpg">
-            <img src="assets/unsplashit/354_004.jpg">
-            <img src="assets/unsplashit/354_006.jpg">
-            <img src="assets/unsplashit/354_008.jpg">
-        </item>
-        <item data-harmonica="V" data-behaviour>
-            <img src="assets/unsplashit/354_002.jpg">
-            <img src="assets/unsplashit/354_004.jpg">
-            <img src="assets/unsplashit/354_006.jpg">
-            <img src="assets/unsplashit/354_008.jpg">
-        </item>
-        <item data-harmonica="H" data-behaviour>
-            <div data-harmonica="V"><img src="assets/unsplashit/354_002.jpg"><img src="assets/unsplashit/354_004.jpg"><img src="assets/unsplashit/354_006.jpg"><img src="assets/unsplashit/354_008.jpg"></div>
-            <div data-harmonica="V"><img src="assets/unsplashit/354_010.jpg"><img src="assets/unsplashit/354_012.jpg"><img src="assets/unsplashit/354_014.jpg"><img src="assets/unsplashit/354_016.jpg"></div>
-            <div data-harmonica="V"><img src="assets/unsplashit/354_070.jpg"><img src="assets/unsplashit/354_072.jpg"><img src="assets/unsplashit/354_074.jpg"><img src="assets/unsplashit/354_076.jpg"></div>
-        </item>
-        <item data-harmonica="H" data-effect="blur" data-behaviour>
-            <input id="C1" type="checkbox" data-function="S" name="hrm-C" /><label for="C1" data-function="T"><span>H1</span></label>
-            <input id="C2" type="checkbox" data-function="S" name="hrm-C" /><label for="C2" data-function="T"><span>H2</span></label>
-            <input id="C3" type="checkbox" data-function="S" name="hrm-C" /><label for="C3" data-function="T"><span>H3</span></label>
-        </item>
-        <item data-harmonica="V" data-effect="blur" data-behaviour>
-            <input id="R1" type="radio"    data-function="S" name="hrm-R" /><label for="R1" data-function="T"><span>V1</span></label>
-            <input id="R2" type="radio"    data-function="S" name="hrm-R" /><label for="R2" data-function="T"><span>V2</span></label>
-            <input id="R3" type="radio"    data-function="S" name="hrm-R" /><label for="R3" data-function="T"><span>V3</span></label>
-        </item>
-    </section>
+    <h1>Size testing</h1>
     <section>
-        <item id="demo9" data-harmonica="H">
+        <div><span class="size1a">size1a</span>&nbsp;<span class="size1b">size1b</span></div>
+        <div><span class="size2a">size2a</span>&nbsp;<span class="size2b">size2b</span></div>
+        <div><span class="size3a">size3a</span>&nbsp;<span class="size3b">size3b</span></div>
+
+    </section>
+
+    <h1>regular harmonicas in a 3x3 patch grid</h1>
+    <section id="demo1" data-patch="3x3">
+        <item empty><div></div></item>
+        <item empty><div></div></item>
+        <item empty><div></div></item>
+        <item data-harmonica="H" data-behaviour data-grid=".mw">
+            <img src="assets/unsplashit/354_002.jpg">
+            <img src="assets/unsplashit/354_004.jpg">
+            <img src="assets/unsplashit/354_006.jpg">
+            <img src="assets/unsplashit/354_008.jpg">
+        </item>
+        <item data-harmonica="V" data-behaviour data-grid=".mw">
+            <img src="assets/unsplashit/354_002.jpg">
+            <img src="assets/unsplashit/354_004.jpg">
+            <img src="assets/unsplashit/354_006.jpg">
+            <img src="assets/unsplashit/354_008.jpg">
+        </item>
+        <item data-harmonica="H" data-behaviour data-grid=".mw">
+            <div data-harmonica="V" data-grid=".mw"><img src="assets/unsplashit/354_002.jpg"><img src="assets/unsplashit/354_004.jpg"><img src="assets/unsplashit/354_006.jpg"><img src="assets/unsplashit/354_008.jpg"></div>
+            <div data-harmonica="V" data-grid=".mw"><img src="assets/unsplashit/354_010.jpg"><img src="assets/unsplashit/354_012.jpg"><img src="assets/unsplashit/354_014.jpg"><img src="assets/unsplashit/354_016.jpg"></div>
+            <div data-harmonica="V" data-grid=".mw"><img src="assets/unsplashit/354_070.jpg"><img src="assets/unsplashit/354_072.jpg"><img src="assets/unsplashit/354_074.jpg"><img src="assets/unsplashit/354_076.jpg"></div>
+        </item>
+        <item data-harmonica="V" auto-flip data-effect="blur" data-behaviour data-grid=".mw">
+            <input id="C1" type="checkbox" data-function="S" name="hrm-C1" /><label for="C1" data-function="T">H1 auto</label>
+            <input id="C2" type="checkbox" data-function="S" name="hrm-C1" /><label for="C2" data-function="T">H2 ...</label>
+            <input id="C3" type="checkbox" data-function="S" name="hrm-C1" /><label for="C3" data-function="T">H3 ...</label>
+            <input id="C4" type="checkbox" data-function="S" name="hrm-C1" /><label for="C4" data-function="T">H4 ...</label>
+            <input id="C5" type="checkbox" data-function="S" name="hrm-C1" /><label for="C5" data-function="T">H5 ...</label>
+        </item>
+
+        <item data-harmonica="V" data-effect="blur" data-behaviour data-grid=".mw">
+            <input id="R1" type="radio" data-function="S" name="hrm-R" />
+            <div class="nobar" for="R1" data-function="T">
+                <div class="nobar--scroller">
+                    <h2>vertical 1</h2>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla elementum congue ipsum a tempus. Aliquam fringilla lacus a condimentum auctor. Aenean porttitor metus ut efficitur condimentum. Fusce ac justo justo. Donec consequat, augue id placerat malesuada,
+                    justo nisi ornare quam, rutrum varius orci leo sed ipsum. Maecenas quam dolor, pulvinar in porta sit amet, sodales ut odio. Mauris erat arcu, tincidunt a risus ut, elementum elementum erat. Phasellus interdum tortor dolor, vitae accumsan elit
+                    maximus nec. Mauris dignissim, leo at dapibus vulputate, orci tellus lobortis nisi, vitae maximus lacus turpis a ipsum. Pellentesque sit amet finibus arcu, id eleifend enim. Duis sit amet erat non purus fringilla hendrerit sed quis sem. Aliquam
+                    erat volutpat. Fusce cursus luctus leo, sit amet posuere enim cursus eget. In a enim a neque pretium maximus. Morbi facilisis maximus neque ut placerat.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla elementum congue ipsum a tempus. Aliquam fringilla lacus a condimentum auctor. Aenean porttitor metus ut efficitur condimentum. Fusce ac justo justo. Donec consequat, augue id placerat malesuada,
+                    justo nisi ornare quam, rutrum varius orci leo sed ipsum. Maecenas quam dolor, pulvinar in porta sit amet, sodales ut odio. Mauris erat arcu, tincidunt a risus ut, elementum elementum erat. Phasellus interdum tortor dolor, vitae accumsan elit
+                    maximus nec. Mauris dignissim, leo at dapibus vulputate, orci tellus lobortis nisi, vitae maximus lacus turpis a ipsum. Pellentesque sit amet finibus arcu, id eleifend enim. Duis sit amet erat non purus fringilla hendrerit sed quis sem. Aliquam
+                    erat volutpat. Fusce cursus luctus leo, sit amet posuere enim cursus eget. In a enim a neque pretium maximus. Morbi facilisis maximus neque ut placerat.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla elementum congue ipsum a tempus. Aliquam fringilla lacus a condimentum auctor. Aenean porttitor metus ut efficitur condimentum. Fusce ac justo justo. Donec consequat, augue id placerat malesuada,
+                    justo nisi ornare quam, rutrum varius orci leo sed ipsum. Maecenas quam dolor, pulvinar in porta sit amet, sodales ut odio. Mauris erat arcu, tincidunt a risus ut, elementum elementum erat. Phasellus interdum tortor dolor, vitae accumsan elit
+                    maximus nec. Mauris dignissim, leo at dapibus vulputate, orci tellus lobortis nisi, vitae maximus lacus turpis a ipsum. Pellentesque sit amet finibus arcu, id eleifend enim. Duis sit amet erat non purus fringilla hendrerit sed quis sem. Aliquam
+                    erat volutpat. Fusce cursus luctus leo, sit amet posuere enim cursus eget. In a enim a neque pretium maximus. Morbi facilisis maximus neque ut placerat.
+                </div>
+            </div>
+            <input id="R2" type="radio" data-function="S" name="hrm-R" />
+            <div class="nobar" for="R2" data-function="T">
+                <div class="nobar--scroller">
+                    <h2>vertical 2</h2>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla elementum congue ipsum a tempus. Aliquam fringilla lacus a condimentum auctor. Aenean porttitor metus ut efficitur condimentum. Fusce ac justo justo. Donec consequat, augue id placerat malesuada,
+                    justo nisi ornare quam, rutrum varius orci leo sed ipsum. Maecenas quam dolor, pulvinar in porta sit amet, sodales ut odio. Mauris erat arcu, tincidunt a risus ut, elementum elementum erat. Phasellus interdum tortor dolor, vitae accumsan elit
+                    maximus nec. Mauris dignissim, leo at dapibus vulputate, orci tellus lobortis nisi, vitae maximus lacus turpis a ipsum. Pellentesque sit amet finibus arcu, id eleifend enim. Duis sit amet erat non purus fringilla hendrerit sed quis sem. Aliquam
+                    erat volutpat. Fusce cursus luctus leo, sit amet posuere enim cursus eget. In a enim a neque pretium maximus. Morbi facilisis maximus neque ut placerat.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla elementum congue ipsum a tempus. Aliquam fringilla lacus a condimentum auctor. Aenean porttitor metus ut efficitur condimentum. Fusce ac justo justo. Donec consequat, augue id placerat malesuada,
+                    justo nisi ornare quam, rutrum varius orci leo sed ipsum. Maecenas quam dolor, pulvinar in porta sit amet, sodales ut odio. Mauris erat arcu, tincidunt a risus ut, elementum elementum erat. Phasellus interdum tortor dolor, vitae accumsan elit
+                    maximus nec. Mauris dignissim, leo at dapibus vulputate, orci tellus lobortis nisi, vitae maximus lacus turpis a ipsum. Pellentesque sit amet finibus arcu, id eleifend enim. Duis sit amet erat non purus fringilla hendrerit sed quis sem. Aliquam
+                    erat volutpat. Fusce cursus luctus leo, sit amet posuere enim cursus eget. In a enim a neque pretium maximus. Morbi facilisis maximus neque ut placerat.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla elementum congue ipsum a tempus. Aliquam fringilla lacus a condimentum auctor. Aenean porttitor metus ut efficitur condimentum. Fusce ac justo justo. Donec consequat, augue id placerat malesuada,
+                    justo nisi ornare quam, rutrum varius orci leo sed ipsum. Maecenas quam dolor, pulvinar in porta sit amet, sodales ut odio. Mauris erat arcu, tincidunt a risus ut, elementum elementum erat. Phasellus interdum tortor dolor, vitae accumsan elit
+                    maximus nec. Mauris dignissim, leo at dapibus vulputate, orci tellus lobortis nisi, vitae maximus lacus turpis a ipsum. Pellentesque sit amet finibus arcu, id eleifend enim. Duis sit amet erat non purus fringilla hendrerit sed quis sem. Aliquam
+                    erat volutpat. Fusce cursus luctus leo, sit amet posuere enim cursus eget. In a enim a neque pretium maximus. Morbi facilisis maximus neque ut placerat.
+                </div>
+            </div>
+            <input id="R3" type="radio" data-function="S" name="hrm-R" />
+            <div class="nobar" for="R3" data-function="T">
+                <div class="nobar--scroller">
+                    <h2>vertical 3</h2>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla elementum congue ipsum a tempus. Aliquam fringilla lacus a condimentum auctor. Aenean porttitor metus ut efficitur condimentum. Fusce ac justo justo. Donec consequat, augue id placerat malesuada,
+                    justo nisi ornare quam, rutrum varius orci leo sed ipsum. Maecenas quam dolor, pulvinar in porta sit amet, sodales ut odio. Mauris erat arcu, tincidunt a risus ut, elementum elementum erat. Phasellus interdum tortor dolor, vitae accumsan elit
+                    maximus nec. Mauris dignissim, leo at dapibus vulputate, orci tellus lobortis nisi, vitae maximus lacus turpis a ipsum. Pellentesque sit amet finibus arcu, id eleifend enim. Duis sit amet erat non purus fringilla hendrerit sed quis sem. Aliquam
+                    erat volutpat. Fusce cursus luctus leo, sit amet posuere enim cursus eget. In a enim a neque pretium maximus. Morbi facilisis maximus neque ut placerat.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla elementum congue ipsum a tempus. Aliquam fringilla lacus a condimentum auctor. Aenean porttitor metus ut efficitur condimentum. Fusce ac justo justo. Donec consequat, augue id placerat malesuada,
+                    justo nisi ornare quam, rutrum varius orci leo sed ipsum. Maecenas quam dolor, pulvinar in porta sit amet, sodales ut odio. Mauris erat arcu, tincidunt a risus ut, elementum elementum erat. Phasellus interdum tortor dolor, vitae accumsan elit
+                    maximus nec. Mauris dignissim, leo at dapibus vulputate, orci tellus lobortis nisi, vitae maximus lacus turpis a ipsum. Pellentesque sit amet finibus arcu, id eleifend enim. Duis sit amet erat non purus fringilla hendrerit sed quis sem. Aliquam
+                    erat volutpat. Fusce cursus luctus leo, sit amet posuere enim cursus eget. In a enim a neque pretium maximus. Morbi facilisis maximus neque ut placerat.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla elementum congue ipsum a tempus. Aliquam fringilla lacus a condimentum auctor. Aenean porttitor metus ut efficitur condimentum. Fusce ac justo justo. Donec consequat, augue id placerat malesuada,
+                    justo nisi ornare quam, rutrum varius orci leo sed ipsum. Maecenas quam dolor, pulvinar in porta sit amet, sodales ut odio. Mauris erat arcu, tincidunt a risus ut, elementum elementum erat. Phasellus interdum tortor dolor, vitae accumsan elit
+                    maximus nec. Mauris dignissim, leo at dapibus vulputate, orci tellus lobortis nisi, vitae maximus lacus turpis a ipsum. Pellentesque sit amet finibus arcu, id eleifend enim. Duis sit amet erat non purus fringilla hendrerit sed quis sem. Aliquam
+                    erat volutpat. Fusce cursus luctus leo, sit amet posuere enim cursus eget. In a enim a neque pretium maximus. Morbi facilisis maximus neque ut placerat.
+                </div>
+            </div>
+        </item>
+        <item empty><div></div></item>
+
+    </section>
+    <h1>harmonica with 'radio' selection</h1>
+    <section id="demo9">
+        <item data-harmonica="H">
             <input id="d1-1" type="radio" name="hrm-demo9" checked />
                                                              <figure><img src="assets/demos/1.jpg"><label for="d1-1">True Colors         </label></figure>
             <input id="d1-2" type="radio" name="hrm-demo9" /><figure><img src="assets/demos/2.jpg"><label for="d1-2">Honest Light        </label></figure>
             <input id="d1-3" type="radio" name="hrm-demo9" /><figure><img src="assets/demos/3.jpg"><label for="d1-3">Silent Serenity     </label></figure>
-            <input id="d1-4" type="radio" name="hrm-demo9" /><figure><img src="assets/demos/4.jpg"><label for="d1-4">Warm Welcome        </label></figure>
+            <input id="d1-4" type="radio" name="hrm-demo9" /><figure><img src="assets/demos/4.jpg"><label for="d1-4">Illuminated Darkness</label></figure>
             <input id="d1-5" type="radio" name="hrm-demo9" /><figure><img src="assets/demos/5.jpg"><label for="d1-5">Sensible Magic      </label></figure>
             <input id="d1-6" type="radio" name="hrm-demo9" /><figure><img src="assets/demos/6.jpg"><label for="d1-6">Lovely Midnight     </label></figure>
-            <input id="d1-7" type="radio" name="hrm-demo9" /><figure><img src="assets/demos/7.jpg"><label for="d1-7">Illuminated Darkness</label></figure>
+            <input id="d1-7" type="radio" name="hrm-demo9" /><figure><img src="assets/demos/7.jpg"><label for="d1-7">Warm Welcome        </label></figure>
             <input id="d1-8" type="radio" name="hrm-demo9" /><figure><img src="assets/demos/8.jpg"><label for="d1-8">Happy Child         </label></figure>
         </item>
     </section>
@@ -204,5 +478,19 @@ input[name="hrm-demo9"]:checked + figure>label             { opacity: 1 }
         </item>
     </section>
 </main>
+
+<div id="demo13" data-button="fab" before="+"></div>
+<div id="demo14" data-button="btn" utf="raquo"after ="↩"></div>
+
+<!-- div id="handwritten">
+    To date 856 people + 29 companies have donated <em>&nbsp;$127,434&nbsp;</em>
+    in total. This puts a huge :D on our face. We love you folks.
+</div -->
 </body>
+
+<script>
+
+
+
+</script>
 </html>

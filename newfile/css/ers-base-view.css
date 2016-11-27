@@ -15,13 +15,15 @@
 /*OLD*/
 .view.square                { height: 20rem; max-height: 20rem; min-height: 320px }
 
+
+/*NEW*/
 [data-view^="P"]            { min-width : 320px; width : 20rem;       max-width : 20rem;
-                              min-height: 568px; height: 35.55556rem; max-height: 35.55556rem }
+                              min-height: 568px; height: 35.55556rem; max-height: 35.55556rem } /* portrait */
 
 [data-view^="L"]            { min-width : 568px; width : 35.55556rem; max-width : 35.55556rem;
-                              min-height: 320px; height: 20rem;       max-height: 20rem }
+                              min-height: 320px; height: 20rem;       max-height: 20rem }       /* landscape */
 
-[data-view^=".SQ"]          { height: 20rem; max-height: 20rem; min-height: 320px }
+[data-view^=".SQ"]          { height: 20rem; max-height: 20rem; min-height: 320px }             /* square */
 
 /* not yet...
 

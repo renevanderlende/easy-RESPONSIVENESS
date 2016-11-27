@@ -189,7 +189,7 @@ i {
 
         <section id="demo-001">
             <input id="card-001" class="scale-switch-50" type="checkbox" data-gone="1"/>
-            <item class="view scale-50" data-bg="L1">
+            <item class="view scale-50 fill-parent" data-bg="L1">
                 <label for="card-001" class="view-header">header</label>
                 <div class="view-panel">
                     <div class="view-content" data-patch="1x1">
@@ -200,7 +200,7 @@ i {
             </item>
 
             <input id="card-002" class="scale-switch-25" type="checkbox" data-gone="1"/>
-            <item class="view scale-25" data-bg="L1">
+            <item class="view scale-25" data-view="FP" data-bg="L1">
                 <label for="card-002" class="view-header">header</label>
                 <div class="view-panel">
                     <div class="view-content" data-patch="2x2">
@@ -364,6 +364,19 @@ i {
                 </div>
             </item>
         </section>
+
+        <section id="demo-devices">
+            <input id="card-dev1" class="scale-switch-50" type="checkbox" data-gone="1"/>
+            <item class="view scale-50 nobar" data-view="FP" data-bg="L1">
+                <label for="card-dev1" class="view-header">canbike.org: CSSpixels</label>
+                <div class="view-panel nobar-scroller">
+                    <div class="view-content">
+                    <iframe src="http://www.canbike.org/CSSpixels/"></iframe>
+                    </div>
+                </div>
+            </item>
+        </section>
+
 
         <section id="demo-QQ">
             <input id="card-00QQ1" class="scale-switch-50" type="checkbox" data-gone="1"/>

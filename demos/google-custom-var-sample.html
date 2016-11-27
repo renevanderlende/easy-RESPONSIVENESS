@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<!--
+Copyright 2016 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Sample illustrating the use of CSS Custom Properties (CSS Variables).">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>CSS Custom Properties (CSS Variables) Sample</title>
+    
+    
+    <link rel="icon" href="https://googlechrome.github.io/samples/images/favicon.ico">
+    
+    <link rel="stylesheet" href="assets/google-var-sample.css">
+    
+    
+<style>
+:root {
+  /*************************** Page-wide variables ****************************/
+
+  /* Base spacing unit. */
+  --spacing-unit: 6px;
+
+  /* Margin size. No unit, because it's a multiple of the spacing unit. */
+  --margins: 2;
+
+  /* Colors. */
+  --primary-color: #5E35B1;
+  --primary-color-text: #FFF;
+
+  /* Number of columns to show. */
+  --grid-columns: 3;
+
+  /***************************** Calculated values ****************************/
+  /* We don't use calc here because we don't want to resolve the values yet.
+     You can think of these as simple textual replacements. */
+
+  /* The size of the margin around the card grid. */
+  --margin-size: (var(--margins) * 2);
+  /* How much internal padding each cell should have */
+  --cell-padding: (4 * var(--spacing-unit));
+  /* How big the space between cells should be */
+  --grid-gutter: (var(--margins) * var(--spacing-unit));
+  /* How big the space should be around the grid */
+  --grid-margin: (var(--margin-size) * var(--spacing-unit));
+  /* Calculated cell margin */
+  --cell-margin: (var(--grid-gutter) / 2);
+}
+
+.header {
+  display: block;
+  position: relative;
+  height: calc(28 * var(--spacing-unit));
+  /* Use a default value for the background color, by passing it in as the 2nd
+     parameter to var(). We don't strictly need it in this case, since we've
+     defined it at the document level, but this illustrates common usage. */
+  background-color: var(--primary-color, #5E35B1);
+  padding-left: calc(4 * var(--spacing-unit));
+
+  transition: background-color 1s;
+}
+
+.title {
+  position: relative;
+  top: calc(8 * var(--spacing-unit));
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+  font-size: calc(4 * var(--spacing-unit));
+  font-weight: 400;
+  color: var(--primary-color-text);
+
+  transition: color 1s;
+}
+
+.shade {
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  padding-left: calc(1 * var(--spacing-unit));
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: calc(8 * var(--spacing-unit));
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.grid {
+  /* Resets */
+  margin: 0;
+  border: 0;
+  padding: 0;
+
+  display: flex;
+  flex-flow: row wrap;
+  align-items: stretch;
+
+  padding: calc(var(--grid-margin) - var(--cell-margin));
+
+  background-color: var(--grid-color);
+}
+
+.cell {
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+  color: rgb(97, 97, 97);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin: calc(var(--cell-margin));
+  background-color: var(--cell-color);
+  width: calc(100% / var(--grid-columns) - var(--grid-gutter));
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),
+      0 3px 1px -2px rgba(0,0,0,.2),
+      0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.cell-title {
+  font-size: calc(3 * var(--spacing-unit));
+}
+
+.cell-header {
+  display: flex;
+  align-items: center;
+  color: var(--primary-color-text);
+  box-sizing: border-box;
+  background-color: var(--primary-color);
+  padding-left: calc(var(--cell-padding));
+  height: calc(12 * var(--spacing-unit));
+}
+
+.cell-content {
+  font-size: calc(2.5 * var(--spacing-unit));
+  padding: calc(var(--cell-padding));
+  flex-grow: 1;
+}
+
+.cell-actions {
+  padding: calc(2 * var(--spacing-unit));
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.picker-button {
+  position: relative;
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+  font-size: calc(2 * var(--spacing-unit));
+  display: inline-block;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 2px;
+  color: var(--primary-color);
+  text-decoration: none;
+  padding: calc(2 * var(--spacing-unit));
+  text-decoration: none;
+  background: transparent;
+  cursor: pointer;
+  overflow: hidden;
+  text-transform: uppercase;
+
+  transition: background-color 0.2s;
+}
+
+.picker-button:focus {
+  outline: none;
+}
+
+.picker-button:active {
+  background-color: #DDD;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-family: sans-serif;
+  font-size: 12px;
+  padding: 8px;
+  background-color: rgba(200, 200, 200, 0.8);
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  margin: 0 0 8px 0;
+}
+
+.control-key {
+  flex-grow: 1;
+  margin-right: 16px;
+}
+
+.control-value {
+  width: 152px;
+}
+</style>
+</head>
+
+<body>
+    
+    <h1>CSS Custom Properties (CSS Variables) Sample</h1>
+    <p class="availability">
+      Available in <a target="_blank" href="https://www.chromestatus.com/feature/6401356696911872">Chrome 49+</a> |
+      <a target="_blank" href="https://github.com/googlechrome/samples/blob/gh-pages/css-custom-properties/">View on GitHub</a> |
+      <a target="_blank" href="https://www.chromestatus.com/samples">Browse Samples</a>
+    </p>
+    <h3>Background</h3>
+<p>CSS custom properties allow you to store and retrieve values from properties
+  you define yourself.</p>
+<p>They follow the same rules as other CSS properties, so you're able to define
+  and use them at multiple levels, following standard CSS cascading and
+  specificity rules.</p>
+<p>Combining custom variables with <code>calc()</code>, in particular, allows
+  for some very interesting possibilities.</p>
+
+<h3>Live Output</h3>
+<div id="output" class="output">
+  <div id="content">
+<div class="header">
+  <div class="title">CSS Variable Demo</div>
+  <div class="shade"></div>
+
+  <div class="controls">
+    <p class="control">
+      <span class="control-key">Spacing unit:</span>
+      <input class="control-value" id="quantum" min="4" max="8" step="1" value="6" type="range">
+    </p>
+    <p class="control">
+      <span class="control-key">Columns:</span>
+      <input class="control-value" id="columns" min="1" max="4" step="1" value="3" type="range">
+    </p>
+    <p class="control">
+      <span class="control-key">Margins:</span>
+      <input class="control-value" id="gutter" min="1" max="5" step="1" value="2" type="range">
+    </p>
+  </div>
+</div>
+<div class="grid">
+  <div class="cell" style="--primary-color: #F44336; --primary-color-text: #FFF;">
+    <header class="cell-header">
+      <div class="cell-title">
+        Red
+      </div>
+    </header>
+    <main class="cell-content">
+      Click the buttons on the cards to set the default color scheme for the
+      whole sample.
+    </main>
+    <div class="cell-actions">
+      <button class="picker-button">
+        Use this color
+        <div class="ripple"></div>
+      </button>
+    </div>
+  </div>
+  <div class="cell" style="--primary-color: #E91E63; --primary-color-text: #FFF;">
+    <header class="cell-header">
+      <div class="cell-title">
+        Pink
+      </div>
+    </header>
+    <main class="cell-content">
+      The colors on the cards are not affected because they're individually
+      defined at the card level, and thus prioritised according to standard CSS
+      rules.
+    </main>
+    <div class="cell-actions">
+      <button class="picker-button">
+        Use this color
+        <div class="ripple"></div>
+      </button>
+    </div>
+  </div>
+  <div class="cell" style="--primary-color: #9C27B0; --primary-color-text: #FFF;">
+    <header class="cell-header">
+      <div class="cell-title">
+        Purple
+      </div>
+    </header>
+    <main class="cell-content">
+      Use the controls above to adjust some properties that affect the entire
+      page.
+    </main>
+    <div class="cell-actions">
+      <button class="picker-button">
+        Use this color
+        <div class="ripple"></div>
+      </button>
+    </div>
+  </div>
+  <div class="cell" style="--primary-color: #00BCD4; --primary-color-text: #424242;">
+    <header class="cell-header">
+      <div class="cell-title">
+        Cyan
+      </div>
+    </header>
+    <main class="cell-content">
+      Every size on the page is calculated as a multiple of the spacing unit,
+      so setting the property to a different value resizes all elements.
+    </main>
+    <div class="cell-actions">
+      <button class="picker-button">
+        Use this color
+        <div class="ripple"></div>
+      </button>
+    </div>
+  </div>
+  <div class="cell" style="--primary-color: #009688; --primary-color-text: #FFF;">
+    <header class="cell-header">
+      <div class="cell-title">
+        Teal
+      </div>
+    </header>
+    <main class="cell-content">
+      Changing the number of columns is done by recalculating the relative size
+      of cells on the grid.
+    </main>
+    <div class="cell-actions">
+      <button class="picker-button">
+        Use this color
+        <div class="ripple"></div>
+      </button>
+    </div>
+  </div>
+  <div class="cell" style="--primary-color: #4CAF50; --primary-color-text: #424242;">
+    <header class="cell-header">
+      <div class="cell-title">
+        Green
+      </div>
+    </header>
+    <main class="cell-content">
+      Margins adjusts both the spacing around the grid and the gutters inside of
+      it.
+    </main>
+    <div class="cell-actions">
+      <button class="picker-button">
+        Use this color
+        <div class="ripple"></div>
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+  <div id="status"></div>
+  <pre id="log"></pre>
+</div>
+
+
+
+
+
+
+
+
+  
+    <h3>CSS Snippet</h3>
+  
+
+  <figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nd">:root</span> <span class="p">{</span>
+  <span class="c">/*************************** Page-wide variables ****************************/</span>
+
+  <span class="c">/* Base spacing unit. */</span>
+  <span class="py">--spacing-unit</span><span class="p">:</span> <span class="m">6px</span><span class="p">;</span>
+
+  <span class="c">/* Margin size. No unit, because it's a multiple of the spacing unit. */</span>
+  <span class="py">--margins</span><span class="p">:</span> <span class="m">2</span><span class="p">;</span>
+
+  <span class="c">/* Colors. */</span>
+  <span class="py">--primary-color</span><span class="p">:</span> <span class="m">#5E35B1</span><span class="p">;</span>
+  <span class="py">--primary-color-text</span><span class="p">:</span> <span class="m">#FFF</span><span class="p">;</span>
+
+  <span class="c">/* Number of columns to show. */</span>
+  <span class="py">--grid-columns</span><span class="p">:</span> <span class="m">3</span><span class="p">;</span>
+
+  <span class="c">/***************************** Calculated values ****************************/</span>
+  <span class="c">/* We don't use calc here because we don't want to resolve the values yet.
+     You can think of these as simple textual replacements. */</span>
+
+  <span class="c">/* The size of the margin around the card grid. */</span>
+  <span class="py">--margin-size</span><span class="p">:</span> <span class="p">(</span><span class="n">var</span><span class="p">(</span><span class="n">--margins</span><span class="p">)</span> <span class="err">*</span> <span class="m">2</span><span class="p">);</span>
+  <span class="c">/* How much internal padding each cell should have */</span>
+  <span class="py">--cell-padding</span><span class="p">:</span> <span class="p">(</span><span class="m">4</span> <span class="err">*</span> <span class="n">var</span><span class="p">(</span><span class="n">--spacing-unit</span><span class="p">));</span>
+  <span class="c">/* How big the space between cells should be */</span>
+  <span class="py">--grid-gutter</span><span class="p">:</span> <span class="p">(</span><span class="n">var</span><span class="p">(</span><span class="n">--margins</span><span class="p">)</span> <span class="err">*</span> <span class="n">var</span><span class="p">(</span><span class="n">--spacing-unit</span><span class="p">));</span>
+  <span class="c">/* How big the space should be around the grid */</span>
+  <span class="py">--grid-margin</span><span class="p">:</span> <span class="p">(</span><span class="n">var</span><span class="p">(</span><span class="n">--margin-size</span><span class="p">)</span> <span class="err">*</span> <span class="n">var</span><span class="p">(</span><span class="n">--spacing-unit</span><span class="p">));</span>
+  <span class="c">/* Calculated cell margin */</span>
+  <span class="py">--cell-margin</span><span class="p">:</span> <span class="p">(</span><span class="n">var</span><span class="p">(</span><span class="n">--grid-gutter</span><span class="p">)</span> <span class="p">/</span> <span class="m">2</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nc">.header</span> <span class="p">{</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="nb">block</span><span class="p">;</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">28</span> <span class="err">*</span> <span class="n">var</span><span class="p">(</span><span class="n">--spacing-unit</span><span class="p">));</span>
+  <span class="c">/* Use a default value for the background color, by passing it in as the 2nd
+     parameter to var(). We don't strictly need it in this case, since we've
+     defined it at the document level, but this illustrates common usage. */</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--primary-color</span><span class="p">,</span> <span class="m">#5E35B1</span><span class="p">);</span>
+  <span class="nl">padding-left</span><span class="p">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">4</span> <span class="err">*</span> <span class="n">var</span><span class="p">(</span><span class="n">--spacing-unit</span><span class="p">));</span>
+
+  <span class="nl">transition</span><span class="p">:</span> <span class="n">background-color</span> <span class="m">1s</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.title</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+  <span class="nl">top</span><span class="p">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">8</span> <span class="err">*</span> <span class="n">var</span><span class="p">(</span><span class="n">--spacing-unit</span><span class="p">));</span>
+  <span class="nl">font-family</span><span class="p">:</span> <span class="s2">'Roboto'</span><span class="p">,</span> <span class="s2">'Helvetica'</span><span class="p">,</span> <span class="nb">sans-serif</span><span class="p">;</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">4</span> <span class="err">*</span> <span class="n">var</span><span class="p">(</span><span class="n">--spacing-unit</span><span class="p">));</span>
+  <span class="nl">font-weight</span><span class="p">:</span> <span class="m">400</span><span class="p">;</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--primary-color-text</span><span class="p">);</span>
+
+  <span class="nl">transition</span><span class="p">:</span> <span class="n">color</span> <span class="m">1s</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.shade</span> <span class="p">{</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="nb">block</span><span class="p">;</span>
+  <span class="nl">box-sizing</span><span class="p">:</span> <span class="n">border-box</span><span class="p">;</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+  <span class="nl">padding-left</span><span class="p">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">1</span> <span class="err">*</span> <span class="n">var</span><span class="p">(</span><span class="n">--spacing-unit</span><span class="p">));</span>
+  <span class="nl">bottom</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">left</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">8</span> <span class="err">*</span> <span class="n">var</span><span class="p">(</span><span class="n">--spacing-unit</span><span class="p">));</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0.2</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nc">.grid</span> <span class="p">{</span>
+  <span class="c">/* Resets */</span>
+  <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+
+  <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+  <span class="nl">flex-flow</span><span class="p">:</span> <span class="n">row</span> <span class="n">wrap</span><span class="p">;</span>
+  <span class="nl">align-items</span><span class="p">:</span> <span class="n">stretch</span><span class="p">;</span>
+
+  <span class="nl">padding</span><span class="p">:</span> <span class="n">calc</span><span class="p">(</span><span class="n">var</span><span class="p">(</span><span class="n">--grid-margin</span><span class="p">)</span> <span class="n">-</span> <span class="n">var</span><span class="p">(</span><span class="n">--cell-margin</span><span class="p">));</span>
+
+  <span class="nl">background-color</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--grid-color</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nc">.cell</span> <span class="p">{</span>
+  <span class="nl">font-family</span><span class="p">:</span> <span class="s2">'Roboto'</span><span class="p">,</span> <span class="s2">'Helvetica'</span><span class="p">,</span> <span class="nb">sans-serif</span><span class="p">;</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="nb">rgb</span><span class="p">(</span><span class="m">97</span><span class="p">,</span> <span class="m">97</span><span class="p">,</span> <span class="m">97</span><span class="p">);</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+  <span class="nl">flex-direction</span><span class="p">:</span> <span class="n">column</span><span class="p">;</span>
+  <span class="nl">box-sizing</span><span class="p">:</span> <span class="n">border-box</span><span class="p">;</span>
+  <span class="nl">margin</span><span class="p">:</span> <span class="n">calc</span><span class="p">(</span><span class="n">var</span><span class="p">(</span><span class="n">--cell-margin</span><span class="p">));</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--cell-color</span><span class="p">);</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">100%</span> <span class="p">/</span> <span class="n">var</span><span class="p">(</span><span class="n">--grid-columns</span><span class="p">)</span> <span class="n">-</span> <span class="n">var</span><span class="p">(</span><span class="n">--grid-gutter</span><span class="p">));</span>
+  <span class="nl">box-shadow</span><span class="p">:</span> <span class="m">0</span> <span class="m">2px</span> <span class="m">2px</span> <span class="m">0</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">.14</span><span class="p">),</span>
+      <span class="m">0</span> <span class="m">3px</span> <span class="m">1px</span> <span class="m">-2px</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">.2</span><span class="p">),</span>
+      <span class="m">0</span> <span class="m">1px</span> <span class="m">5px</span> <span class="m">0</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">.12</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nc">.cell-title</span> <span class="p">{</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">3</span> <span class="err">*</span> <span class="n">var</span><span class="p">(</span><span class="n">--spacing-unit</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="nc">.cell-header</span> <span class="p">{</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+  <span class="nl">align-items</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--primary-color-text</span><span class="p">);</span>
+  <span class="nl">box-sizing</span><span class="p">:</span> <span class="n">border-box</span><span class="p">;</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--primary-color</span><span class="p">);</span>
+  <span class="nl">padding-left</span><span class="p">:</span> <span class="n">calc</span><span class="p">(</span><span class="n">var</span><span class="p">(</span><span class="n">--cell-padding</span><span class="p">));</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">12</span> <span class="err">*</span> <span class="n">var</span><span class="p">(</span><span class="n">--spacing-unit</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="nc">.cell-content</span> <span class="p">{</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">2.5</span> <span class="err">*</span> <span class="n">var</span><span class="p">(</span><span class="n">--spacing-unit</span><span class="p">));</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="n">calc</span><span class="p">(</span><span class="n">var</span><span class="p">(</span><span class="n">--cell-padding</span><span class="p">));</span>
+  <span class="nl">flex-grow</span><span class="p">:</span> <span class="m">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.cell-actions</span> <span class="p">{</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">2</span> <span class="err">*</span> <span class="n">var</span><span class="p">(</span><span class="n">--spacing-unit</span><span class="p">));</span>
+  <span class="nl">border-top</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0.12</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nc">.picker-button</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+  <span class="nl">font-family</span><span class="p">:</span> <span class="s2">'Roboto'</span><span class="p">,</span> <span class="s2">'Helvetica'</span><span class="p">,</span> <span class="nb">sans-serif</span><span class="p">;</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">2</span> <span class="err">*</span> <span class="n">var</span><span class="p">(</span><span class="n">--spacing-unit</span><span class="p">));</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="n">inline-block</span><span class="p">;</span>
+  <span class="nl">box-sizing</span><span class="p">:</span> <span class="n">border-box</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+  <span class="nl">border-radius</span><span class="p">:</span> <span class="m">2px</span><span class="p">;</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--primary-color</span><span class="p">);</span>
+  <span class="nl">text-decoration</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="n">calc</span><span class="p">(</span><span class="m">2</span> <span class="err">*</span> <span class="n">var</span><span class="p">(</span><span class="n">--spacing-unit</span><span class="p">));</span>
+  <span class="nl">text-decoration</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="nb">transparent</span><span class="p">;</span>
+  <span class="nl">cursor</span><span class="p">:</span> <span class="nb">pointer</span><span class="p">;</span>
+  <span class="nl">overflow</span><span class="p">:</span> <span class="nb">hidden</span><span class="p">;</span>
+  <span class="nl">text-transform</span><span class="p">:</span> <span class="nb">uppercase</span><span class="p">;</span>
+
+  <span class="nl">transition</span><span class="p">:</span> <span class="n">background-color</span> <span class="m">0.2s</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.picker-button</span><span class="nd">:focus</span> <span class="p">{</span>
+  <span class="nl">outline</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.picker-button</span><span class="nd">:active</span> <span class="p">{</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="m">#DDD</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.controls</span> <span class="p">{</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+  <span class="nl">flex-direction</span><span class="p">:</span> <span class="n">column</span><span class="p">;</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+  <span class="nl">top</span><span class="p">:</span> <span class="m">4px</span><span class="p">;</span>
+  <span class="nl">right</span><span class="p">:</span> <span class="m">4px</span><span class="p">;</span>
+  <span class="nl">font-family</span><span class="p">:</span> <span class="nb">sans-serif</span><span class="p">;</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">12px</span><span class="p">;</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">8px</span><span class="p">;</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="n">rgba</span><span class="p">(</span><span class="m">200</span><span class="p">,</span> <span class="m">200</span><span class="p">,</span> <span class="m">200</span><span class="p">,</span> <span class="m">0.8</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nc">.control</span> <span class="p">{</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+  <span class="nl">align-items</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+  <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">8px</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.control-key</span> <span class="p">{</span>
+  <span class="nl">flex-grow</span><span class="p">:</span> <span class="m">1</span><span class="p">;</span>
+  <span class="nl">margin-right</span><span class="p">:</span> <span class="m">16px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.control-value</span> <span class="p">{</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">152px</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+
+
+
+  
+    
+<script>'use strict';
+
+// Auxiliary method. Retrieves and sanitises the value of a custom property.
+var getVariable         = function(styles, propertyName) { return String(styles.getPropertyValue(propertyName)).trim(); };
+// Auxiliary method. Sets the value of a custom property at the document level.
+var setDocumentVariable = function(propertyName, value) { document.documentElement.style.setProperty(propertyName, value); };
+
+// Sets the document color scheme to the color scheme of the clicked element.
+// This illustrates how it's easy to make a change affecting a large number of
+// elements by simply changing a few custom properties.
+var chooseDefaultColor = function(event) {
+	// Get the styles for the event target (the clicked button), so we can see
+    // what its custom properties are set to.
+    var styles = getComputedStyle(event.target);
+
+    // Get the values for the button's colours...
+    var primary = getVariable(styles, '--primary-color');
+    var text = getVariable(styles, '--primary-color-text');
+    // ... and apply them to the document.
+    setDocumentVariable('--primary-color', primary);
+    setDocumentVariable('--primary-color-text', text);
+};
+
+// Initialise page controls.
+window.addEventListener('load', function() {
+  // Get the styles for the document.
+  // This is where we've chosen to store all the global variables we use.
+  var styles = getComputedStyle(document.documentElement);
+
+  var quantum = document.getElementById('quantum');
+  var gutter  = document.getElementById('gutter');
+  var columns = document.getElementById('columns');
+
+  // Set up event handlers for buttons.
+  var buttons = document.querySelectorAll('.picker-button');
+
+  for (var i = 0; i < buttons.length; i++) { buttons[i].addEventListener('click', chooseDefaultColor); }
+
+  // Retrieve initial custom property values and update controls.
+  quantum.value = getVariable(styles, '--spacing-unit').replace('px', '');
+  gutter.value  = getVariable(styles, '--margins');
+  columns.value = getVariable(styles, '--grid-columns');
+
+  // Set up event handlers for having the sliders update the custom properties
+  // at the document level.
+  quantum.addEventListener('input', function() {
+    setDocumentVariable('--spacing-unit', quantum.value + 'px');
+  });
+
+  gutter.addEventListener('input', function() {
+    setDocumentVariable('--margins', gutter.value);
+  });
+
+  columns.addEventListener('input', function() {
+    setDocumentVariable('--grid-columns', columns.value);
+  });
+});
+</script>
+    
+  
+
+  
+    <h3>JavaScript Snippet</h3>
+  
+
+  
+    <figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="s1">'use strict'</span><span class="p">;</span>
+
+<span class="c1">// Auxiliary method. Retrieves and sanitises the value of a custom property.</span>
+<span class="kd">var</span> <span class="nx">getVariable</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">styles</span><span class="p">,</span> <span class="nx">propertyName</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nb">String</span><span class="p">(</span><span class="nx">styles</span><span class="p">.</span><span class="nx">getPropertyValue</span><span class="p">(</span><span class="nx">propertyName</span><span class="p">)).</span><span class="nx">trim</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="c1">// Auxiliary method. Sets the value of a custom property at the document level.</span>
+<span class="kd">var</span> <span class="nx">setDocumentVariable</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">propertyName</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">setProperty</span><span class="p">(</span><span class="nx">propertyName</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="c1">// Sets the document color scheme to the color scheme of the clicked element.</span>
+<span class="c1">// This illustrates how it's easy to make a change affecting a large number of</span>
+<span class="c1">// elements by simply changing a few custom properties.</span>
+<span class="kd">var</span> <span class="nx">chooseDefaultColor</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Get the styles for the event target (the clicked button), so we can see</span>
+  <span class="c1">// what its custom properties are set to.</span>
+  <span class="kd">var</span> <span class="nx">styles</span> <span class="o">=</span> <span class="nx">getComputedStyle</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">);</span>
+
+  <span class="c1">// Get the values for the button's colours...</span>
+  <span class="kd">var</span> <span class="nx">primary</span> <span class="o">=</span> <span class="nx">getVariable</span><span class="p">(</span><span class="nx">styles</span><span class="p">,</span> <span class="s1">'--primary-color'</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">getVariable</span><span class="p">(</span><span class="nx">styles</span><span class="p">,</span> <span class="s1">'--primary-color-text'</span><span class="p">);</span>
+  <span class="c1">// ... and apply them to the document.</span>
+  <span class="nx">setDocumentVariable</span><span class="p">(</span><span class="s1">'--primary-color'</span><span class="p">,</span> <span class="nx">primary</span><span class="p">);</span>
+  <span class="nx">setDocumentVariable</span><span class="p">(</span><span class="s1">'--primary-color-text'</span><span class="p">,</span> <span class="nx">text</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="c1">// Initialise page controls.</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'load'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Get the styles for the document.</span>
+  <span class="c1">// This is where we've chosen to store all the global variables we use.</span>
+  <span class="kd">var</span> <span class="nx">styles</span> <span class="o">=</span> <span class="nx">getComputedStyle</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">);</span>
+
+  <span class="kd">var</span> <span class="nx">quantum</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'quantum'</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">gutter</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'gutter'</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">columns</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'columns'</span><span class="p">);</span>
+
+  <span class="c1">// Set up event handlers for buttons.</span>
+  <span class="kd">var</span> <span class="nx">buttons</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">'.picker-button'</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">buttons</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">buttons</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'click'</span><span class="p">,</span> <span class="nx">chooseDefaultColor</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Retrieve initial custom property values and update controls.</span>
+  <span class="nx">quantum</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">getVariable</span><span class="p">(</span><span class="nx">styles</span><span class="p">,</span> <span class="s1">'--spacing-unit'</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="s1">'px'</span><span class="p">,</span> <span class="s1">''</span><span class="p">);</span>
+  <span class="nx">gutter</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">getVariable</span><span class="p">(</span><span class="nx">styles</span><span class="p">,</span> <span class="s1">'--margins'</span><span class="p">);</span>
+  <span class="nx">columns</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">getVariable</span><span class="p">(</span><span class="nx">styles</span><span class="p">,</span> <span class="s1">'--grid-columns'</span><span class="p">);</span>
+
+  <span class="c1">// Set up event handlers for having the sliders update the custom properties</span>
+  <span class="c1">// at the document level.</span>
+  <span class="nx">quantum</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'input'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">setDocumentVariable</span><span class="p">(</span><span class="s1">'--spacing-unit'</span><span class="p">,</span> <span class="nx">quantum</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="s1">'px'</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">gutter</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'input'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">setDocumentVariable</span><span class="p">(</span><span class="s1">'--margins'</span><span class="p">,</span> <span class="nx">gutter</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">columns</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'input'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">setDocumentVariable</span><span class="p">(</span><span class="s1">'--grid-columns'</span><span class="p">,</span> <span class="nx">columns</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span></code></pre></figure>
+  
+
+</body></html>

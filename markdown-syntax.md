@@ -1,3 +1,9 @@
+<style>
+html { font-size: calc(0.00625 * 100vmin + .75rem) !important }
+body { font-size: 1rem !important }
+</style>
+
+
 Markdown: Syntax
 ================
 

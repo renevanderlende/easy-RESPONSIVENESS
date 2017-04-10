@@ -24,6 +24,7 @@
 [data-calcbase="80" ] { font-size: calc( 8   * 0.0625 * 100vmin) } 
 [data-calcbase="90" ] { font-size: calc( 9   * 0.0625 * 100vmin) } 
 [data-calcbase="100"] { font-size: calc(10   * 0.0625 * 100vmin) } 
+[data-calcbase="110"] { font-size: calc(11   * 0.0625 * 100vmin) } 
 [data-calcbase="120"] { font-size: calc(12   * 0.0625 * 100vmin) } 
 [data-calcbase="125"] { font-size: calc(12.5 * 0.0625 * 100vmin) } 
 

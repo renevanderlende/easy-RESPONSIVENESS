@@ -49,9 +49,9 @@ section             { padding: 1rem }
 .size1a   { font-size: calc(0.00625 * 100vmin + 0.625em) }
 .size1b   { font-size: 1em }
 .size2a   { font-size: calc(2 * (0.00625 * 100vmin + 0.625em)) }
-.size2b   { font-size: calc(2 * 0.00625 * 100vmin + 0.625em) }
+.size2b   { font-size: calc(2 *  0.00625 * 100vmin + 0.625em)  }
 .size3a   { font-size: calc(3 * (0.00625 * 100vmin + 0.625em)) }
-.size3b   { font-size: calc(3 * 0.00625 * 100vmin + 0.625em) }
+.size3b   { font-size: calc(3 *  0.00625 * 100vmin + 0.625em)  }
 
 
 [data-color="bg.p"]    { background-color: hsl(334, 79%, 37%); color: white } /* primary */
@@ -161,7 +161,6 @@ input[name="hrm-demo9"]:checked + figure>label              { opacity: 1 }
 
 .square > *         { margin: auto }
 
-
 #mybox              { /*position: fixed; z-index: 1; top: 0; left: 0;*/
                       background-image: url("assets/unsplashit/1920x1200-855.jpg") /*354_563/712/829*/;
                       background-position: 100% 100%; background-size: cover;
@@ -173,7 +172,11 @@ input[name="hrm-demo9"]:checked + figure>label              { opacity: 1 }
                       max-height: 18.75rem;
 
                       width : 100%;     /* forces stretch-to-maximum */
-                      height: calc(11.25rem + (18.75 - 11.25) * ((100vmin - 20rem)/(90 - 20))); /* calculate height depending on width */
+
+                      /* height: calc(11.25rem + (18.75 - 11.25) * ((100vmin - 20rem)/(90 - 20))); old => calculate height depending on width */
+                      
+                      height: calc(.125 * 100vmin + 8.75rem); /* new => (320,180)(1280,300)=>(f): y=mx+b */
+
                       filter: blur(1px)
                     }
 </style>

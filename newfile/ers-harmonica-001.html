@@ -172,7 +172,7 @@ html    { font-size: calc(0.00625 * 100vmin + 0.625rem); font-weight: normal; li
 
 <style>
  /* EXTRAS: add a nice filter hover filter effect */
-[data-effect="blur"]:hover>*:not(:hover)   { filter: blur(2px); opacity: .6 } /* demo, anything goes */
+[data-effect="blur"]:hover>*:not(:hover)   { filter: blur(1px); opacity: .6 } /* demo, anything goes */
 </style>
 
 <style>
@@ -184,7 +184,9 @@ item[data-harmonica]>*          { border: .5px solid hsla(0,0%,0%,.1)  }
 item[data-harmonica]>*:hover    { font-weight: bold }
 
 /* Toying with hidden checkboxes */
-[data-harmonica*="M"]>*[data-function="S"]:checked + [data-function="T"] { background: hsl(210, 100%, 60%); color: white }
+[data-harmonica*="M"]>*[data-function="S"]:checked + [data-function="T"] { background: hsl(210, 100%, 60%); color: white;
+                                                                           box-shadow: 5px 0 5px 1px silver,
+                                                                                      -5px 0 5px 1px silver }
 
 </style>
 

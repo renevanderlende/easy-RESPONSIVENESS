@@ -1,0 +1,92 @@
+{
+  "name": "renevanderlende/easy-RESPONSIVENESS",
+  "version": "0.1.4",
+  "libraries": {
+    "xv": "^1.1.25"
+  },
+  "title": "ERS",
+  "branch": "master",
+  "style": {
+    "name": "Future",
+    "componentSet": {
+      "nav": "nav/BasicNav",
+      "header": "header/BannerHeader",
+      "article": "article/BasicArticle",
+      "footer": "footer/BasicFooter"
+    },
+    "fontFamily": "\"Avenir Next\", Helvetica, sans-serif",
+    "heading": {
+      "fontWeight": 500,
+      "textTransform": "uppercase",
+      "letterSpacing": "0.2em"
+    },
+    "alternativeText": {
+      "textTransform": "uppercase",
+      "fontWeight": 400,
+      "letterSpacing": "0.2em",
+      "opacity": 0.75
+    },
+    "colors": {
+      "text": "#333",
+      "background": "#fff",
+      "primary": "#666",
+      "secondary": "#888",
+      "highlight": "#1f80ff",
+      "muted": "#f6f6f6",
+      "border": "#eee"
+    },
+    "layout": {
+      "centered": true,
+      "maxWidth": 1024,
+      "bannerHeight": "80vh"
+    }
+  },
+  "content": [
+    {
+      "component": "nav",
+      "links": [
+        {
+          "href": "https://github.com/renevanderlende/easy-RESPONSIVENESS",
+          "text": "GitHub"
+        }
+      ]
+    },
+    {
+      "component": "header",
+      "heading": "easy-RESPONSIVENESS",
+      "subhead": "Create responsive webpages the easy way with vanilla HTML, CSS and JS",
+      "children": [
+        {
+          "component": "ui/TweetButton",
+          "text": "easy-RESPONSIVENESS: Create responsive webpages the easy way with vanilla HTML, CSS and JS",
+          "url": null
+        },
+        {
+          "component": "ui/GithubButton",
+          "user": "renevanderlende",
+          "repo": "easy-RESPONSIVENESS"
+        }
+      ]
+    },
+    {
+      "component": "article",
+      "metadata": {
+        "source": "github.readme"
+      },
+      "html": "\n<p>easy RESPONSIVE||NESS: Vanilla CSS3 Responsive Web Design </p>\n<pre>- with minimal Javascript mostly <span class=\"hljs-keyword\">for</span> <span class=\"hljs-keyword\">debug</span>/<span class=\"hljs-built_in\">design</span> purposes\n- without ANY <span class=\"hljs-keyword\">external</span> CSS/JS <span class=\"hljs-keyword\">library</span> dependencies</pre><p>Very WIP and frequently updated. It is not useful to fork just yet, but keep checking back for progress...</p>\n<p><a href=\"https://speckyboy.com/2016/06/16/mastering-responsive-web-design/\">https://speckyboy.com/2016/06/16/mastering-responsive-web-design/</a>\n<a href=\"https://speckyboy.com/2016/06/08/getting-started-css-flexbox/\">https://speckyboy.com/2016/06/08/getting-started-css-flexbox/</a></p>\n<pre><span class=\"hljs-comment\">/* Coolors Exported Palette - coolors.co/f2ee7a-7c6582-6252aa-f1ffc9-cdc5bb =&gt; &apos;smell-the-field&apos; */</span>\n$color :                             hsla( <span class=\"hljs-number\">40</span>, <span class=\"hljs-number\">90</span>%,<span class=\"hljs-number\">51</span>%,<span class=\"hljs-number\">1</span>) <span class=\"hljs-comment\">/* signal red */</span>\n$color0:                             hsla(<span class=\"hljs-number\">228</span>, <span class=\"hljs-number\">38</span>%,<span class=\"hljs-number\">26</span>%,<span class=\"hljs-number\">1</span>) <span class=\"hljs-comment\">/* royal blue */</span>\n$color1:                             hsla( <span class=\"hljs-number\">40</span>, <span class=\"hljs-number\">90</span>%,<span class=\"hljs-number\">51</span>%,<span class=\"hljs-number\">1</span>) <span class=\"hljs-comment\">/* eggyoke */</span>\n$color6: #<span class=\"hljs-number\">292038</span> rgba( <span class=\"hljs-number\">41</span>, <span class=\"hljs-number\">32</span>, <span class=\"hljs-number\">56</span>,<span class=\"hljs-number\">1</span>) hsla(<span class=\"hljs-number\">263</span>, <span class=\"hljs-number\">27</span>%,<span class=\"hljs-number\">17</span>%,<span class=\"hljs-number\">1</span>) <span class=\"hljs-comment\">/* dark purple */</span>\n$color5: #cdc5bb rgba(<span class=\"hljs-number\">205</span>,<span class=\"hljs-number\">197</span>,<span class=\"hljs-number\">187</span>,<span class=\"hljs-number\">1</span>) hsla( <span class=\"hljs-number\">33</span>, <span class=\"hljs-number\">15</span>%,<span class=\"hljs-number\">77</span>%,<span class=\"hljs-number\">1</span>) <span class=\"hljs-comment\">/* sandy concrete */</span>\n$color4: #f4f1bb rgba(<span class=\"hljs-number\">244</span>,<span class=\"hljs-number\">241</span>,<span class=\"hljs-number\">187</span>,<span class=\"hljs-number\">1</span>) hsla( <span class=\"hljs-number\">57</span>, <span class=\"hljs-number\">72</span>%,<span class=\"hljs-number\">85</span>%,<span class=\"hljs-number\">1</span>) <span class=\"hljs-comment\">/* light parmesan */</span>\n$color1: #f5f749 rgba(<span class=\"hljs-number\">245</span>,<span class=\"hljs-number\">247</span>, <span class=\"hljs-number\">73</span>,<span class=\"hljs-number\">1</span>) hsla( <span class=\"hljs-number\">61</span>, <span class=\"hljs-number\">92</span>%,<span class=\"hljs-number\">63</span>%,<span class=\"hljs-number\">1</span>) <span class=\"hljs-comment\">/* signal yellow */</span>\n$color3: #<span class=\"hljs-number\">6252</span>aa rgba( <span class=\"hljs-number\">98</span>, <span class=\"hljs-number\">82</span>,<span class=\"hljs-number\">170</span>,<span class=\"hljs-number\">1</span>) hsla(<span class=\"hljs-number\">251</span>, <span class=\"hljs-number\">35</span>%,<span class=\"hljs-number\">49</span>%,<span class=\"hljs-number\">1</span>) <span class=\"hljs-comment\">/* purplish blue */</span>\n$color8: #<span class=\"hljs-number\">673</span>c60 rgba(<span class=\"hljs-number\">103</span>, <span class=\"hljs-number\">60</span>, <span class=\"hljs-number\">96</span>,<span class=\"hljs-number\">1</span>) hsla(<span class=\"hljs-number\">310</span>, <span class=\"hljs-number\">26</span>%,<span class=\"hljs-number\">32</span>%,<span class=\"hljs-number\">1</span>)\n$color2: #<span class=\"hljs-number\">7</span>c6582 rgba(<span class=\"hljs-number\">124</span>,<span class=\"hljs-number\">101</span>,<span class=\"hljs-number\">130</span>,<span class=\"hljs-number\">1</span>) hsla(<span class=\"hljs-number\">288</span>, <span class=\"hljs-number\">13</span>%,<span class=\"hljs-number\">45</span>%,<span class=\"hljs-number\">1</span>) <span class=\"hljs-comment\">/* pale purple */</span>\n$color7: #<span class=\"hljs-number\">88</span>d18a rgba(<span class=\"hljs-number\">136</span>,<span class=\"hljs-number\">209</span>,<span class=\"hljs-number\">138</span>,<span class=\"hljs-number\">1</span>) hsla(<span class=\"hljs-number\">122</span>, <span class=\"hljs-number\">44</span>%,<span class=\"hljs-number\">68</span>%,<span class=\"hljs-number\">1</span>) <span class=\"hljs-comment\">/* pistachio */</span>\n$color9:                             hsla( <span class=\"hljs-number\">18</span>,<span class=\"hljs-number\">100</span>%,<span class=\"hljs-number\">72</span>%,<span class=\"hljs-number\">1</span>) <span class=\"hljs-comment\">/* peachy */</span>\n$colorA:                             hsla(<span class=\"hljs-number\">233</span>, <span class=\"hljs-number\">22</span>%,<span class=\"hljs-number\">23</span>%,<span class=\"hljs-number\">1</span>) <span class=\"hljs-comment\">/* blue suit */</span>\n$colorB:                             hsla( <span class=\"hljs-number\">23</span>, <span class=\"hljs-number\">22</span>%,<span class=\"hljs-number\">52</span>%,<span class=\"hljs-number\">1</span>) <span class=\"hljs-comment\">/* choco ice */</span>\n$colorC: #f1eec5                     hsla( <span class=\"hljs-number\">56</span>, <span class=\"hljs-number\">62</span>%,<span class=\"hljs-number\">86</span>%,<span class=\"hljs-number\">1</span>) <span class=\"hljs-comment\">/* no vanilla */</span>\n$colorD:                             hsla( <span class=\"hljs-number\">32</span>, <span class=\"hljs-number\">36</span>%,<span class=\"hljs-number\">73</span>%,<span class=\"hljs-number\">1</span>) <span class=\"hljs-comment\">/* cappuchino */</span>\n$colorE:                             hsla(<span class=\"hljs-number\">210</span>, <span class=\"hljs-number\">13</span>%,<span class=\"hljs-number\">25</span>%,<span class=\"hljs-number\">1</span>) <span class=\"hljs-comment\">/* wastebox */</span></pre>"
+    },
+    {
+      "component": "footer",
+      "links": [
+        {
+          "href": "https://github.com/renevanderlende/easy-RESPONSIVENESS",
+          "text": "GitHub"
+        },
+        {
+          "href": "https://github.com/renevanderlende",
+          "text": "renevanderlende"
+        }
+      ]
+    }
+  ]
+}
